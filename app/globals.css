@@ -1,0 +1,34 @@
+@import "tailwindcss";
+
+/* Paleta provisoria aprobada en la presentación V02. No es la identidad oficial de Vitalis. */
+@theme inline {
+  --color-teal: #0f5f6b;
+  --color-teal-600: #137685;
+  --color-mint: #e4f2ef;
+  --color-mint-200: #c5e4de;
+  --color-paper: #f7f6f2;
+  --color-ink: #1c2b33;
+  --color-ink-soft: #55656e;
+  --color-warm: #c9784f;
+  --color-warm-soft: #f8ebe4;
+  --color-warm-ink: #8a4a2c;
+  --color-line: #d9e3e1;
+  --font-sans: "Inter", "Helvetica Neue", Arial, sans-serif;
+  --font-display: "Poppins", "Inter", sans-serif;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+}
+
+@media (min-width: 768px) {
+  body {
+    background: #e9efec;
+  }
+}
