@@ -13,7 +13,14 @@ export function leerEstado(): EstadoDemo | null {
       return null;
     }
     // Compatibilidad: estados guardados antes de añadir la disponibilidad reciben los valores iniciales.
-    return { ...(dato as EstadoDemo), disponibilidad: { ...DISPONIBILIDAD_INICIAL, ...(dato.disponibilidad ?? {}) } };
+    // Compatibilidad: solicitudes anteriores a E03-D reciben registro nulo; el profesional activo tiene valor por defecto.
+    const solicitudes = dato.solicitudes.map((s) => ({ ...s, registro: s.registro ?? null }));
+    return {
+      ...(dato as EstadoDemo),
+      solicitudes,
+      disponibilidad: { ...DISPONIBILIDAD_INICIAL, ...(dato.disponibilidad ?? {}) },
+      profesionalActivoId: dato.profesionalActivoId ?? "prof-demo-a",
+    };
   } catch {
     return null;
   }

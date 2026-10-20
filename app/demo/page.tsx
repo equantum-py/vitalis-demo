@@ -21,9 +21,9 @@ const PERFILES: { perfil: Perfil; titulo: string; descripcion: string; ruta: str
   {
     perfil: "profesional",
     titulo: "Profesionales",
-    descripcion: "Agenda y registro simulado. Próxima etapa (E03-D).",
+    descripcion: "Agenda, inicio de visita, registro simulado y finalización.",
     ruta: "/profesional",
-    disponible: false,
+    disponible: true,
   },
   {
     perfil: "administracion",

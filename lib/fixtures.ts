@@ -33,4 +33,5 @@ export const ESTADO_INICIAL: EstadoDemo = {
   solicitudes: [],
   urgencias: [],
   disponibilidad: DISPONIBILIDAD_INICIAL,
+  profesionalActivoId: "prof-demo-a",
 };

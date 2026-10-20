@@ -27,6 +27,14 @@ export interface EntradaHistorial {
   fecha: string; // ISO 8601
 }
 
+/** Registro simulado de la visita. Ficticio: no es historia clínica real. Se cierra al finalizar la visita. */
+export interface RegistroVisita {
+  observaciones: string;
+  indicaciones: string;
+  actualizado: string; // ISO 8601
+  cerrado: boolean;
+}
+
 export interface Solicitud {
   id: string;
   pacienteId: string;
@@ -38,6 +46,8 @@ export interface Solicitud {
   profesionalId: string | null;
   franja: string | null;
   historial: EntradaHistorial[];
+  /** Registro de la visita. Solo lo ve el profesional asignado; administración no lo muestra. */
+  registro: RegistroVisita | null;
 }
 
 export interface OrientacionUrgencia {
@@ -54,4 +64,6 @@ export interface EstadoDemo {
   urgencias: OrientacionUrgencia[];
   /** Disponibilidad ficticia por profesional (id → disponible). */
   disponibilidad: Record<string, boolean>;
+  /** Profesional cuya agenda se muestra en el perfil profesional (demostración). */
+  profesionalActivoId: string;
 }

@@ -2,6 +2,7 @@ import { ESTADO_INICIAL, FRANJAS_DEMO, PACIENTE_DEMO, PROFESIONALES_DEMO } from 
 import type { DatosSolicitud } from "./validacion";
 import { validarSolicitud } from "./validacion";
 import type { EstadoDemo, EstadoSolicitud, Perfil, Solicitud } from "./types";
+import { MIN_OBSERVACIONES } from "./validacion-visita";
 
 /**
  * Acciones del estado compartido. La asignación de profesional y la confirmación
@@ -16,7 +17,18 @@ export type Accion =
   | { tipo: "confirmarFranja"; solicitudId: string; franja: string; fecha: string }
   | { tipo: "cancelarSolicitud"; solicitudId: string; fecha: string }
   | { tipo: "registrarUrgencia"; fecha: string }
-  | { tipo: "cambiarDisponibilidad"; profesionalId: string; disponible: boolean };
+  | { tipo: "cambiarDisponibilidad"; profesionalId: string; disponible: boolean }
+  | { tipo: "elegirProfesionalActivo"; profesionalId: string }
+  | { tipo: "iniciarVisita"; solicitudId: string; profesionalId: string; fecha: string }
+  | {
+      tipo: "guardarRegistro";
+      solicitudId: string;
+      profesionalId: string;
+      observaciones: string;
+      indicaciones: string;
+      fecha: string;
+    }
+  | { tipo: "finalizarVisita"; solicitudId: string; profesionalId: string; fecha: string };
 
 function codigo(prefijo: string, n: number): string {
   return `${prefijo}-${String(n).padStart(3, "0")}`;
@@ -62,6 +74,7 @@ export function reducer(estado: EstadoDemo, accion: Accion): EstadoDemo {
         profesionalId: null,
         franja: null,
         historial: [{ estado: "recibida", fecha: accion.fecha }],
+        registro: null,
       };
       return { ...estado, secuencia: n, solicitudes: [nueva, ...estado.solicitudes] };
     }
@@ -106,6 +119,50 @@ export function reducer(estado: EstadoDemo, accion: Accion): EstadoDemo {
           ...s,
           estado: "cancelada",
           historial: [...s.historial, { estado: "cancelada", fecha: accion.fecha }],
+        };
+      });
+
+    case "elegirProfesionalActivo":
+      if (!PROFESIONALES_DEMO.some((p) => p.id === accion.profesionalId)) return estado;
+      return { ...estado, profesionalActivoId: accion.profesionalId };
+
+    case "iniciarVisita":
+      // Regla: solo se inicia una visita confirmada y solo la del profesional asignado.
+      return actualizarSolicitud(estado, accion.solicitudId, (s) => {
+        if (s.estado !== "confirmada" || s.profesionalId !== accion.profesionalId) return s;
+        return {
+          ...s,
+          estado: "en_visita",
+          historial: [...s.historial, { estado: "en_visita", fecha: accion.fecha }],
+        };
+      });
+
+    case "guardarRegistro":
+      // Regla: solo se edita durante la visita en curso del profesional asignado. Finalizada = inmodificable.
+      return actualizarSolicitud(estado, accion.solicitudId, (s) => {
+        if (s.estado !== "en_visita" || s.profesionalId !== accion.profesionalId) return s;
+        if (s.registro?.cerrado) return s;
+        return {
+          ...s,
+          registro: {
+            observaciones: accion.observaciones.trim(),
+            indicaciones: accion.indicaciones.trim(),
+            actualizado: accion.fecha,
+            cerrado: false,
+          },
+        };
+      });
+
+    case "finalizarVisita":
+      // Regla: se finaliza solo con un registro de observaciones guardado. Luego el registro queda cerrado.
+      return actualizarSolicitud(estado, accion.solicitudId, (s) => {
+        if (s.estado !== "en_visita" || s.profesionalId !== accion.profesionalId) return s;
+        if (!s.registro || s.registro.observaciones.length < MIN_OBSERVACIONES) return s;
+        return {
+          ...s,
+          estado: "finalizada",
+          registro: { ...s.registro, actualizado: accion.fecha, cerrado: true },
+          historial: [...s.historial, { estado: "finalizada", fecha: accion.fecha }],
         };
       });
 
