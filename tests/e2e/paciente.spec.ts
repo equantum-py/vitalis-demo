@@ -87,7 +87,7 @@ test("integración: asignar y confirmar desde la herramienta de prueba y refleja
   await expect(page).toHaveURL(/SOL-001\/confirmacion$/);
 
   // Asignación (separada de la confirmación)
-  await page.goto("/demo");
+  await page.goto("/demo?pruebas=1");
   await page.getByLabel("Profesional a asignar").selectOption("prof-demo-a");
   await page.getByRole("button", { name: "Asignar profesional" }).click();
   await expect(page.getByText("Última solicitud: SOL-001 · Asignada")).toBeVisible();
@@ -99,7 +99,7 @@ test("integración: asignar y confirmar desde la herramienta de prueba y refleja
   await expect(page.getByText("A confirmar por coordinación")).toBeVisible();
 
   // Confirmación de franja
-  await page.goto("/demo");
+  await page.goto("/demo?pruebas=1");
   await page.getByLabel("Franja a confirmar").selectOption("Tarde · franja de demostración");
   await page.getByRole("button", { name: "Confirmar franja" }).click();
   await expect(page.getByText("Última solicitud: SOL-001 · Confirmada")).toBeVisible();

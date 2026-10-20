@@ -1,8 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { Suspense, useState } from "react";
 import { DemoBadge } from "@/components/DemoBadge";
 import { AvisoDemo, CLASE_BOTON, CLASE_INPUT, PageTitle, Tarjeta } from "@/components/ui";
 import { FRANJAS_DEMO, PACIENTE_DEMO, PROFESIONALES_DEMO } from "@/lib/fixtures";
@@ -35,6 +35,16 @@ const PERFILES: { perfil: Perfil; titulo: string; descripcion: string; ruta: str
 ];
 
 export default function SelectorDemo() {
+  return (
+    <Suspense fallback={null}>
+      <Selector />
+    </Suspense>
+  );
+}
+
+function Selector() {
+  // Herramienta de atajo: solo para desarrollo y pruebas automatizadas (?pruebas=1). No aparece en el recorrido comercial.
+  const modoPruebas = useSearchParams().get("pruebas") === "1";
   const { estado, despachar, restablecer } = useDemo();
   const router = useRouter();
   const [confirmarReinicio, setConfirmarReinicio] = useState(false);
@@ -81,6 +91,7 @@ export default function SelectorDemo() {
         ))}
       </section>
 
+      {modoPruebas && (
       <Tarjeta className="flex flex-col gap-4 border-dashed">
         <div>
           <h2 className="font-semibold text-ink">Herramienta de prueba de integración</h2>
@@ -173,6 +184,7 @@ export default function SelectorDemo() {
           </div>
         )}
       </Tarjeta>
+      )}
 
       <Tarjeta className="flex flex-col gap-3">
         <h2 className="font-semibold text-ink">Datos de la demo</h2>

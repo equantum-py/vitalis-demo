@@ -35,7 +35,7 @@ test("recorrido completo entre los tres perfiles: crear, asignar, confirmar, vis
   await expect(page).toHaveURL(/SOL-001\/confirmacion$/);
 
   // 2. Coordinación asigna y confirma la franja (herramienta de integración de la demo, válida en todos los tamaños)
-  await page.goto("/demo");
+  await page.goto("/demo?pruebas=1");
   await page.getByLabel("Profesional a asignar").selectOption("prof-demo-a");
   await page.getByRole("button", { name: "Asignar profesional" }).click();
   await page.getByLabel("Franja a confirmar").selectOption("Tarde · franja de demostración");
@@ -104,7 +104,7 @@ test("bloqueos: visita de otro profesional no disponible y registro cerrado tras
   await page.getByRole("button", { name: "Enviar solicitud" }).click();
   await expect(page).toHaveURL(/SOL-001\/confirmacion$/);
 
-  await page.goto("/demo");
+  await page.goto("/demo?pruebas=1");
   await page.getByLabel("Profesional a asignar").selectOption("prof-demo-a");
   await page.getByRole("button", { name: "Asignar profesional" }).click();
   await page.getByLabel("Franja a confirmar").selectOption("Mañana · franja de demostración");
