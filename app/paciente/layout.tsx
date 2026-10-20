@@ -12,8 +12,8 @@ import { PACIENTE_DEMO } from "@/lib/fixtures";
 export default function LayoutPaciente({ children }: { children: React.ReactNode }) {
   return (
     <div className="mx-auto flex min-h-dvh w-full max-w-md flex-col bg-paper md:my-6 md:min-h-[calc(100dvh-3rem)] md:overflow-hidden md:rounded-3xl md:border md:border-line md:shadow-sm">
-      <header className="sticky top-0 z-10 flex items-center justify-between gap-3 bg-surface px-5 py-3 shadow-[0_1px_0_var(--color-line)]">
-        <div className="flex min-w-0 items-center gap-2.5">
+      <header className="sticky top-0 z-10 flex items-center justify-between gap-2 bg-surface px-5 py-3 shadow-[0_1px_0_var(--color-line)]">
+        <div className="flex min-w-0 items-center gap-2">
           <MarcaVitalis />
           <Link href="/paciente" className="font-display text-xl font-semibold text-navy">
             Vitalis
@@ -22,10 +22,11 @@ export default function LayoutPaciente({ children }: { children: React.ReactNode
         </div>
         <Link
           href="/paciente/urgencia"
-          className="inline-flex min-h-11 shrink-0 items-center gap-1.5 rounded-full bg-warm-soft px-3.5 text-sm font-semibold text-warm-ink focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-azul-600"
+          aria-label="Urgencia"
+          className="inline-flex min-h-11 shrink-0 items-center gap-1.5 rounded-full bg-warm-soft px-3 text-sm font-semibold text-warm-ink focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-azul-600 min-[390px]:px-3.5"
         >
           <Icono nombre="urgencia" className="size-4.5" />
-          Urgencia
+          <span className="max-[389px]:sr-only">Urgencia</span>
         </Link>
       </header>
       <p className="px-5 pt-3 text-xs text-ink-soft">Perfil de demostración: {PACIENTE_DEMO.nombre} (ficticia)</p>
