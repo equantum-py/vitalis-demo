@@ -36,7 +36,7 @@ export function VistaVisita({ id }: { id: string }) {
         <p className="text-ink-soft">
           Esta visita no está asignada a {activo?.nombre ?? "el profesional activo"} o todavía no tiene franja confirmada.
         </p>
-        <Link href="/profesional/agenda" className="font-semibold text-teal underline">
+        <Link href="/profesional/agenda" className="font-semibold text-azul-600 underline">
           Volver a la agenda
         </Link>
       </div>
@@ -107,12 +107,12 @@ function DetalleVisita({ solicitud, onIniciar, onGuardar, onFinalizar }: PropsDe
         acciones={<StatusPill estado={solicitud.estado} />}
       />
 
-      <Link href="/profesional/agenda" className="inline-block text-sm font-semibold text-teal underline">
+      <Link href="/profesional/agenda" className="inline-block text-sm font-semibold text-azul-600 underline">
         ← Volver a la agenda
       </Link>
 
       {aviso && (
-        <p role="status" className="rounded-xl border border-mint-200 bg-mint p-3 font-medium text-teal">
+        <p role="status" className="rounded-xl border border-azul-200 bg-azul-soft p-3 font-medium text-azul-600">
           {aviso}
         </p>
       )}

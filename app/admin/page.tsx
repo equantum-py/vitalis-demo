@@ -38,7 +38,7 @@ export default function DashboardAdmin() {
           {recientes.length === 0 ? (
             <Vacio>
               Todavía no hay solicitudes. Cree una desde el perfil de pacientes en{" "}
-              <Link href="/paciente/solicitar" className="font-semibold text-teal underline">
+              <Link href="/paciente/solicitar" className="font-semibold text-azul-600 underline">
                 Solicitar atención
               </Link>
               .
@@ -69,19 +69,19 @@ export default function DashboardAdmin() {
           <ul className="flex flex-col gap-3 text-sm">
             <li className="flex items-center justify-between rounded-xl bg-paper p-3">
               <span>Solicitudes para asignar profesional</span>
-              <Link href="/admin/solicitudes?estado=recibida" className="font-semibold text-teal underline">
+              <Link href="/admin/solicitudes?estado=recibida" className="font-semibold text-azul-600 underline">
                 {i.recibidas}
               </Link>
             </li>
             <li className="flex items-center justify-between rounded-xl bg-paper p-3">
               <span>Asignadas sin franja confirmada</span>
-              <Link href="/admin/solicitudes?estado=asignada" className="font-semibold text-teal underline">
+              <Link href="/admin/solicitudes?estado=asignada" className="font-semibold text-azul-600 underline">
                 {i.asignadas}
               </Link>
             </li>
             <li className="flex items-center justify-between rounded-xl bg-paper p-3">
               <span>Orientaciones de urgencia registradas</span>
-              <Link href="/admin/urgencias" className="font-semibold text-teal underline">
+              <Link href="/admin/urgencias" className="font-semibold text-azul-600 underline">
                 {i.urgencias}
               </Link>
             </li>

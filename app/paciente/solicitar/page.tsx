@@ -117,7 +117,7 @@ export default function SolicitarAtencion() {
           {PREFERENCIAS.map((p) => (
             <label
               key={p}
-              className="flex min-h-11 cursor-pointer items-center gap-3 rounded-xl border border-line bg-white px-3.5 has-checked:border-teal has-checked:bg-mint"
+              className="flex min-h-11 cursor-pointer items-center gap-3 rounded-xl border border-line bg-white px-3.5 has-checked:border-azul has-checked:bg-azul-soft"
             >
               <input
                 type="radio"
@@ -128,7 +128,7 @@ export default function SolicitarAtencion() {
                   setPreferencia(p);
                   revalidar();
                 }}
-                className="h-5 w-5 accent-teal"
+                className="h-5 w-5 accent-azul"
               />
               <span>{ETIQUETA_PREFERENCIA[p]}</span>
             </label>
@@ -136,7 +136,7 @@ export default function SolicitarAtencion() {
           <p className="text-sm text-ink-soft">La preferencia es orientativa. Coordinación la confirmará.</p>
         </fieldset>
 
-        <div role="note" className="rounded-xl border border-[#E0B7A0] bg-warm-soft p-3 text-sm text-warm-ink">
+        <div role="note" className="rounded-xl border border-warm-200 bg-warm-soft p-3 text-sm text-warm-ink">
           Si es una emergencia, no use este formulario. Llame al servicio de emergencias de inmediato.
         </div>
 

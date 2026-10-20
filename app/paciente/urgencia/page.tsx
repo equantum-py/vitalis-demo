@@ -23,7 +23,7 @@ export default function OrientacionUrgencia() {
 
       <section
         aria-labelledby="titulo-urgencia"
-        className="rounded-2xl border border-[#E0B7A0] bg-warm-soft p-5 text-warm-ink"
+        className="rounded-2xl border border-warm-200 bg-warm-soft p-5 text-warm-ink"
       >
         <h2 id="titulo-urgencia" className="text-lg font-bold">
           Si hay una emergencia, llame al servicio de emergencias de inmediato.
@@ -40,14 +40,14 @@ export default function OrientacionUrgencia() {
           Registrar que leí esta orientación
         </button>
         {registrada && (
-          <p role="status" className="text-sm font-medium text-teal">
+          <p role="status" className="text-sm font-medium text-azul-600">
             Orientación registrada en el registro separado de urgencias. No se creó ninguna solicitud.
           </p>
         )}
         <p className="text-sm text-ink-soft">Registros de urgencia en esta demostración: {estado.urgencias.length}</p>
       </Tarjeta>
 
-      <Link href="/paciente/solicitudes" className="font-semibold text-teal underline underline-offset-4">
+      <Link href="/paciente/solicitudes" className="font-semibold text-azul-600 underline underline-offset-4">
         Ver solicitudes programadas
       </Link>
 

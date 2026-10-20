@@ -47,8 +47,8 @@ export default function AgendaAdmin() {
                       <ul className="flex flex-col gap-2">
                         {celda.visitas.map((s) => (
                           <li key={s.id}>
-                            <Link href={`/admin/solicitudes/${s.id}`} className="block rounded-xl border border-mint-200 bg-mint p-3 hover:border-teal">
-                              <span className="font-semibold text-teal">{s.id}</span>
+                            <Link href={`/admin/solicitudes/${s.id}`} className="block rounded-xl border border-azul-200 bg-azul-soft p-3 hover:border-azul">
+                              <span className="font-semibold text-azul-600">{s.id}</span>
                               <span className="block text-sm text-ink-soft">{s.direccion}</span>
                               <span className="block text-xs text-ink-soft">{s.estado === "confirmada" ? "Confirmada" : "En curso o finalizada"}</span>
                             </Link>
@@ -92,7 +92,7 @@ export default function AgendaAdmin() {
                   <span className="font-semibold">{s.id}</span>{" "}
                   <span className="text-ink-soft">{filas.find((f) => f.profesional.id === s.profesionalId)?.profesional.nombre}</span>
                 </span>
-                <Link href={`/admin/solicitudes/${s.id}`} className="font-semibold text-teal underline">
+                <Link href={`/admin/solicitudes/${s.id}`} className="font-semibold text-azul-600 underline">
                   Confirmar franja
                 </Link>
               </li>

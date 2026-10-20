@@ -23,8 +23,8 @@ export function VistaConfirmacion({ id }: { id: string }) {
   return (
     <div className="flex flex-col gap-5">
       <div role="status">
-      <Tarjeta className="flex flex-col gap-3 border-teal/30 bg-mint">
-        <p className="text-sm font-bold uppercase tracking-wider text-teal">Solicitud recibida</p>
+      <Tarjeta className="flex flex-col gap-3 border-azul/30 bg-azul-soft">
+        <p className="text-sm font-bold uppercase tracking-wider text-azul-600">Solicitud recibida</p>
         <h1 className="font-display text-2xl font-semibold text-ink">Gracias. Su solicitud quedó registrada.</h1>
         <p className="text-ink">
           Código <span className="font-semibold">{solicitud.id}</span> · {formatearFecha(solicitud.historial[0].fecha)}

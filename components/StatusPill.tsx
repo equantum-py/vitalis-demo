@@ -3,8 +3,8 @@ import type { EstadoSolicitud } from "@/lib/types";
 
 const CLASES = {
   neutro: "bg-white text-ink-soft border-line",
-  info: "bg-mint text-teal border-mint-200",
-  ok: "bg-teal text-white border-teal",
+  info: "bg-azul-soft text-azul-600 border-azul-200",
+  ok: "bg-azul text-white border-azul",
   cerrado: "bg-paper text-ink border-line",
 } as const;
 

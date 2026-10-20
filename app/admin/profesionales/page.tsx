@@ -32,7 +32,7 @@ export default function ProfesionalesAdmin() {
                       <h2 className="font-display text-lg font-semibold text-ink">{p.nombre}</h2>
                       <span
                         className={`shrink-0 rounded-full border px-3 py-1 text-sm font-semibold ${
-                          disponible ? "border-mint-200 bg-mint text-teal" : "border-line bg-paper text-ink-soft"
+                          disponible ? "border-azul-200 bg-azul-soft text-azul-600" : "border-line bg-paper text-ink-soft"
                         }`}
                       >
                         {disponible ? "Disponible" : "No disponible"}

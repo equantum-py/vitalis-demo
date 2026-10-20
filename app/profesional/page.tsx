@@ -42,7 +42,7 @@ export default function InicioProfesional() {
                 </div>
                 <div className="flex items-center gap-3">
                   <StatusPill estado={s.estado} />
-                  <Link href={`/profesional/visitas/${s.id}`} className="font-semibold text-teal underline underline-offset-4">
+                  <Link href={`/profesional/visitas/${s.id}`} className="font-semibold text-azul-600 underline underline-offset-4">
                     Abrir visita
                   </Link>
                 </div>

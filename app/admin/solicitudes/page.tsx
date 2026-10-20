@@ -100,7 +100,7 @@ function ListaSolicitudes() {
                     <td className="px-4 py-3">{nombreProfesional(s.profesionalId)}</td>
                     <td className="px-4 py-3"><StatusPill estado={s.estado} /></td>
                     <td className="px-4 py-3 text-right">
-                      <Link href={`/admin/solicitudes/${s.id}`} className="font-semibold text-teal underline underline-offset-4">
+                      <Link href={`/admin/solicitudes/${s.id}`} className="font-semibold text-azul-600 underline underline-offset-4">
                         Ver detalle
                       </Link>
                     </td>

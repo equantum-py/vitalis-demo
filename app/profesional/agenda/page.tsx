@@ -36,7 +36,7 @@ export default function AgendaProfesional() {
                   <li key={s.id}>
                     <Link
                       href={`/profesional/visitas/${s.id}`}
-                      className="flex flex-wrap items-center justify-between gap-2 rounded-xl border border-line bg-paper p-4 hover:border-teal"
+                      className="flex flex-wrap items-center justify-between gap-2 rounded-xl border border-line bg-paper p-4 hover:border-azul"
                     >
                       <span>
                         <span className="block font-semibold text-ink">{s.id}</span>

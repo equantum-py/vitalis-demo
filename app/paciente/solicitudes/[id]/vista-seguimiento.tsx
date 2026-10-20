@@ -25,7 +25,7 @@ export function VistaSeguimiento({ id }: { id: string }) {
         <p className="text-ink-soft">
           No hay una solicitud con este código en la demostración. Puede haberse restablecido la demo.
         </p>
-        <Link href="/paciente/solicitudes" className="font-semibold text-teal underline underline-offset-4">
+        <Link href="/paciente/solicitudes" className="font-semibold text-azul-600 underline underline-offset-4">
           Volver a mis solicitudes
         </Link>
       </div>
@@ -44,8 +44,8 @@ export function VistaSeguimiento({ id }: { id: string }) {
         </div>
       </PageTitle>
 
-      <Tarjeta className="flex flex-col gap-2 border-teal/30 bg-mint">
-        <h2 className="text-sm font-bold uppercase tracking-wider text-teal">Próximo paso</h2>
+      <Tarjeta className="flex flex-col gap-2 border-azul/30 bg-azul-soft">
+        <h2 className="text-sm font-bold uppercase tracking-wider text-azul-600">Próximo paso</h2>
         <p className="text-ink">{PROXIMO_PASO[solicitud.estado]}</p>
       </Tarjeta>
 
