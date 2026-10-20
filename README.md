@@ -57,7 +57,7 @@ CHROMIUM_PATH=/ruta/al/chrome npm run test:e2e
 
 De lo contrario, `npx playwright install chromium` (una sola vez).
 
-Las pruebas E2E corren en cinco perfiles de viewport: **390 px** (móvil), **768 px** (tablet), **1024 px** y **1440 px** (escritorio). El de 390 px además corre con dispositivo táctil.
+Las pruebas E2E corren en **390 px** (móvil, con dispositivo táctil) y **1440 px** (escritorio). La auditoría responsive corre además en **768 px** y **1024 px**.
 
 ## Recorrido comercial
 
@@ -97,6 +97,7 @@ Resultados de la última verificación (E03-E):
 
 Cobertura principal:
 - `tests/unit/`: reducer (transiciones válidas e inválidas), validación de solicitudes y de registro, selectores de administración y de profesionales.
+- `tests/e2e/demo.spec.ts`: selector comercial sin herramienta de atajo visible, y herramienta solo con `?pruebas=1`.
 - `tests/e2e/paciente.spec.ts`: flujo de paciente, urgencias, persistencia tras recargar, restablecimiento y cambio de perfil.
 - `tests/e2e/admin.spec.ts`: solicitud única en administración, flujo hasta «Confirmada», filtros, profesionales no disponibles, urgencias separadas, aviso de solo lectura en móvil.
 - `tests/e2e/profesional.spec.ts`: recorrido entre los tres perfiles, restricción por profesional, registro bloqueado y persistencia.
