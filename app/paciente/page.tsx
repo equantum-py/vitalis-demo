@@ -22,7 +22,7 @@ export default function InicioPaciente() {
       <Tarjeta className="flex flex-col gap-3">
         <h2 className="font-semibold text-ink">Solicitar atención a domicilio</h2>
         <p className="text-sm text-ink-soft">Complete sus datos básicos y coordinación le confirmará la franja y el profesional.</p>
-        <EnlaceBoton href="/paciente/solicitar">Crear solicitud</EnlaceBoton>
+        <EnlaceBoton href="/paciente/solicitar">Solicitar atención</EnlaceBoton>
       </Tarjeta>
 
       {reciente ? (

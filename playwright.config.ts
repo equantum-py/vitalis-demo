@@ -17,10 +17,33 @@ export default defineConfig({
   projects: [
     {
       name: "movil-390",
+      testIgnore: /auditoria\.spec/,
       use: { ...devices["Desktop Chrome"], viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true },
     },
     {
       name: "escritorio-1440",
+      testIgnore: /auditoria\.spec/,
+      use: { ...devices["Desktop Chrome"], viewport: { width: 1440, height: 900 } },
+    },
+    // Auditoría responsive: solo el spec de auditoría corre en tablet y en escritorio medio.
+    {
+      name: "tablet-768",
+      testMatch: /auditoria\.spec/,
+      use: { ...devices["Desktop Chrome"], viewport: { width: 768, height: 1024 } },
+    },
+    {
+      name: "escritorio-1024",
+      testMatch: /auditoria\.spec/,
+      use: { ...devices["Desktop Chrome"], viewport: { width: 1024, height: 768 } },
+    },
+    {
+      name: "movil-390-auditoria",
+      testMatch: /auditoria\.spec/,
+      use: { ...devices["Desktop Chrome"], viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true },
+    },
+    {
+      name: "escritorio-1440-auditoria",
+      testMatch: /auditoria\.spec/,
       use: { ...devices["Desktop Chrome"], viewport: { width: 1440, height: 900 } },
     },
   ],

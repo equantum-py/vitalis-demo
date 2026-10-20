@@ -19,7 +19,7 @@ export default function MisSolicitudes() {
       {estado.solicitudes.length === 0 ? (
         <Tarjeta className="flex flex-col gap-3">
           <p className="text-ink-soft">Todavía no creó ninguna solicitud.</p>
-          <EnlaceBoton href="/paciente/solicitar">Crear solicitud</EnlaceBoton>
+          <EnlaceBoton href="/paciente/solicitar">Solicitar atención</EnlaceBoton>
         </Tarjeta>
       ) : (
         <ul className="flex flex-col gap-3">

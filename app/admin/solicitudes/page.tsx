@@ -77,14 +77,14 @@ function ListaSolicitudes() {
       ) : (
         <>
           {/* Escritorio: tabla */}
-          <div className="hidden overflow-hidden rounded-2xl border border-line bg-white lg:block">
+          <div className="hidden overflow-x-auto rounded-2xl border border-line bg-white lg:block">
             <table className="w-full text-left text-[15px]">
               <thead className="bg-paper text-xs uppercase tracking-wider text-ink-soft">
                 <tr>
                   <th className="px-4 py-3 font-semibold">Código</th>
                   <th className="px-4 py-3 font-semibold">Paciente (ficticio)</th>
                   <th className="px-4 py-3 font-semibold">Motivo</th>
-                  <th className="px-4 py-3 font-semibold">Preferencia</th>
+                  <th className="hidden px-4 py-3 font-semibold xl:table-cell">Preferencia</th>
                   <th className="px-4 py-3 font-semibold">Profesional</th>
                   <th className="px-4 py-3 font-semibold">Estado</th>
                   <th className="px-4 py-3 font-semibold"><span className="sr-only">Acción</span></th>
@@ -95,8 +95,8 @@ function ListaSolicitudes() {
                   <tr key={s.id} className="hover:bg-paper/60">
                     <td className="px-4 py-3 font-semibold text-ink">{s.id}</td>
                     <td className="px-4 py-3">{PACIENTE_DEMO.nombre}</td>
-                    <td className="max-w-xs truncate px-4 py-3 text-ink-soft">{s.motivo}</td>
-                    <td className="px-4 py-3 text-ink-soft">{ETIQUETA_PREFERENCIA[s.preferencia]}</td>
+                    <td className="max-w-[16rem] truncate px-4 py-3 text-ink-soft">{s.motivo}</td>
+                    <td className="hidden px-4 py-3 text-ink-soft xl:table-cell">{ETIQUETA_PREFERENCIA[s.preferencia]}</td>
                     <td className="px-4 py-3">{nombreProfesional(s.profesionalId)}</td>
                     <td className="px-4 py-3"><StatusPill estado={s.estado} /></td>
                     <td className="px-4 py-3 text-right">
