@@ -1,36 +1,71 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Vitalis · Demo funcional (E03-B)
 
-## Getting Started
+**DEMO · datos completamente ficticios.** Esta aplicación es una demostración comercial. No procesa información médica real, no se conecta a servicios hospitalarios ni a sistemas de Vitalis o del Gobierno de Salta, no tiene autenticación real y no incluye pagos ni recetas electrónicas. Las funcionalidades son propuestas sujetas a validación con Vitalis.
 
-First, run the development server:
+## Estado de la entrega
+
+| Módulo | Estado |
+|---|---|
+| Base técnica: Next.js, TypeScript, Tailwind, componentes compartidos, navegación responsive | Implementado |
+| Estado compartido con persistencia en `localStorage` y restablecimiento | Implementado |
+| Selector de perfiles (demo) | Implementado |
+| Pacientes: inicio, solicitar, confirmación, mis solicitudes, seguimiento, orientación de urgencias | Implementado |
+| Profesionales (E03-D) | Pendiente (marcador "En construcción") |
+| Administración (E03-C) | Pendiente (marcador "En construcción"). El estado compartido ya está preparado para su integración |
+| Familiares autorizados, mi perfil (pacientes) | Pendiente |
+| Recorrido completo y despliegue (E03-E, E03-F) | Pendiente |
+
+## Ejecutar la demo
+
+Requisitos: Node.js 20 o superior.
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev          # desarrollo en http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Build de producción y pruebas:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm run build
+npm run lint
+npm test             # pruebas unitarias (Vitest)
+npx playwright install chromium   # solo la primera vez
+npm run test:e2e     # pruebas de extremo a extremo en 390 px y 1440 px
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Si ya existe un navegador Chromium instalado, puede indicarse con `CHROMIUM_PATH=/ruta/al/chrome npm run test:e2e`.
 
-## Learn More
+## Recorrido sugerido
 
-To learn more about Next.js, take a look at the following resources:
+1. Abrir `/demo` y elegir **Pacientes y familias**.
+2. Crear una solicitud desde **Solicitar**. Se genera un código de demostración (p. ej. `SOL-001`).
+3. Consultar el seguimiento desde **Mis solicitudes**.
+4. En `/demo`, la herramienta de prueba asigna un profesional y confirma la franja. Esa herramienta es temporal y será reemplazada por el panel de administración en E03-C.
+5. Volver a pacientes y comprobar el estado actualizado.
+6. Probar **Urgencia**: registra una orientación en un registro separado y **no crea solicitudes**.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Decisiones aplicadas (E03-A aprobado)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- **D1:** la administración en móvil será de solo lectura en tarjetas (pendiente de E03-C).
+- **D2:** persistencia en `localStorage`, con botón para restablecer la demo.
+- **D3:** perfiles y datos completamente ficticios.
+- **D4:** Next.js estable, TypeScript y Tailwind CSS.
+- **D6:** identidad visual provisoria, basada en la presentación aprobada.
 
-## Deploy on Vercel
+## Reglas de la demo
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- Las urgencias nunca entran en la cola de solicitudes programadas. No hay detección ni clasificación automática: la urgencia se registra solo cuando la persona la elige.
+- La asignación de profesional y la confirmación de la franja son acciones separadas en el estado compartido.
+- Ninguna pantalla presenta una función como aprobada por Vitalis.
+- No se usan fuentes externas en tiempo de ejecución: las tipografías están autoalojadas (`@fontsource`).
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Estructura
+
+```
+app/            rutas (demo, paciente, profesional, admin)
+components/     componentes compartidos
+lib/            tipos, datos ficticios, reducer puro, persistencia, validación
+tests/unit/     pruebas del reducer y validación
+tests/e2e/      pruebas de extremo a extremo y capturas en 390 px y 1440 px
+```
