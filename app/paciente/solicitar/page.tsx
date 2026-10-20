@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import type { FormEvent } from "react";
 import { AvisoDemo, CampoTexto, CLASE_BOTON, CLASE_INPUT, PageTitle, Tarjeta } from "@/components/ui";
 import { ETIQUETA_PREFERENCIA } from "@/lib/estado-ui";
@@ -21,15 +21,19 @@ export default function SolicitarAtencion() {
   const [preferencia, setPreferencia] = useState<Preferencia>("sin_preferencia");
   const [errores, setErrores] = useState<ErroresSolicitud>({});
   const [intentado, setIntentado] = useState(false);
+  const enviandoRef = useRef(false);
 
   const datos = { motivo, direccion, telefono, preferencia };
 
   function enviar(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    // Guarda síncrona: evita crear dos solicitudes con un doble clic o Enter repetido.
+    if (enviandoRef.current) return;
     setIntentado(true);
     const nuevosErrores = validarSolicitud(datos);
     setErrores(nuevosErrores);
     if (Object.keys(nuevosErrores).length > 0) return;
+    enviandoRef.current = true;
 
     const fecha = new Date().toISOString();
     despachar({ tipo: "crearSolicitud", datos, fecha });

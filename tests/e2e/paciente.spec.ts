@@ -122,7 +122,7 @@ test("restablecer la demo borra los datos y el estado se conserva al cambiar de 
   // Cambio de perfil sin perder el estado
   await page.goto("/demo");
   await page.getByRole("button", { name: /Administración y coordinación/ }).click();
-  await expect(page.getByRole("heading", { name: "Administración y coordinación" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Dashboard" })).toBeVisible();
   await page.goto("/paciente/solicitudes");
   await expect(page.getByRole("link", { name: /SOL-001/ })).toBeVisible();
   await capturar(page, "09-perfil-cambiado", testInfo);

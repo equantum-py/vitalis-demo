@@ -19,10 +19,18 @@ export const FRANJAS_DEMO: string[] = [
   "Tarde · franja de demostración",
 ];
 
+/** Disponibilidad inicial. Profesional Demo C aparece como no disponible para demostrar la regla de asignación. */
+export const DISPONIBILIDAD_INICIAL: Record<string, boolean> = {
+  "prof-demo-a": true,
+  "prof-demo-b": true,
+  "prof-demo-c": false,
+};
+
 export const ESTADO_INICIAL: EstadoDemo = {
   version: 1,
   perfil: "paciente",
   secuencia: 0,
   solicitudes: [],
   urgencias: [],
+  disponibilidad: DISPONIBILIDAD_INICIAL,
 };

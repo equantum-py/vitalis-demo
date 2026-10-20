@@ -28,9 +28,9 @@ const PERFILES: { perfil: Perfil; titulo: string; descripcion: string; ruta: str
   {
     perfil: "administracion",
     titulo: "Administración y coordinación",
-    descripcion: "Solicitudes, asignaciones e indicadores. Próxima etapa (E03-C).",
+    descripcion: "Dashboard, solicitudes, asignaciones, confirmación de franjas, agenda y profesionales.",
     ruta: "/admin",
-    disponible: false,
+    disponible: true,
   },
 ];
 

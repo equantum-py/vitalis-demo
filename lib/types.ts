@@ -52,4 +52,6 @@ export interface EstadoDemo {
   secuencia: number;
   solicitudes: Solicitud[];
   urgencias: OrientacionUrgencia[];
+  /** Disponibilidad ficticia por profesional (id → disponible). */
+  disponibilidad: Record<string, boolean>;
 }

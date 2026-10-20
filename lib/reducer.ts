@@ -15,7 +15,8 @@ export type Accion =
   | { tipo: "asignarProfesional"; solicitudId: string; profesionalId: string; fecha: string }
   | { tipo: "confirmarFranja"; solicitudId: string; franja: string; fecha: string }
   | { tipo: "cancelarSolicitud"; solicitudId: string; fecha: string }
-  | { tipo: "registrarUrgencia"; fecha: string };
+  | { tipo: "registrarUrgencia"; fecha: string }
+  | { tipo: "cambiarDisponibilidad"; profesionalId: string; disponible: boolean };
 
 function codigo(prefijo: string, n: number): string {
   return `${prefijo}-${String(n).padStart(3, "0")}`;
@@ -65,7 +66,15 @@ export function reducer(estado: EstadoDemo, accion: Accion): EstadoDemo {
       return { ...estado, secuencia: n, solicitudes: [nueva, ...estado.solicitudes] };
     }
 
+    case "cambiarDisponibilidad": {
+      if (!PROFESIONALES_DEMO.some((p) => p.id === accion.profesionalId)) return estado;
+      if (estado.disponibilidad[accion.profesionalId] === accion.disponible) return estado;
+      return { ...estado, disponibilidad: { ...estado.disponibilidad, [accion.profesionalId]: accion.disponible } };
+    }
+
     case "asignarProfesional":
+      // Regla: solo se asignan profesionales disponibles (demo).
+      if (estado.disponibilidad[accion.profesionalId] === false) return estado;
       return actualizarSolicitud(estado, accion.solicitudId, (s) => {
         if (s.estado !== "recibida") return s;
         if (!PROFESIONALES_DEMO.some((p) => p.id === accion.profesionalId)) return s;

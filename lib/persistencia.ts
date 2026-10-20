@@ -1,4 +1,5 @@
 import type { EstadoDemo } from "./types";
+import { DISPONIBILIDAD_INICIAL } from "./fixtures";
 
 export const CLAVE_ESTADO = "vitalis-demo:estado:v1";
 
@@ -11,7 +12,8 @@ export function leerEstado(): EstadoDemo | null {
     if (dato.version !== 1 || !Array.isArray(dato.solicitudes) || !Array.isArray(dato.urgencias)) {
       return null;
     }
-    return dato as EstadoDemo;
+    // Compatibilidad: estados guardados antes de añadir la disponibilidad reciben los valores iniciales.
+    return { ...(dato as EstadoDemo), disponibilidad: { ...DISPONIBILIDAD_INICIAL, ...(dato.disponibilidad ?? {}) } };
   } catch {
     return null;
   }

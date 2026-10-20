@@ -135,3 +135,31 @@ describe("cambiar perfil y restablecer", () => {
     expect(aplicar(ESTADO_INICIAL, { tipo: "cargar", estado: guardado })).toEqual(guardado);
   });
 });
+
+describe("disponibilidad de profesionales", () => {
+  const base = aplicar(ESTADO_INICIAL, { tipo: "crearSolicitud", datos: DATOS_VALIDOS, fecha: FECHA });
+
+  it("no asigna un profesional no disponible (Profesional Demo C por defecto)", () => {
+    const estado = aplicar(base, {
+      tipo: "asignarProfesional",
+      solicitudId: "SOL-001",
+      profesionalId: "prof-demo-c",
+      fecha: FECHA,
+    });
+    expect(estado.solicitudes[0].estado).toBe("recibida");
+  });
+
+  it("cambiarDisponibilidad habilita el profesional y permite asignarlo", () => {
+    const estado = aplicar(
+      base,
+      { tipo: "cambiarDisponibilidad", profesionalId: "prof-demo-c", disponible: true },
+      { tipo: "asignarProfesional", solicitudId: "SOL-001", profesionalId: "prof-demo-c", fecha: FECHA },
+    );
+    expect(estado.disponibilidad["prof-demo-c"]).toBe(true);
+    expect(estado.solicitudes[0].estado).toBe("asignada");
+  });
+
+  it("ignora IDs de profesionales inexistentes", () => {
+    expect(aplicar(base, { tipo: "cambiarDisponibilidad", profesionalId: "x", disponible: true })).toBe(base);
+  });
+});
