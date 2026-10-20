@@ -30,7 +30,7 @@ export default function DashboardAdmin() {
       <div className="mt-4 grid grid-cols-2 gap-4 xl:grid-cols-4">
         <Kpi etiqueta="Finalizadas" valor={i.finalizadas} />
         <Kpi etiqueta="Canceladas" valor={i.canceladas} />
-        <Kpi etiqueta="Orientaciones de urgencia" valor={i.urgencias} nota="Registro separado. No son solicitudes." />
+        <Kpi className="col-span-2" etiqueta="Orientaciones de urgencia" valor={i.urgencias} nota="Registro separado. No son solicitudes." />
       </div>
 
       <div className="mt-6 grid gap-6 xl:grid-cols-[1fr_340px]">
@@ -67,19 +67,19 @@ export default function DashboardAdmin() {
 
         <Panel titulo="Acciones pendientes">
           <ul className="flex flex-col gap-3 text-sm">
-            <li className="flex items-center justify-between rounded-xl bg-paper p-3">
+            <li className="flex items-center justify-between gap-3 rounded-xl bg-paper p-3">
               <span>Solicitudes para asignar profesional</span>
               <Link href="/admin/solicitudes?estado=recibida" className="font-semibold text-azul-600 underline">
                 {i.recibidas}
               </Link>
             </li>
-            <li className="flex items-center justify-between rounded-xl bg-paper p-3">
+            <li className="flex items-center justify-between gap-3 rounded-xl bg-paper p-3">
               <span>Asignadas sin franja confirmada</span>
               <Link href="/admin/solicitudes?estado=asignada" className="font-semibold text-azul-600 underline">
                 {i.asignadas}
               </Link>
             </li>
-            <li className="flex items-center justify-between rounded-xl bg-paper p-3">
+            <li className="flex items-center justify-between gap-3 rounded-xl bg-paper p-3">
               <span>Orientaciones de urgencia registradas</span>
               <Link href="/admin/urgencias" className="font-semibold text-azul-600 underline">
                 {i.urgencias}

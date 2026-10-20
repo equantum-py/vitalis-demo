@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { EncabezadoPagina, Panel, Vacio } from "@/components/admin/Encabezado";
+import { Kpi } from "@/components/admin/Kpi";
 import { StatusPill } from "@/components/StatusPill";
 import { FRANJAS_DEMO, PROFESIONALES_DEMO } from "@/lib/fixtures";
 import { resumenProfesional, visitasDelProfesional } from "@/lib/profesional";
@@ -22,11 +23,11 @@ export default function InicioProfesional() {
         descripcion="Resumen de visitas asignadas. Solo se muestran visitas de este profesional."
       />
 
-      <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
-        <Indicador etiqueta="Por iniciar" valor={resumen.confirmadas} nota="Franja confirmada" />
-        <Indicador etiqueta="En curso" valor={resumen.enCurso} nota="Visita iniciada" />
-        <Indicador etiqueta="Finalizadas" valor={resumen.finalizadas} nota="Registro cerrado" />
-        <Indicador etiqueta="Pendientes de franja" valor={resumen.pendientesFranja} nota="Sin confirmar por coordinación" />
+      <div className="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-4">
+        <Kpi etiqueta="Por iniciar" valor={resumen.confirmadas} nota="Franja confirmada" />
+        <Kpi etiqueta="En curso" valor={resumen.enCurso} nota="Visita iniciada" />
+        <Kpi etiqueta="Finalizadas" valor={resumen.finalizadas} nota="Registro cerrado" />
+        <Kpi etiqueta="Pendientes de franja" valor={resumen.pendientesFranja} nota="Sin confirmar por coordinación" />
       </div>
 
       <Panel titulo="Próximas visitas">
@@ -35,7 +36,7 @@ export default function InicioProfesional() {
         ) : (
           <ul className="divide-y divide-line">
             {proximas.map((s) => (
-              <li key={s.id} className="flex flex-wrap items-center justify-between gap-3 py-3">
+              <li key={s.id} className="flex flex-wrap items-center justify-between gap-3 py-4">
                 <div>
                   <p className="font-semibold text-ink">{s.id}</p>
                   <p className="text-sm text-ink-soft">{s.franja}</p>
@@ -59,12 +60,3 @@ export default function InicioProfesional() {
   );
 }
 
-function Indicador({ etiqueta, valor, nota }: { etiqueta: string; valor: number; nota: string }) {
-  return (
-    <div className="rounded-2xl border border-line bg-white p-5">
-      <p className="text-sm font-semibold text-ink-soft">{etiqueta}</p>
-      <p className="mt-1 font-display text-3xl font-semibold text-ink">{valor}</p>
-      <p className="mt-1 text-xs text-ink-soft">{nota}</p>
-    </div>
-  );
-}

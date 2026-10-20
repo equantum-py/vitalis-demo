@@ -11,8 +11,20 @@ export function PageTitle({ eyebrow, title, children }: { eyebrow?: string; titl
   );
 }
 
-export function Tarjeta({ children, className = "" }: { children: ReactNode; className?: string }) {
-  return <div className={`rounded-2xl border border-line bg-surface p-4 ${className}`}>{children}</div>;
+export function Tarjeta({
+  children,
+  className = "",
+  role,
+}: {
+  children: ReactNode;
+  className?: string;
+  role?: "status";
+}) {
+  return (
+    <div role={role} className={`rounded-2xl border border-line bg-surface p-4 ${className}`}>
+      {children}
+    </div>
+  );
 }
 
 const BASE_BOTON =

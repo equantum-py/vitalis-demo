@@ -27,7 +27,7 @@ export default function MisSolicitudes() {
             <li key={s.id}>
               <Link
                 href={`/paciente/solicitudes/${s.id}`}
-                className="flex flex-col gap-2 rounded-2xl border border-line bg-white p-4 transition-colors hover:border-azul-600 focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-azul-600"
+                className="flex flex-col gap-2.5 rounded-2xl border border-line bg-surface p-4 transition-colors hover:border-azul-600 focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-azul-600"
               >
                 <div className="flex items-center justify-between gap-2">
                   <span className="font-semibold text-ink">{s.id}</span>

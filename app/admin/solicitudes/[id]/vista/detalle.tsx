@@ -23,7 +23,7 @@ export function VistaDetalleSolicitud({ id }: { id: string }) {
   if (!solicitud) {
     return (
       <div className="flex flex-col gap-4">
-        <h1 className="font-display text-2xl font-semibold text-ink">Solicitud no encontrada</h1>
+        <h1 className="font-display text-[1.75rem] font-medium leading-tight text-navy">Solicitud no encontrada</h1>
         <p className="text-ink-soft">No existe una solicitud con este código en la demostración.</p>
         <Link href="/admin/solicitudes" className="font-semibold text-azul-600 underline">
           Volver a solicitudes
