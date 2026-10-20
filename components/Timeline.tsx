@@ -25,21 +25,21 @@ export function Timeline({ estado, historial }: Props) {
             {!ultimo && (
               <span
                 aria-hidden="true"
-                className={`absolute left-[13px] top-7 h-[calc(100%-1.25rem)] w-0.5 ${completo ? "bg-teal" : "bg-line"}`}
+                className={`absolute left-[13px] top-7 h-[calc(100%-1.25rem)] w-0.5 ${completo ? "bg-azul" : "bg-line"}`}
               />
             )}
             <span
               aria-hidden="true"
               className={`relative z-10 flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-xs font-bold ${
-                completo || actual ? "bg-teal text-white" : "border-2 border-line bg-white text-ink-soft"
-              } ${actual ? "ring-4 ring-mint-200" : ""}`}
+                completo || actual ? "bg-azul text-white" : "border-2 border-line bg-white text-ink-soft"
+              } ${actual ? "ring-4 ring-azul-200" : ""}`}
             >
               {completo ? "✓" : i + 1}
             </span>
             <div className="min-w-0 pt-0.5">
               <p className={`font-semibold ${completo || actual ? "text-ink" : "text-ink-soft"}`}>
                 {ETIQUETA_ESTADO[paso]}
-                {actual && <span className="ml-2 text-sm font-normal text-teal">(etapa actual)</span>}
+                {actual && <span className="ml-2 text-sm font-normal text-azul-600">(etapa actual)</span>}
               </p>
               {entrada && <p className="text-sm text-ink-soft">{formatearFecha(entrada.fecha)}</p>}
             </div>

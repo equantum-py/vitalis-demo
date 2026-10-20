@@ -20,7 +20,7 @@ export default function ProfesionalesAdmin() {
           <Vacio>No hay profesionales cargados.</Vacio>
         </Panel>
       ) : (
-        <ul className="grid gap-4 md:grid-cols-3">
+        <ul className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
           {PROFESIONALES_DEMO.map((p) => {
             const disponible = estado.disponibilidad[p.id] !== false;
             const visitas = estado.solicitudes.filter((s) => s.profesionalId === p.id).length;
@@ -28,11 +28,11 @@ export default function ProfesionalesAdmin() {
               <li key={p.id}>
                 <Panel>
                   <div className="flex flex-col gap-3">
-                    <div className="flex items-start justify-between gap-2">
-                      <h2 className="font-display text-lg font-semibold text-ink">{p.nombre}</h2>
+                    <div className="flex flex-col items-start gap-2">
+                      <h2 className="font-display text-xl font-medium text-navy">{p.nombre}</h2>
                       <span
-                        className={`shrink-0 rounded-full border px-3 py-1 text-sm font-semibold ${
-                          disponible ? "border-mint-200 bg-mint text-teal" : "border-line bg-paper text-ink-soft"
+                        className={`rounded-full border px-3 py-1 text-sm font-semibold ${
+                          disponible ? "border-azul-200 bg-azul-soft text-azul-600" : "border-line bg-paper text-ink-soft"
                         }`}
                       >
                         {disponible ? "Disponible" : "No disponible"}
@@ -41,10 +41,10 @@ export default function ProfesionalesAdmin() {
                     <p className="text-sm text-ink-soft">
                       Solicitudes asignadas: <span className="font-semibold text-ink">{visitas}</span>
                     </p>
-                    {/* Acción solo en escritorio; en móvil es de solo lectura. */}
+                    {/* Acción solo en escritorio amplio; por debajo de xl es de solo lectura. */}
                     <button
                       type="button"
-                      className={`${CLASE_BOTON.secundario} hidden lg:inline-flex`}
+                      className={`${CLASE_BOTON.secundario} hidden xl:inline-flex`}
                       onClick={() => despachar({ tipo: "cambiarDisponibilidad", profesionalId: p.id, disponible: !disponible })}
                     >
                       {disponible ? "Marcar como no disponible" : "Marcar como disponible"}

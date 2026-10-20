@@ -76,8 +76,8 @@ function ListaSolicitudes() {
         </Panel>
       ) : (
         <>
-          {/* Escritorio: tabla */}
-          <div className="hidden overflow-x-auto rounded-2xl border border-line bg-white lg:block">
+          {/* Escritorio amplio (xl): tabla. Por debajo, tarjetas de solo lectura. */}
+          <div className="hidden overflow-x-auto rounded-2xl border border-line bg-surface xl:block">
             <table className="w-full text-left text-[15px]">
               <thead className="bg-paper text-xs uppercase tracking-wider text-ink-soft">
                 <tr>
@@ -100,7 +100,7 @@ function ListaSolicitudes() {
                     <td className="px-4 py-3">{nombreProfesional(s.profesionalId)}</td>
                     <td className="px-4 py-3"><StatusPill estado={s.estado} /></td>
                     <td className="px-4 py-3 text-right">
-                      <Link href={`/admin/solicitudes/${s.id}`} className="font-semibold text-teal underline underline-offset-4">
+                      <Link href={`/admin/solicitudes/${s.id}`} className="font-semibold text-azul-600 underline underline-offset-4">
                         Ver detalle
                       </Link>
                     </td>
@@ -110,8 +110,8 @@ function ListaSolicitudes() {
             </table>
           </div>
 
-          {/* Móvil y tablet: tarjetas de solo lectura */}
-          <ul className="flex flex-col gap-3 lg:hidden">
+          
+          <ul className="flex flex-col gap-3 xl:hidden">
             {filas.map((s) => (
               <li key={s.id}>
                 <Link href={`/admin/solicitudes/${s.id}`} className="flex flex-col gap-2 rounded-2xl border border-line bg-white p-4">

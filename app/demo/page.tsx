@@ -55,7 +55,7 @@ function Selector() {
   return (
     <main className="mx-auto flex min-h-dvh w-full max-w-2xl flex-col gap-6 p-5 md:my-8 md:rounded-3xl md:bg-paper md:p-8 md:shadow-sm">
       <div className="flex items-center justify-between">
-        <p className="font-display text-lg font-semibold text-teal">VITALIS</p>
+        <p className="font-display text-lg font-semibold text-azul-600">VITALIS</p>
         <DemoBadge />
       </div>
 
@@ -78,7 +78,7 @@ function Selector() {
               despachar({ tipo: "cambiarPerfil", perfil: p.perfil });
               router.push(p.ruta);
             }}
-            className="flex min-h-16 flex-col items-start gap-1 rounded-2xl border border-line bg-white p-4 text-left transition-colors hover:border-teal-600 focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-teal-600"
+            className="flex min-h-16 flex-col items-start gap-1 rounded-2xl border border-line bg-white p-4 text-left transition-colors hover:border-azul-600 focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-azul-600"
           >
             <span className="flex w-full items-center justify-between">
               <span className="font-semibold text-ink">{p.titulo}</span>
@@ -218,7 +218,7 @@ function Selector() {
 
       <AvisoDemo>
         Vitalis todavía no aprobó las funcionalidades que se muestran. Son propuestas para validar en conjunto.{" "}
-        <Link href="/paciente" className="font-semibold text-teal underline underline-offset-4">
+        <Link href="/paciente" className="font-semibold text-azul-600 underline underline-offset-4">
           Ir a pacientes
         </Link>
       </AvisoDemo>

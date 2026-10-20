@@ -23,9 +23,9 @@ export function VistaDetalleSolicitud({ id }: { id: string }) {
   if (!solicitud) {
     return (
       <div className="flex flex-col gap-4">
-        <h1 className="font-display text-2xl font-semibold text-ink">Solicitud no encontrada</h1>
+        <h1 className="font-display text-[1.75rem] font-medium leading-tight text-navy">Solicitud no encontrada</h1>
         <p className="text-ink-soft">No existe una solicitud con este código en la demostración.</p>
-        <Link href="/admin/solicitudes" className="font-semibold text-teal underline">
+        <Link href="/admin/solicitudes" className="font-semibold text-azul-600 underline">
           Volver a solicitudes
         </Link>
       </div>
@@ -46,12 +46,12 @@ export function VistaDetalleSolicitud({ id }: { id: string }) {
         acciones={<StatusPill estado={solicitud.estado} />}
       />
 
-      <Link href="/admin/solicitudes" className="mb-4 inline-block text-sm font-semibold text-teal underline">
+      <Link href="/admin/solicitudes" className="mb-4 inline-block text-sm font-semibold text-azul-600 underline">
         ← Volver a solicitudes
       </Link>
 
       {aviso && (
-        <p role="status" className="mb-4 rounded-xl border border-mint-200 bg-mint p-3 font-medium text-teal">
+        <p role="status" className="mb-4 rounded-xl border border-azul-200 bg-azul-soft p-3 font-medium text-azul-600">
           {aviso}
         </p>
       )}

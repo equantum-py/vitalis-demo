@@ -1,20 +1,27 @@
 @import "tailwindcss";
 
-/* Paleta provisoria aprobada en la presentación V02. No es la identidad oficial de Vitalis. */
+/* Sistema visual aprobado (E04-E, dirección A "Clínica serena").
+   Colores observados en el logotipo e Instagram de Vitalis; los tonos de texto y fondo son propuestos.
+   Provisorio: no es todavía la identidad oficial aprobada por Vitalis. */
 @theme inline {
-  --color-teal: #0f5f6b;
-  --color-teal-600: #137685;
-  --color-mint: #e4f2ef;
-  --color-mint-200: #c5e4de;
-  --color-paper: #f7f6f2;
-  --color-ink: #1c2b33;
-  --color-ink-soft: #55656e;
-  --color-warm: #c9784f;
-  --color-warm-soft: #f8ebe4;
-  --color-warm-ink: #8a4a2c;
-  --color-line: #d9e3e1;
-  --font-sans: "Inter", "Helvetica Neue", Arial, sans-serif;
-  --font-display: "Poppins", "Inter", sans-serif;
+  --color-navy: #124266;
+  --color-azul: #0672ba;
+  --color-azul-600: #055e9e;
+  --color-azul-soft: #e3f0fa;
+  --color-azul-200: #bfdcf0;
+  --color-verde: #4b7a2f;
+  --color-verde-soft: #eaf3e4;
+  --color-paper: #f4f8fb;
+  --color-surface: #ffffff;
+  --color-ink: #0e2f4a;
+  --color-ink-soft: #4e6478;
+  --color-warm: #b5461c;
+  --color-warm-soft: #fbede6;
+  --color-warm-200: #eec3b1;
+  --color-warm-ink: #8a3414;
+  --color-line: #d6e2ec;
+  --font-sans: "Manrope", "Helvetica Neue", Arial, sans-serif;
+  --font-display: "Newsreader", Georgia, "Times New Roman", serif;
 }
 
 html {
@@ -25,10 +32,11 @@ body {
   background: var(--color-paper);
   color: var(--color-ink);
   font-family: var(--font-sans);
+  font-variant-numeric: tabular-nums;
 }
 
 @media (min-width: 768px) {
   body {
-    background: #e9efec;
+    background: #dce6ee;
   }
 }

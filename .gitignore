@@ -43,3 +43,6 @@ next-env.d.ts
 # Pruebas y artefactos locales
 /test-results
 /playwright-report
+
+# Capturas regeneradas por la auditoría en cada ejecución (no son evidencia versionada)
+/tests/e2e/capturas/auditoria

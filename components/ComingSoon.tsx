@@ -9,7 +9,7 @@ export function ComingSoon({ titulo, fase }: { titulo: string; fase: string }) {
       <p className="text-ink-soft">
         Este módulo todavía no está implementado. Se construye en {fase}. Ninguna función de esta pantalla está activa.
       </p>
-      <Link href="/demo" className="font-semibold text-teal underline underline-offset-4">
+      <Link href="/demo" className="font-semibold text-azul-600 underline underline-offset-4">
         Volver al selector de perfiles
       </Link>
     </main>

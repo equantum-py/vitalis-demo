@@ -32,11 +32,11 @@ export function VistaVisita({ id }: { id: string }) {
   if (!solicitud || !visible) {
     return (
       <div className="flex flex-col gap-4">
-        <h1 className="font-display text-2xl font-semibold text-ink">Visita no disponible</h1>
+        <h1 className="font-display text-[1.75rem] font-medium leading-tight text-navy">Visita no disponible</h1>
         <p className="text-ink-soft">
           Esta visita no está asignada a {activo?.nombre ?? "el profesional activo"} o todavía no tiene franja confirmada.
         </p>
-        <Link href="/profesional/agenda" className="font-semibold text-teal underline">
+        <Link href="/profesional/agenda" className="font-semibold text-azul-600 underline">
           Volver a la agenda
         </Link>
       </div>
@@ -107,12 +107,12 @@ function DetalleVisita({ solicitud, onIniciar, onGuardar, onFinalizar }: PropsDe
         acciones={<StatusPill estado={solicitud.estado} />}
       />
 
-      <Link href="/profesional/agenda" className="inline-block text-sm font-semibold text-teal underline">
+      <Link href="/profesional/agenda" className="inline-block text-sm font-semibold text-azul-600 underline">
         ← Volver a la agenda
       </Link>
 
       {aviso && (
-        <p role="status" className="rounded-xl border border-mint-200 bg-mint p-3 font-medium text-teal">
+        <p role="status" className="rounded-xl border border-azul-200 bg-azul-soft p-3 font-medium text-azul-600">
           {aviso}
         </p>
       )}
@@ -201,7 +201,7 @@ function DetalleVisita({ solicitud, onIniciar, onGuardar, onFinalizar }: PropsDe
                     onChange={(e) => setIndicaciones(e.target.value)}
                   />
                 </div>
-                <button type="submit" className={CLASE_BOTON.secundario}>
+                <button type="submit" className={CLASE_BOTON.primario}>
                   Guardar registro
                 </button>
                 {sinGuardar && <p className="text-sm text-ink-soft">Hay cambios sin guardar.</p>}
