@@ -21,24 +21,24 @@ export default function DashboardAdmin() {
         descripcion="Resumen de la demostración. Los indicadores son conteos sobre datos ficticios y no representan métricas reales de Vitalis."
       />
 
-      <div className="grid grid-cols-2 gap-4 xl:grid-cols-4">
+      <div className="grid grid-cols-2 gap-3 md:gap-4 xl:grid-cols-4">
         <Kpi etiqueta="Solicitudes" valor={i.total} nota="Creadas en la demostración" />
         <Kpi etiqueta="Por asignar" valor={i.recibidas} nota="Estado: recibida" />
         <Kpi etiqueta="Por confirmar franja" valor={i.asignadas} nota="Estado: asignada" />
         <Kpi etiqueta="Confirmadas" valor={i.confirmadas} nota="Estado: confirmada" />
       </div>
-      <div className="mt-4 grid grid-cols-2 gap-4 xl:grid-cols-4">
+      <div className="mt-3 grid grid-cols-2 gap-3 md:mt-4 md:gap-4 xl:grid-cols-4">
         <Kpi etiqueta="Finalizadas" valor={i.finalizadas} />
         <Kpi etiqueta="Canceladas" valor={i.canceladas} />
         <Kpi className="col-span-2" etiqueta="Orientaciones de urgencia" valor={i.urgencias} nota="Registro separado. No son solicitudes." />
       </div>
 
-      <div className="mt-6 grid gap-6 xl:grid-cols-[1fr_340px]">
+      <div className="mt-6 grid gap-4 xl:grid-cols-[minmax(0,1fr)_340px] xl:gap-6">
         <Panel titulo="Solicitudes recientes">
           {recientes.length === 0 ? (
             <Vacio>
               Todavía no hay solicitudes. Cree una desde el perfil de pacientes en{" "}
-              <Link href="/paciente/solicitar" className="font-semibold text-azul-600 underline">
+              <Link href="/paciente/solicitar" className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-lg px-2 font-semibold text-azul-600 underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-azul-600">
                 Solicitar atención
               </Link>
               .
@@ -47,7 +47,7 @@ export default function DashboardAdmin() {
             <ul className="divide-y divide-line">
               {recientes.map((s) => (
                 <li key={s.id}>
-                  <Link href={`/admin/solicitudes/${s.id}`} className="flex flex-wrap items-center justify-between gap-3 py-3 hover:bg-paper/60">
+                  <Link href={`/admin/solicitudes/${s.id}`} className="flex min-h-16 flex-wrap items-center justify-between gap-3 rounded-lg px-2 py-3 transition-colors hover:bg-paper/60 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-azul-600">
                     <div className="min-w-0">
                       <p className="font-semibold text-ink">
                         {s.id} · <span className="font-normal text-ink-soft">{PACIENTE_DEMO.nombre}</span>
