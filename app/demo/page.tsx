@@ -53,7 +53,7 @@ function Selector() {
   const ultima = estado.solicitudes[0];
 
   return (
-    <main className="mx-auto flex min-h-dvh w-full max-w-2xl flex-col gap-6 p-5 md:my-8 md:rounded-3xl md:bg-paper md:p-8 md:shadow-sm">
+    <main className="mx-auto flex min-h-dvh w-full max-w-2xl flex-col gap-6 bg-[#f4f8fb] p-5 md:my-8 md:rounded-[28px] md:p-8 md:shadow-sm">
       <div className="flex items-center justify-between">
         <p className="font-display text-lg font-semibold text-azul-600">VITALIS</p>
         <DemoBadge />
@@ -78,7 +78,7 @@ function Selector() {
               despachar({ tipo: "cambiarPerfil", perfil: p.perfil });
               router.push(p.ruta);
             }}
-            className="flex min-h-16 flex-col items-start gap-1 rounded-2xl border border-line bg-white p-4 text-left transition-colors hover:border-azul-600 focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-azul-600"
+            className="clay-card clay-interactive flex min-h-[94px] w-full flex-col items-start justify-center gap-2 p-5 text-left hover:border-azul-600"
           >
             <span className="flex w-full items-center justify-between">
               <span className="font-semibold text-ink">{p.titulo}</span>
