@@ -12,7 +12,7 @@ export default function ProfesionalesAdmin() {
     <div>
       <EncabezadoPagina
         titulo="Profesionales"
-        descripcion="Profesionales ficticios de la demostración. Marque como no disponible para impedir nuevas asignaciones."
+        descripcion="Gestione la disponibilidad para nuevas asignaciones."
       />
 
       {PROFESIONALES_DEMO.length === 0 ? (
@@ -56,7 +56,7 @@ export default function ProfesionalesAdmin() {
           })}
         </ul>
       )}
-      <p className="mt-6 text-sm text-ink-soft">Profesionales ficticios. No representan personal real de Vitalis.</p>
+      <p className="mt-6 text-sm text-ink-soft">La disponibilidad determina qué profesionales pueden recibir nuevas asignaciones.</p>
     </div>
   );
 }
