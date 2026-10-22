@@ -24,7 +24,7 @@ export function VistaDetalleSolicitud({ id }: { id: string }) {
     return (
       <div className="flex flex-col gap-4">
         <h1 className="font-display text-[1.75rem] font-medium leading-tight text-navy">Solicitud no encontrada</h1>
-        <p className="text-ink-soft">No existe una solicitud con este código en la demostración.</p>
+        <p className="text-ink-soft">No existe una solicitud con este código.</p>
         <Link href="/admin/solicitudes" className="font-semibold text-azul-600 underline">
           Volver a solicitudes
         </Link>
@@ -58,7 +58,7 @@ export function VistaDetalleSolicitud({ id }: { id: string }) {
 
       <div className="grid gap-6 xl:grid-cols-[1fr_380px]">
         <div className="flex flex-col gap-6">
-          <Panel titulo="Datos de la solicitud (ficticios)">
+          <Panel titulo="Datos de la solicitud">
             <dl className="grid gap-4 sm:grid-cols-2">
               <div>
                 <dt className="text-sm font-semibold text-ink-soft">Paciente</dt>
@@ -73,7 +73,7 @@ export function VistaDetalleSolicitud({ id }: { id: string }) {
                 <dd className="text-ink">{solicitud.direccion}</dd>
               </div>
               <div className="sm:col-span-2">
-                <dt className="text-sm font-semibold text-ink-soft">Motivo (texto ingresado en la demo)</dt>
+                <dt className="text-sm font-semibold text-ink-soft">Motivo</dt>
                 <dd className="text-ink">{solicitud.motivo}</dd>
               </div>
               <div>
@@ -90,7 +90,7 @@ export function VistaDetalleSolicitud({ id }: { id: string }) {
               </div>
             </dl>
             <p className="mt-4 rounded-xl bg-paper p-3 text-sm text-ink-soft">
-              Administración no visualiza información clínica. Esta pantalla contiene solo datos administrativos ficticios.
+              Administración solo visualiza la información administrativa de la solicitud.
             </p>
           </Panel>
 
