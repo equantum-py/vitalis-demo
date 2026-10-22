@@ -13,9 +13,7 @@ export default function LayoutAdmin({ children }: { children: React.ReactNode })
       <aside className="hidden lg:sticky lg:top-0 lg:flex lg:h-dvh lg:w-60 lg:shrink-0 lg:flex-col lg:gap-8 lg:bg-navy lg:p-5 lg:text-white">
         <div className="flex items-center gap-2.5">
           <MarcaVitalis variante="clara" />
-          <Link href="/admin" className="font-display text-xl font-semibold text-white">
-            Vitalis
-          </Link>
+
         </div>
         <Suspense fallback={null}>
           <NavAdmin variante="lateral" />
@@ -30,7 +28,6 @@ export default function LayoutAdmin({ children }: { children: React.ReactNode })
           <div className="flex items-center gap-3">
             <Link href="/admin" className="flex items-center gap-2.5 font-display text-xl font-semibold text-navy lg:hidden">
               <MarcaVitalis />
-              Vitalis
             </Link>
             <span className="hidden text-sm font-semibold text-ink-soft lg:inline">Panel de administración</span>
             <DemoBadge />
