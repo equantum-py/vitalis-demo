@@ -1,13 +1,10 @@
-/** Marcador de marca provisional: monograma limpio, sin logotipo recreado ni imagen sin licencia.
- *  Reemplazar por el logotipo transparente cuando Vitalis lo autorice. */
+import Image from "next/image";
+
+/** Logotipo oficial proporcionado por Vitalis. */
 export function MarcaVitalis({ variante = "oscura" }: { variante?: "oscura" | "clara" }) {
-  const color = variante === "oscura" ? "bg-navy text-white" : "bg-white text-navy";
   return (
-    <span
-      className={`inline-flex size-9 shrink-0 items-center justify-center rounded-xl font-display text-lg font-semibold leading-none ${color}`}
-      aria-hidden="true"
-    >
-      V
+    <span className={`inline-flex shrink-0 items-center justify-center rounded-lg ${variante === "clara" ? "bg-white px-2 py-1" : ""}`}>
+      <Image src="/vitalis-logo.png" alt="Vitalis — Servicio de enfermería" width={144} height={58} className="h-10 w-auto max-w-[132px] object-contain" priority />
     </span>
   );
 }
