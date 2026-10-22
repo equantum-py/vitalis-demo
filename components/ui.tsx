@@ -21,14 +21,14 @@ export function Tarjeta({
   role?: "status";
 }) {
   return (
-    <div role={role} className={`rounded-2xl border border-line bg-surface p-4 ${className}`}>
+    <div role={role} className={`clay-card p-4 ${className}`}>
       {children}
     </div>
   );
 }
 
 const BASE_BOTON =
-  "inline-flex min-h-12 items-center justify-center rounded-xl px-5 text-base font-semibold transition-colors focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-azul-600 disabled:cursor-not-allowed disabled:opacity-50";
+  "inline-flex min-h-12 items-center justify-center rounded-2xl px-5 text-base font-semibold clay-interactive focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-azul-600 disabled:cursor-not-allowed disabled:opacity-50";
 
 export const CLASE_BOTON = {
   primario: `${BASE_BOTON} bg-azul text-white hover:bg-azul-600`,
@@ -88,10 +88,10 @@ export function CampoTexto({
 }
 
 export const CLASE_INPUT =
-  "min-h-12 w-full rounded-xl border border-[#B9CBD9] bg-surface px-3.5 py-2.5 text-base text-ink placeholder:text-ink-soft/70 focus-visible:outline-3 focus-visible:outline-offset-1 focus-visible:outline-azul-600 aria-invalid:border-warm";
+  "min-h-12 w-full rounded-2xl border border-[#B9CBD9] bg-surface px-3.5 py-2.5 text-base text-ink placeholder:text-ink-soft/70 focus-visible:outline-3 focus-visible:outline-offset-1 focus-visible:outline-azul-600 aria-invalid:border-warm";
 
 export function AvisoDemo({ children }: { children: ReactNode }) {
   return (
-    <p className="rounded-xl border border-line bg-surface/70 p-3 text-sm leading-relaxed text-ink-soft">{children}</p>
+    <p className="rounded-2xl border border-line bg-surface/70 p-3 text-sm leading-relaxed text-ink-soft">{children}</p>
   );
 }
