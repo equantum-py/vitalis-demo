@@ -3,8 +3,8 @@ import { DemoProvider } from "@/lib/store";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Vitalis · Demo (datos ficticios)",
-  description: "Demostración navegable de una plataforma de atención domiciliaria. Datos ficticios.",
+  title: "Vitalis | Servicio de enfermería",
+  description: "Vitalis — servicio de enfermería y atención domiciliaria.",
   robots: { index: false, follow: false },
 };
 
