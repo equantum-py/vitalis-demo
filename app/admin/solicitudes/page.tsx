@@ -13,6 +13,12 @@ import { PACIENTE_DEMO } from "@/lib/fixtures";
 import { useDemo } from "@/lib/store";
 import type { EstadoSolicitud } from "@/lib/types";
 
+function etiquetaAccion(estado: EstadoSolicitud): string {
+  if (estado === "recibida") return "Asignar profesional";
+  if (estado === "asignada") return "Confirmar franja";
+  return "Ver detalle";
+}
+
 function ListaSolicitudes() {
   const { estado } = useDemo();
   const params = useSearchParams();
@@ -101,7 +107,7 @@ function ListaSolicitudes() {
                     <td className="px-4 py-3"><StatusPill estado={s.estado} /></td>
                     <td className="px-4 py-3 text-right">
                       <Link href={`/admin/solicitudes/${s.id}`} className="inline-flex min-h-11 items-center justify-center rounded-lg px-3 font-semibold text-azul-600 underline underline-offset-4 hover:bg-paper focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-azul-600">
-                        Ver detalle
+                        {etiquetaAccion(s.estado)}
                       </Link>
                     </td>
                   </tr>
@@ -124,7 +130,7 @@ function ListaSolicitudes() {
                     {PACIENTE_DEMO.nombre} · {nombreProfesional(s.profesionalId)}
                   </p>
                   <p className="text-xs text-ink-soft">{formatearFecha(s.historial[0].fecha)} · {ETIQUETA_PREFERENCIA[s.preferencia]}</p>
-                  <span className="mt-auto inline-flex min-h-11 items-center self-start font-semibold text-azul-600">Ver detalle <span aria-hidden="true" className="ml-2">→</span></span>
+                  <span className="mt-auto inline-flex min-h-11 items-center self-start font-semibold text-azul-600">{etiquetaAccion(s.estado)} <span aria-hidden="true" className="ml-2">→</span></span>
                 </Link>
               </li>
             ))}
