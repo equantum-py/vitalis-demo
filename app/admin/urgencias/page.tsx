@@ -21,7 +21,7 @@ export default function UrgenciasAdmin() {
 
       {urgencias.length === 0 ? (
         <Panel>
-          <Vacio>No hay orientaciones de urgencia registradas en la demostración.</Vacio>
+          <Vacio>No hay orientaciones de urgencia registradas.</Vacio>
         </Panel>
       ) : (
         <>
