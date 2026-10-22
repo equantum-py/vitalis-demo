@@ -5,17 +5,17 @@
    Fuentes cargadas desde Google Fonts; requieren conexión en el navegador.
    No se modifican estados, permisos ni reglas de negocio. */
 @theme inline {
-  --color-navy: #124266;
-  --color-azul: #0672ba;
-  --color-azul-600: #055e9e;
-  --color-azul-soft: #e3f0fa;
-  --color-azul-200: #bfdcf0;
-  --color-verde: #4b7a2f;
-  --color-verde-soft: #eaf3e4;
+  --color-navy: #005b8f;
+  --color-azul: #0b5e9c;
+  --color-azul-600: #005b8f;
+  --color-azul-soft: #e6f3fa;
+  --color-azul-200: #b9ddf0;
+  --color-verde: #7cb342;
+  --color-verde-soft: #f0f7e8;
   --color-paper: #f4f8fb;
   --color-surface: #ffffff;
-  --color-ink: #0e2f4a;
-  --color-ink-soft: #4e6478;
+  --color-ink: #005b8f;
+  --color-ink-soft: #6d6e71;
   --color-warm: #b5461c;
   --color-warm-soft: #fbede6;
   --color-warm-200: #eec3b1;
@@ -50,9 +50,18 @@ h1, h2, h3, h4, h5, h6, .font-display {
 }
 .clay-interactive:hover { box-shadow: var(--clay-shadow-hover); transform: translateY(-1px); }
 .clay-interactive:active { transform: translateY(0); }
-.clay-interactive:focus-visible { outline: 3px solid #286cf0; outline-offset: 3px; }
+.clay-interactive:focus-visible { outline: 3px solid #0b5e9c; outline-offset: 3px; }
 @media (prefers-reduced-motion: reduce) {
   .clay-interactive { transition: none; }
   .clay-interactive:hover, .clay-interactive:active { transform: none; }
 }
 @media (min-width: 768px) { body { background: #e8f0f8; } }
+
+/* Colores oficiales Vitalis: referencia corporativa del 22/10/2026. */
+:root {
+  --vitalis-blue: #0b5e9c;
+  --vitalis-blue-light: #1e88c8;
+  --vitalis-green: #7cb342;
+  --vitalis-blue-dark: #005b8f;
+  --vitalis-gray: #6d6e71;
+}
