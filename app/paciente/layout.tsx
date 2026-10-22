@@ -29,7 +29,7 @@ export default function LayoutPaciente({ children }: { children: React.ReactNode
         </Suspense>
       </main>
       <Suspense fallback={null}><TabBar /></Suspense>
-      <span className="sr-only">Perfil ficticio: {PACIENTE_DEMO.nombre}</span>
+      <span className="sr-only">Perfil: {PACIENTE_DEMO.nombre}</span>
     </div>
   );
 }
