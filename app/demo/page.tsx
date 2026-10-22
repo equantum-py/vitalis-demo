@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useState } from "react";
 import { DemoBadge } from "@/components/DemoBadge";
-import { AvisoDemo, CLASE_BOTON, CLASE_INPUT, PageTitle, Tarjeta } from "@/components/ui";
+import { AvisoDemo, CLASE_BOTON, CLASE_INPUT, Tarjeta } from "@/components/ui";
 import { FRANJAS_DEMO, PACIENTE_DEMO, PROFESIONALES_DEMO } from "@/lib/fixtures";
 import { ETIQUETA_ESTADO } from "@/lib/estado-ui";
 import { useDemo } from "@/lib/store";
