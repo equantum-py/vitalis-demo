@@ -4,7 +4,6 @@ import Link from "next/link";
 import { useState } from "react";
 import { Icono } from "@/components/Icono";
 import { EmergencyNotice } from "@/components/EmergencyNotice";
-import { AvisoDemo } from "@/components/ui";
 import { PACIENTE_DEMO, PROFESIONALES_DEMO } from "@/lib/fixtures";
 import { useDemo } from "@/lib/store";
 import { StatusPill } from "@/components/StatusPill";
@@ -32,7 +31,7 @@ export default function InicioPaciente() {
             <h1 className="truncate text-[17px] font-semibold leading-tight">Hola, {PACIENTE_DEMO.nombre.split(" ")[0]}</h1>
             <p className="mt-1 flex items-center gap-1 text-xs text-[#6d6e71]">
               <Icono nombre="ubicacion" className="size-3 text-[#1e88c8]" />
-              Atención a domicilio · Demo
+              Atención a domicilio
             </p>
           </div>
         </div>
@@ -43,7 +42,7 @@ export default function InicioPaciente() {
 
       <div className="flex gap-2.5">
         <label className="flex min-h-12 min-w-0 flex-1 items-center gap-2 rounded-xl border border-[#e3e8f0] bg-white px-4">
-          <span className="sr-only">Buscar profesional de demostración</span>
+          <span className="sr-only">Buscar profesional</span>
           <input value={busqueda} onChange={(e) => setBusqueda(e.target.value)} placeholder="Buscar profesional" className="w-full min-w-0 bg-transparent text-sm outline-none placeholder:text-[#a2acbc]" />
           <svg viewBox="0 0 24 24" fill="none" stroke="#1e88c8" strokeWidth="1.8" className="size-5 shrink-0" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m16 16 5 5"/></svg>
         </label>
@@ -106,8 +105,8 @@ export default function InicioPaciente() {
               <span aria-hidden="true" className="flex size-14 shrink-0 items-center justify-center rounded-lg bg-[#e9f1fa] text-xl font-semibold text-[#0b5e9c]">{profesional.nombre.slice(-1)}</span>
               <div className="min-w-0 flex-1">
                 <p className="truncate text-xs font-bold">{profesional.nombre}</p>
-                <p className="mt-1 text-[11px] text-[#6d6e71]">Profesional de demostración</p>
-                <p className="mt-1 text-[10px] text-[#1e88c8]">Sin valoraciones ni disponibilidad real</p>
+                <p className="mt-1 text-[11px] text-[#6d6e71]">Profesional</p>
+                <p className="mt-1 text-[10px] text-[#1e88c8]">Información de atención</p>
               </div>
             </div>
           )) : <p className="rounded-xl bg-white p-4 text-sm text-[#64758b]">No se encontraron profesionales de demostración.</p>}
@@ -115,7 +114,7 @@ export default function InicioPaciente() {
       </section>
 
       <EmergencyNotice />
-      <AvisoDemo>Vitalis es una demostración con datos ficticios. No permite reservar servicios médicos reales.</AvisoDemo>
+
     </div>
   );
 }
