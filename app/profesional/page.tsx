@@ -54,7 +54,7 @@ export default function InicioProfesional() {
       </Panel>
 
       <p className="text-sm text-ink-soft">
-        Franjas de demostración: {FRANJAS_DEMO.join(" · ")}. Datos ficticios; no representan agenda real.
+        Franjas disponibles: {FRANJAS_DEMO.join(" · ")}.
       </p>
     </div>
   );
