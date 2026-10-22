@@ -62,7 +62,7 @@ export default function SolicitarAtencion() {
         <CampoTexto
           id="motivo"
           label="Motivo de la solicitud"
-          ayuda="Describa brevemente el motivo. No incluya datos médicos sensibles en esta demostración."
+          ayuda="Describa brevemente el motivo. No incluya información médica sensible."
           error={errores.motivo}
         >
           <textarea
@@ -145,7 +145,7 @@ export default function SolicitarAtencion() {
         </button>
 
         <AvisoDemo>
-          Demostración: la solicitud se guarda solo en este navegador. No se envía a Vitalis ni a ningún sistema externo.
+          La solicitud se guarda solo en este navegador. No se envía a un equipo de atención.
         </AvisoDemo>
       </form>
     </div>
