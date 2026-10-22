@@ -15,7 +15,6 @@ export default function LayoutPaciente({ children }: { children: React.ReactNode
       <header className="flex min-h-[60px] items-center justify-between gap-2 border-b border-[#eef1f6] bg-white px-4">
         <div className="flex min-w-0 items-center gap-2">
           <MarcaVitalis />
-          <Link href="/paciente" className="font-sans text-[17px] font-bold text-[#124266]">Vitalis</Link>
           <DemoBadge />
         </div>
         <Link href="/paciente/urgencia" aria-label="Urgencia" className="inline-flex min-h-10 shrink-0 items-center gap-1.5 rounded-full bg-warm-soft px-3 text-xs font-semibold text-warm-ink">
