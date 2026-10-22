@@ -97,7 +97,7 @@ export default function InicioPaciente() {
       <section aria-labelledby="profesionales">
         <div className="mb-3 flex items-center justify-between gap-2">
           <h2 id="profesionales" className="text-[15px] font-bold">Profesionales</h2>
-          <span className="text-[10px] font-semibold uppercase text-[#0b5e9c]">Datos demo</span>
+          <span className="text-[10px] font-semibold uppercase text-[#0b5e9c]">Profesionales</span>
         </div>
         <div className="flex flex-col gap-2.5">
           {profesionales.length ? profesionales.map((profesional) => (
@@ -109,7 +109,7 @@ export default function InicioPaciente() {
                 <p className="mt-1 text-[10px] text-[#1e88c8]">Información de atención</p>
               </div>
             </div>
-          )) : <p className="rounded-xl bg-white p-4 text-sm text-[#64758b]">No se encontraron profesionales de demostración.</p>}
+          )) : <p className="rounded-xl bg-white p-4 text-sm text-[#64758b]">No se encontraron profesionales.</p>}
         </div>
       </section>
 
