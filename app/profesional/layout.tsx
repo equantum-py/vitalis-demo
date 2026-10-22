@@ -19,9 +19,7 @@ export default function LayoutProfesional({ children }: { children: React.ReactN
         <div className="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-3">
           <div className="flex items-center gap-3">
             <MarcaVitalis variante="clara" />
-            <Link href="/profesional" className="font-display text-xl font-semibold text-white">
-              Vitalis
-            </Link>
+
             <span className="hidden text-sm font-semibold text-azul-200 sm:inline">Profesionales</span>
             <DemoBadge />
           </div>
