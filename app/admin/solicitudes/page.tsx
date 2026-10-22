@@ -13,6 +13,12 @@ import { PACIENTE_DEMO } from "@/lib/fixtures";
 import { useDemo } from "@/lib/store";
 import type { EstadoSolicitud } from "@/lib/types";
 
+function etiquetaAccion(estado: EstadoSolicitud): string {
+  if (estado === "recibida") return "Asignar profesional";
+  if (estado === "asignada") return "Confirmar franja";
+  return "Ver detalle";
+}
+
 function ListaSolicitudes() {
   const { estado } = useDemo();
   const params = useSearchParams();
@@ -30,7 +36,7 @@ function ListaSolicitudes() {
         descripcion="Solicitudes creadas por pacientes en la demostración. Seleccione una para asignar profesional o confirmar la franja."
       />
 
-      <div className="mb-4 flex flex-col gap-3 lg:flex-row lg:items-end">
+      <div className="mb-5 flex flex-col gap-3 rounded-2xl border border-line bg-surface p-4 lg:flex-row lg:items-end">
         <div className="flex flex-col gap-1.5 lg:w-64">
           <label htmlFor="filtro-estado" className="text-sm font-semibold text-ink">
             Estado
@@ -61,7 +67,7 @@ function ListaSolicitudes() {
             placeholder="Ej.: SOL-001"
           />
         </div>
-        <p role="status" className="text-sm text-ink-soft lg:ml-auto">
+        <p role="status" className="text-sm font-medium text-ink-soft lg:ml-auto">
           {filas.length} de {estado.solicitudes.length} solicitudes
         </p>
       </div>
@@ -100,8 +106,8 @@ function ListaSolicitudes() {
                     <td className="px-4 py-3">{nombreProfesional(s.profesionalId)}</td>
                     <td className="px-4 py-3"><StatusPill estado={s.estado} /></td>
                     <td className="px-4 py-3 text-right">
-                      <Link href={`/admin/solicitudes/${s.id}`} className="font-semibold text-azul-600 underline underline-offset-4">
-                        Ver detalle
+                      <Link href={`/admin/solicitudes/${s.id}`} className="inline-flex min-h-11 items-center justify-center rounded-lg px-3 font-semibold text-azul-600 underline underline-offset-4 hover:bg-paper focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-azul-600">
+                        {etiquetaAccion(s.estado)}
                       </Link>
                     </td>
                   </tr>
@@ -114,7 +120,7 @@ function ListaSolicitudes() {
           <ul className="flex flex-col gap-3 xl:hidden">
             {filas.map((s) => (
               <li key={s.id}>
-                <Link href={`/admin/solicitudes/${s.id}`} className="flex flex-col gap-2 rounded-2xl border border-line bg-white p-4">
+                <Link href={`/admin/solicitudes/${s.id}`} className="flex min-h-44 flex-col gap-2 rounded-2xl border border-line bg-surface p-4 transition-colors hover:bg-paper focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-azul-600">
                   <div className="flex items-center justify-between gap-2">
                     <span className="font-semibold text-ink">{s.id}</span>
                     <StatusPill estado={s.estado} />
@@ -123,7 +129,8 @@ function ListaSolicitudes() {
                   <p className="text-sm text-ink-soft">
                     {PACIENTE_DEMO.nombre} · {nombreProfesional(s.profesionalId)}
                   </p>
-                  <p className="text-xs text-ink-soft">{formatearFecha(s.historial[0].fecha)}</p>
+                  <p className="text-xs text-ink-soft">{formatearFecha(s.historial[0].fecha)} · {ETIQUETA_PREFERENCIA[s.preferencia]}</p>
+                  <span className="mt-auto inline-flex min-h-11 items-center self-start font-semibold text-azul-600">{etiquetaAccion(s.estado)} <span aria-hidden="true" className="ml-2">→</span></span>
                 </Link>
               </li>
             ))}
