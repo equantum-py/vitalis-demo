@@ -22,21 +22,21 @@ export default function InicioPaciente() {
   );
 
   return (
-    <div className="flex flex-col gap-7 pb-4 text-[#17263b]">
+    <div className="flex flex-col gap-7 pb-4 text-[#005b8f]">
       <header className="flex items-center justify-between gap-3">
         <div className="flex min-w-0 items-center gap-3">
-          <span aria-hidden="true" className="flex size-11 shrink-0 items-center justify-center rounded-full bg-[#e9f1fa] text-lg font-bold text-[#276cf2]">
+          <span aria-hidden="true" className="flex size-11 shrink-0 items-center justify-center rounded-full bg-[#e9f1fa] text-lg font-bold text-[#0b5e9c]">
             {PACIENTE_DEMO.nombre.charAt(0)}
           </span>
           <div className="min-w-0">
             <h1 className="truncate text-[17px] font-semibold leading-tight">Hola, {PACIENTE_DEMO.nombre.split(" ")[0]}</h1>
-            <p className="mt-1 flex items-center gap-1 text-xs text-[#8b9aaa]">
-              <Icono nombre="ubicacion" className="size-3 text-[#28bfe3]" />
+            <p className="mt-1 flex items-center gap-1 text-xs text-[#6d6e71]">
+              <Icono nombre="ubicacion" className="size-3 text-[#1e88c8]" />
               Atención a domicilio · Demo
             </p>
           </div>
         </div>
-        <Link href="/paciente/solicitudes" aria-label="Ver solicitudes y avisos" className="flex size-11 shrink-0 items-center justify-center rounded-full bg-[#286cf0] text-white shadow-[0_8px_18px_#286cf033]">
+        <Link href="/paciente/solicitudes" aria-label="Ver solicitudes y avisos" className="flex size-11 shrink-0 items-center justify-center rounded-full bg-[#0b5e9c] text-white shadow-[0_8px_18px_#0b5e9c33]">
           <Icono nombre="solicitudes" className="size-5" />
         </Link>
       </header>
@@ -45,9 +45,9 @@ export default function InicioPaciente() {
         <label className="flex min-h-12 min-w-0 flex-1 items-center gap-2 rounded-xl border border-[#e3e8f0] bg-white px-4">
           <span className="sr-only">Buscar profesional de demostración</span>
           <input value={busqueda} onChange={(e) => setBusqueda(e.target.value)} placeholder="Buscar profesional" className="w-full min-w-0 bg-transparent text-sm outline-none placeholder:text-[#a2acbc]" />
-          <svg viewBox="0 0 24 24" fill="none" stroke="#20bce2" strokeWidth="1.8" className="size-5 shrink-0" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m16 16 5 5"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="#1e88c8" strokeWidth="1.8" className="size-5 shrink-0" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m16 16 5 5"/></svg>
         </label>
-        <button type="button" aria-label="Mostrar u ocultar filtros" aria-expanded={filtros} onClick={() => setFiltros(!filtros)} className="flex size-12 shrink-0 items-center justify-center rounded-xl border border-[#e3e8f0] bg-white text-[#20bce2]">
+        <button type="button" aria-label="Mostrar u ocultar filtros" aria-expanded={filtros} onClick={() => setFiltros(!filtros)} className="flex size-12 shrink-0 items-center justify-center rounded-xl border border-[#e3e8f0] bg-white text-[#1e88c8]">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="size-5" aria-hidden="true"><path d="M4 7h16M7 12h10M10 17h4"/></svg>
         </button>
       </div>
@@ -56,9 +56,9 @@ export default function InicioPaciente() {
       <section aria-labelledby="proxima-atencion">
         <div className="mb-3 flex items-center justify-between gap-2">
           <h2 id="proxima-atencion" className="text-[15px] font-bold">Próxima atención</h2>
-          <Link href="/paciente/solicitudes" className="text-[10px] font-semibold uppercase text-[#286cf0]">Ver todas</Link>
+          <Link href="/paciente/solicitudes" className="text-[10px] font-semibold uppercase text-[#0b5e9c]">Ver todas</Link>
         </div>
-        <div className="rounded-[20px] bg-gradient-to-br from-[#438bfa] to-[#1760ea] p-4 text-white shadow-[0_6px_0_#dbe6fb]">
+        <div className="rounded-[20px] bg-gradient-to-br from-[#1e88c8] to-[#0b5e9c] p-4 text-white shadow-[0_6px_0_#dbe6fb]">
           {reciente ? (
             <>
               <div className="flex items-center justify-between gap-3">
@@ -68,13 +68,13 @@ export default function InicioPaciente() {
                 </div>
                 <StatusPill estado={reciente.estado} />
               </div>
-              <Link href={`/paciente/solicitudes/${reciente.id}`} className="mt-4 flex min-h-11 items-center justify-center rounded-xl bg-[#1d61d9]/65 text-xs font-semibold text-white">Ver seguimiento <Icono nombre="flecha" className="ml-2 size-4" /></Link>
+              <Link href={`/paciente/solicitudes/${reciente.id}`} className="mt-4 flex min-h-11 items-center justify-center rounded-xl bg-[#005b8f]/65 text-xs font-semibold text-white">Ver seguimiento <Icono nombre="flecha" className="ml-2 size-4" /></Link>
             </>
           ) : (
             <>
               <p className="text-sm font-semibold">Todavía no hay una atención programada</p>
               <p className="mt-2 text-xs text-white/85">Solicitá atención a domicilio. Coordinación confirmará los detalles.</p>
-              <Link href="/paciente/solicitar" className="mt-4 flex min-h-11 items-center justify-center rounded-xl bg-[#1d61d9]/65 text-xs font-semibold text-white">Solicitar atención <Icono nombre="flecha" className="ml-2 size-4" /></Link>
+              <Link href="/paciente/solicitar" className="mt-4 flex min-h-11 items-center justify-center rounded-xl bg-[#005b8f]/65 text-xs font-semibold text-white">Solicitar atención <Icono nombre="flecha" className="ml-2 size-4" /></Link>
             </>
           )}
         </div>
@@ -83,12 +83,12 @@ export default function InicioPaciente() {
       <section aria-labelledby="especialidades">
         <div className="mb-3 flex items-center justify-between gap-2">
           <h2 id="especialidades" className="text-[15px] font-bold">Especialidades</h2>
-          <Link href="/paciente/solicitar" className="text-[10px] font-semibold uppercase text-[#286cf0]">Ver todas</Link>
+          <Link href="/paciente/solicitar" className="text-[10px] font-semibold uppercase text-[#0b5e9c]">Ver todas</Link>
         </div>
         <div className="grid grid-cols-3 gap-2">
           {SERVICIOS.map((servicio, i) => (
             <Link key={servicio} href="/paciente/solicitar" className="flex min-h-12 min-w-0 items-center gap-1.5 rounded-xl bg-white px-2 shadow-[0_5px_18px_#1d386008]">
-              <span className={`flex size-7 shrink-0 items-center justify-center rounded-lg text-sm ${i === 0 ? "bg-[#fff0f1] text-[#f66]" : i === 1 ? "bg-[#edf2ff] text-[#286cf0]" : "bg-[#eff9fa] text-[#16a9c6]"}`} aria-hidden="true">{i === 0 ? "✚" : i === 1 ? "♡" : "+"}</span>
+              <span className={`flex size-7 shrink-0 items-center justify-center rounded-lg text-sm ${i === 0 ? "bg-[#fff0f1] text-[#f66]" : i === 1 ? "bg-[#edf2ff] text-[#0b5e9c]" : "bg-[#eff9fa] text-[#1e88c8]"}`} aria-hidden="true">{i === 0 ? "✚" : i === 1 ? "♡" : "+"}</span>
               <span className="min-w-0 break-words text-[10px] font-medium leading-tight">{servicio}</span>
             </Link>
           ))}
@@ -98,16 +98,16 @@ export default function InicioPaciente() {
       <section aria-labelledby="profesionales">
         <div className="mb-3 flex items-center justify-between gap-2">
           <h2 id="profesionales" className="text-[15px] font-bold">Profesionales</h2>
-          <span className="text-[10px] font-semibold uppercase text-[#286cf0]">Datos demo</span>
+          <span className="text-[10px] font-semibold uppercase text-[#0b5e9c]">Datos demo</span>
         </div>
         <div className="flex flex-col gap-2.5">
           {profesionales.length ? profesionales.map((profesional) => (
             <div key={profesional.id} className="flex min-h-18 items-center gap-3 rounded-xl bg-white p-2 shadow-[0_5px_18px_#1d386008]">
-              <span aria-hidden="true" className="flex size-14 shrink-0 items-center justify-center rounded-lg bg-[#e9f1fa] text-xl font-semibold text-[#286cf0]">{profesional.nombre.slice(-1)}</span>
+              <span aria-hidden="true" className="flex size-14 shrink-0 items-center justify-center rounded-lg bg-[#e9f1fa] text-xl font-semibold text-[#0b5e9c]">{profesional.nombre.slice(-1)}</span>
               <div className="min-w-0 flex-1">
                 <p className="truncate text-xs font-bold">{profesional.nombre}</p>
-                <p className="mt-1 text-[11px] text-[#8b9aaa]">Profesional de demostración</p>
-                <p className="mt-1 text-[10px] text-[#28bfe3]">Sin valoraciones ni disponibilidad real</p>
+                <p className="mt-1 text-[11px] text-[#6d6e71]">Profesional de demostración</p>
+                <p className="mt-1 text-[10px] text-[#1e88c8]">Sin valoraciones ni disponibilidad real</p>
               </div>
             </div>
           )) : <p className="rounded-xl bg-white p-4 text-sm text-[#64758b]">No se encontraron profesionales de demostración.</p>}
