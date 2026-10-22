@@ -1,10 +1,9 @@
 "use client";
 
-import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useState } from "react";
 import { DemoBadge } from "@/components/DemoBadge";
-import { AvisoDemo, CLASE_BOTON, CLASE_INPUT, Tarjeta } from "@/components/ui";
+import { CLASE_BOTON, CLASE_INPUT, Tarjeta } from "@/components/ui";
 import { FRANJAS_DEMO, PACIENTE_DEMO, PROFESIONALES_DEMO } from "@/lib/fixtures";
 import { ETIQUETA_ESTADO } from "@/lib/estado-ui";
 import { useDemo } from "@/lib/store";
@@ -45,9 +44,8 @@ export default function SelectorDemo() {
 function Selector() {
   // Herramienta de atajo: solo para desarrollo y pruebas automatizadas (?pruebas=1). No aparece en el recorrido comercial.
   const modoPruebas = useSearchParams().get("pruebas") === "1";
-  const { estado, despachar, restablecer } = useDemo();
+  const { estado, despachar } = useDemo();
   const router = useRouter();
-  const [confirmarReinicio, setConfirmarReinicio] = useState(false);
   const [perfilElegido, setPerfilElegido] = useState<Perfil>("paciente");
   const [asignacion, setAsignacion] = useState<Record<string, string>>({});
   const [franjaSeleccionada, setFranjaSeleccionada] = useState<Record<string, string>>({});
@@ -121,7 +119,7 @@ function Selector() {
         Continuar
         <svg viewBox="0 0 24 24" className="size-5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="m5 12 14 0m-6-6 6 6-6 6"/></svg>
       </button>
-      <p className="mt-3 text-center text-xs leading-relaxed text-[#6d6e71]">Experiencia de demostración · Sin acceso a datos reales</p>
+      <p className="mt-3 text-center text-xs leading-relaxed text-[#6d6e71]">Servicio de enfermería · Atención a domicilio</p>
 
       {modoPruebas && (
       <Tarjeta className="flex flex-col gap-4 border-dashed">
@@ -218,42 +216,6 @@ function Selector() {
       </Tarjeta>
       )}
 
-      <Tarjeta className="flex flex-col gap-3">
-        <h2 className="font-semibold text-ink">Datos de la demo</h2>
-        <p className="text-sm text-ink-soft">
-          Los cambios se guardan solo en este navegador. No se envían a Vitalis ni a ningún sistema externo.
-        </p>
-        {!confirmarReinicio ? (
-          <button type="button" onClick={() => setConfirmarReinicio(true)} className={CLASE_BOTON.peligro}>
-            Restablecer demo
-          </button>
-        ) : (
-          <div className="flex flex-col gap-2 sm:flex-row">
-            <button
-              type="button"
-              onClick={() => {
-                restablecer();
-                setConfirmarReinicio(false);
-                setAsignacion({});
-                setFranjaSeleccionada({});
-              }}
-              className={CLASE_BOTON.peligro}
-            >
-              Sí, borrar los datos de la demo
-            </button>
-            <button type="button" onClick={() => setConfirmarReinicio(false)} className={CLASE_BOTON.secundario}>
-              Cancelar
-            </button>
-          </div>
-        )}
-      </Tarjeta>
-
-      <AvisoDemo>
-        Vitalis todavía no aprobó las funcionalidades que se muestran. Son propuestas para validar en conjunto.{" "}
-        <Link href="/paciente" className="font-semibold text-azul-600 underline underline-offset-4">
-          Ir a pacientes
-        </Link>
-      </AvisoDemo>
     </main>
   );
 }
