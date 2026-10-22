@@ -3,6 +3,7 @@
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useState } from "react";
 import { DemoBadge } from "@/components/DemoBadge";
+import { MarcaVitalis } from "@/components/MarcaVitalis";
 import { CLASE_BOTON, CLASE_INPUT, Tarjeta } from "@/components/ui";
 import { FRANJAS_DEMO, PACIENTE_DEMO, PROFESIONALES_DEMO } from "@/lib/fixtures";
 import { ETIQUETA_ESTADO } from "@/lib/estado-ui";
@@ -55,11 +56,7 @@ function Selector() {
     <main className="mx-auto flex min-h-dvh w-full max-w-md flex-col bg-[#edf5fa] px-5 pb-8 pt-6 text-[#005b8f] sm:my-6 sm:min-h-[calc(100dvh-3rem)] sm:rounded-[34px] sm:border sm:border-white/80 sm:px-7 sm:shadow-[12px_18px_45px_#005b8f20]">
       <header className="flex items-center justify-between">
         <div className="flex items-center gap-2.5">
-          <span aria-hidden="true" className="flex size-11 items-center justify-center rounded-[16px] bg-gradient-to-br from-[#1e88c8] to-[#0b5e9c] text-xl font-bold text-white shadow-[5px_6px_12px_#0b5e9c30,inset_1px_1px_2px_#ffffff65]">V</span>
-          <div>
-            <p className="font-display text-[17px] font-semibold leading-tight text-[#0b5e9c]">Vitalis</p>
-            <p className="text-[11px] leading-tight text-[#6d6e71]">Servicio de enfermería</p>
-          </div>
+          <MarcaVitalis />
         </div>
         <DemoBadge />
       </header>
