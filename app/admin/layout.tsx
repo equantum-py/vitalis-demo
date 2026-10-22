@@ -21,7 +21,7 @@ export default function LayoutAdmin({ children }: { children: React.ReactNode })
           <NavAdmin variante="lateral" />
         </Suspense>
         <p className="mt-auto text-xs leading-relaxed text-white/75">
-          Administración y coordinación. Demostración con datos ficticios.
+          Administración y coordinación.
         </p>
       </aside>
 
@@ -36,7 +36,7 @@ export default function LayoutAdmin({ children }: { children: React.ReactNode })
             <DemoBadge />
           </div>
           <div className="flex items-center gap-4 text-sm">
-            <span className="text-ink-soft">Perfil: Coordinación (demostración)</span>
+            <span className="text-ink-soft">Perfil: Coordinación</span>
             <Link href="/demo" className="font-semibold text-azul-600 underline underline-offset-4">
               Cambiar perfil
             </Link>
