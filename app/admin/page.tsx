@@ -18,11 +18,11 @@ export default function DashboardAdmin() {
     <div>
       <EncabezadoPagina
         titulo="Dashboard"
-        descripcion="Resumen de la demostración. Los indicadores son conteos sobre datos ficticios y no representan métricas reales de Vitalis."
+        descripcion="Resumen de solicitudes y actividad registrada."
       />
 
       <div className="grid grid-cols-2 gap-4 xl:grid-cols-4">
-        <Kpi etiqueta="Solicitudes" valor={i.total} nota="Creadas en la demostración" />
+        <Kpi etiqueta="Solicitudes" valor={i.total} nota="Registradas" />
         <Kpi etiqueta="Por asignar" valor={i.recibidas} nota="Estado: recibida" />
         <Kpi etiqueta="Por confirmar franja" valor={i.asignadas} nota="Estado: asignada" />
         <Kpi etiqueta="Confirmadas" valor={i.confirmadas} nota="Estado: confirmada" />
