@@ -13,14 +13,14 @@ const PERFILES: { perfil: Perfil; titulo: string; descripcion: string; ruta: str
   {
     perfil: "paciente",
     titulo: "Pacientes y familias",
-    descripcion: `${PACIENTE_DEMO.nombre} (ficticia). Solicitar atención y seguir su estado.`,
+    descripcion: `${PACIENTE_DEMO.nombre}. Solicitar atención y seguir su estado.`,
     ruta: "/paciente",
     disponible: true,
   },
   {
     perfil: "profesional",
     titulo: "Profesionales",
-    descripcion: "Agenda, inicio de visita, registro simulado y finalización.",
+    descripcion: "Agenda, inicio de visita, registro y finalización.",
     ruta: "/profesional",
     disponible: true,
   },
@@ -74,7 +74,7 @@ function Selector() {
       </div>
 
       <section aria-labelledby="perfiles" className="mt-7 flex flex-col gap-3.5">
-        <h2 id="perfiles" className="sr-only">Perfiles de demostración</h2>
+        <h2 id="perfiles" className="sr-only">Perfiles de acceso</h2>
         {PERFILES.map((p, index) => {
           const activo = perfilElegido === p.perfil;
           return (
