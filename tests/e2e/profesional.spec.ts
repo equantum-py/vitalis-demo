@@ -68,10 +68,10 @@ test("recorrido completo entre los tres perfiles: crear, asignar, confirmar, vis
   await expect(page.getByRole("button", { name: "Finalizar visita" })).toBeDisabled();
 
   // 4. Registro simulado y finalización
-  await page.getByLabel("Observaciones (texto ficticio)").fill(OBS);
-  await page.getByLabel("Indicaciones (texto ficticio, opcional)").fill("Indicación ficticia");
+  await page.getByLabel("Observaciones", { exact: true }).fill(OBS);
+  await page.getByLabel("Indicaciones (opcional)").fill("Indicación ficticia");
   await page.getByRole("button", { name: "Guardar registro" }).click();
-  await expect(page.getByText("Registro guardado (simulado)", { exact: false })).toBeVisible();
+  await expect(page.getByText("Registro guardado en este navegador.", { exact: false })).toBeVisible();
   await capturar(page, "p4-registro", testInfo);
   await sinDesbordeHorizontal(page);
 
@@ -119,10 +119,10 @@ test("bloqueos: visita de otro profesional no disponible y registro cerrado tras
   // Volver al profesional A, iniciar, guardar y recargar: el estado se conserva
   await page.getByLabel("Profesional activo").selectOption("prof-demo-a");
   await page.getByRole("button", { name: "Iniciar visita" }).click();
-  await page.getByLabel("Observaciones (texto ficticio)").fill(OBS);
+  await page.getByLabel("Observaciones", { exact: true }).fill(OBS);
   await page.getByRole("button", { name: "Guardar registro" }).click();
   await page.reload();
-  await expect(page.getByLabel("Observaciones (texto ficticio)")).toHaveValue(OBS);
+  await expect(page.getByLabel("Observaciones", { exact: true })).toHaveValue(OBS);
   await expect(page.getByText("En visita", { exact: true }).first()).toBeVisible();
 
   await page.getByRole("button", { name: "Finalizar visita" }).click();
