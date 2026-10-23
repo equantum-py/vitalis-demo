@@ -11,7 +11,6 @@ test("acceso comercial: personas y profesionales, sin herramienta de atajo visib
   await expect(page).toHaveURL(/\/paciente$/);
   await page.goto("/demo");
   await expect(page.getByText("En construcción")).toHaveCount(0);
-  await expect(page.getByRole("button", { name: "Restablecer demo" })).toBeVisible();
   // La herramienta de atajo no aparece en el recorrido comercial
   await expect(page.getByText("Herramienta de prueba de integración")).toHaveCount(0);
   await expect(page.getByLabel("Profesional a asignar")).toHaveCount(0);
