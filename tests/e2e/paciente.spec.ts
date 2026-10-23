@@ -20,12 +20,14 @@ async function sinDesbordeHorizontal(page: import("@playwright/test").Page) {
 test("flujo de paciente: crear, consultar, urgencia separada y persistencia", async ({ page }, testInfo) => {
   // Selector de perfiles
   await page.goto("/demo");
-  await expect(page.getByText("DEMO", { exact: true }).first()).toBeVisible();
+  await expect(page.getByRole("button", { name: "Personas" })).toBeVisible();
   await capturar(page, "01-selector", testInfo);
   await sinDesbordeHorizontal(page);
 
   // Inicio de pacientes
-  await page.getByRole("button", { name: /Pacientes y familias/ }).click();
+  await page.getByLabel("Número de cédula").fill("1234567");
+  await page.getByLabel("Contraseña").fill("123456");
+  await page.getByRole("button", { name: /Ingresar/ }).click();
   await expect(page).toHaveURL(/\/paciente$/);
   await expect(page.getByRole("heading", { name: "Hola, Ana" })).toBeVisible();
   await capturar(page, "02-inicio", testInfo);
@@ -121,7 +123,7 @@ test("restablecer la demo borra los datos y el estado se conserva al cambiar de 
 
   // Cambio de perfil sin perder el estado
   await page.goto("/demo");
-  await page.getByRole("button", { name: /Administración y coordinación/ }).click();
+  await page.goto("/admin");
   await expect(page.getByRole("heading", { name: "Dashboard" })).toBeVisible();
   await page.goto("/paciente/solicitudes");
   await expect(page.getByRole("link", { name: /SOL-001/ })).toBeVisible();
