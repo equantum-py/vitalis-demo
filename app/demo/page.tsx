@@ -62,11 +62,11 @@ function Selector() {
   const ultima = estado.solicitudes[0];
 
   const ingresar = () => {
-    if (!/^\\d{6}$/.test(clave)) {
+    if (!/^[0-9]{6}$/.test(clave)) {
       setErrorAcceso("La contraseña debe tener exactamente 6 dígitos.");
       return;
     }
-    if (!/^\\d+$/.test(usuario.trim())) {
+    if (!/^[0-9]+$/.test(usuario.trim())) {
       setErrorAcceso("Ingresá tu número de cédula, solo números.");
       return;
     }
