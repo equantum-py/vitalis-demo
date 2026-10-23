@@ -6,15 +6,12 @@ type EventoInstalacion = Event & { prompt: () => Promise<void>; userChoice: Prom
 
 export function InstalarVitalis() {
   const [evento, setEvento] = useState<EventoInstalacion | null>(null);
-  const [ios, setIos] = useState(false);
-  const [instalada, setInstalada] = useState(false);
+  const [ios] = useState(() => process.env.NODE_ENV === "production" && typeof navigator !== "undefined" && /iPhone|iPad|iPod/.test(navigator.userAgent));
+  const [instalada, setInstalada] = useState(() => typeof window !== "undefined" && (window.matchMedia("(display-mode: standalone)").matches || ("standalone" in navigator && Boolean((navigator as Navigator & { standalone?: boolean }).standalone))));
 
   useEffect(() => {
     if (process.env.NODE_ENV !== "production" || !("serviceWorker" in navigator)) return;
     navigator.serviceWorker.register("/sw.js").catch(() => {});
-    const standalone = window.matchMedia("(display-mode: standalone)").matches || ("standalone" in navigator && Boolean((navigator as Navigator & { standalone?: boolean }).standalone));
-    setInstalada(standalone);
-    setIos(/iPhone|iPad|iPod/.test(navigator.userAgent));
     const antes = (e: Event) => { e.preventDefault(); setEvento(e as EventoInstalacion); };
     const despues = () => { setInstalada(true); setEvento(null); };
     window.addEventListener("beforeinstallprompt", antes);
