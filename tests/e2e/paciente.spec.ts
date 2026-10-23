@@ -129,8 +129,8 @@ test("restablecer la demo borra los datos y el estado se conserva al cambiar de 
   await expect(page.getByRole("link", { name: /SOL-001/ })).toBeVisible();
   await capturar(page, "09-perfil-cambiado", testInfo);
 
-  // Restablecer
-  await page.goto("/demo");
+  // Restablecer exclusivamente desde la herramienta de pruebas
+  await page.goto("/demo?pruebas=1");
   await page.getByRole("button", { name: "Restablecer demo" }).click();
   await page.getByRole("button", { name: "Sí, borrar los datos de la demo" }).click();
   await page.goto("/paciente/solicitudes");
