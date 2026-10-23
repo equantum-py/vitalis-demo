@@ -4,6 +4,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useState } from "react";
 import { DemoBadge } from "@/components/DemoBadge";
 import { MarcaVitalis } from "@/components/MarcaVitalis";
+import { InstalarVitalis } from "@/components/InstalarVitalis";
 import { CLASE_BOTON, CLASE_INPUT, Tarjeta } from "@/components/ui";
 import { FRANJAS_DEMO, PACIENTE_DEMO, PROFESIONALES_DEMO } from "@/lib/fixtures";
 import { ETIQUETA_ESTADO } from "@/lib/estado-ui";
@@ -140,6 +141,7 @@ function Selector() {
           <p className="mt-3 text-center text-[11px] text-[#6d6e71]">Acceso de prueba: CI {perfilElegido === "paciente" ? "1234567" : "7654321"} · PIN {perfilElegido === "paciente" ? "123456" : "654321"}</p>
         </section>
 
+        <InstalarVitalis />
         <div className="mt-auto pt-7">
           <div className="grid grid-cols-3 gap-2 border-t border-[#dbe7ef] pt-5 text-center text-[11px] text-[#6d6e71]">
             <span className="flex flex-col items-center gap-2"><span className="text-xl text-[#0b5e9c]">▦</span>Agendá tu visita</span>
