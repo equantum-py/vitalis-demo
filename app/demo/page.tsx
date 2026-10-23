@@ -52,71 +52,76 @@ function Selector() {
   const [franjaSeleccionada, setFranjaSeleccionada] = useState<Record<string, string>>({});
   const ultima = estado.solicitudes[0];
 
+  const ingresar = () => {
+    const elegido = PERFILES.find((p) => p.perfil === perfilElegido);
+    if (!elegido) return;
+    despachar({ tipo: "cambiarPerfil", perfil: elegido.perfil });
+    router.push(elegido.ruta);
+  };
+
   return (
-    <main className="mx-auto flex min-h-dvh w-full max-w-md flex-col bg-[#edf5fa] px-5 pb-8 pt-6 text-[#005b8f] sm:my-6 sm:min-h-[calc(100dvh-3rem)] sm:rounded-[34px] sm:border sm:border-white/80 sm:px-7 sm:shadow-[12px_18px_45px_#005b8f20]">
-      <header className="flex items-center justify-between">
-        <div className="flex items-center gap-2.5">
-          <MarcaVitalis />
+    <main className="relative mx-auto flex min-h-dvh w-full max-w-md flex-col overflow-hidden bg-[#f8fcff] text-[#005b8f] sm:my-6 sm:min-h-[calc(100dvh-3rem)] sm:rounded-[34px] sm:shadow-[12px_18px_45px_#005b8f20]">
+      <div className="pointer-events-none absolute -right-24 -top-28 size-80 rounded-full bg-[#dff3fc]/70 blur-3xl" aria-hidden="true" />
+      <div className="pointer-events-none absolute -left-32 top-72 size-72 rounded-full bg-[#e7f5ed]/70 blur-3xl" aria-hidden="true" />
+      <div className="relative flex flex-1 flex-col px-7 pb-7 pt-8">
+        <header className="flex items-center justify-center">
+          <div className="scale-125 origin-center"><MarcaVitalis /></div>
+          <DemoBadge />
+        </header>
+        <div className="mt-8 text-center">
+          <p className="text-[11px] font-semibold uppercase tracking-[.2em] text-[#7cb342]">Servicio de enfermería</p>
+          <h1 className="mt-2 font-display text-[27px] font-semibold leading-tight text-[#005b8f]">Tu salud en buenas manos</h1>
+          <p className="mx-auto mt-2 max-w-[270px] text-sm leading-relaxed text-[#6d6e71]">Accedé a una atención más simple, cercana y segura.</p>
         </div>
-        <DemoBadge />
-      </header>
 
-      <div className="mt-9">
-        <div className="mb-4 flex size-[62px] items-center justify-center rounded-[23px] bg-[#e3f2dc] text-[#558c24] shadow-[6px_7px_14px_#0b5e9c18,-4px_-4px_12px_#ffffff,inset_1px_1px_1px_#ffffff]">
-          <svg viewBox="0 0 24 24" className="size-8" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M12 21s-8-4.5-8-10a4.5 4.5 0 0 1 8-2.6A4.5 4.5 0 0 1 20 11c0 5.5-8 10-8 10Z"/><path d="M8 12h2l1-2 2 4 1-2h2"/></svg>
-        </div>
-        <p className="text-xs font-semibold uppercase tracking-[.12em] text-[#1e88c8]">Bienvenido a Vitalis</p>
-        <h1 className="mt-2 font-display text-[27px] font-semibold leading-[1.2] tracking-[-.04em] text-[#0b5e9c]">¿Cómo querés ingresar?</h1>
-        <p className="mt-2 text-sm leading-relaxed text-[#6d6e71]">Seleccioná un perfil para conocer la experiencia de Vitalis.</p>
-      </div>
-
-      <section aria-labelledby="perfiles" className="mt-7 flex flex-col gap-3.5">
-        <h2 id="perfiles" className="sr-only">Perfiles de acceso</h2>
-        {PERFILES.map((p, index) => {
-          const activo = perfilElegido === p.perfil;
-          return (
-            <button
-              key={p.perfil}
-              type="button"
-              aria-pressed={activo}
+        <div className="mt-7 grid grid-cols-2 rounded-full border border-[#dce8f0] bg-[#edf3f8] p-1 shadow-inner" role="group" aria-label="Tipo de acceso">
+          {PERFILES.slice(0, 2).map((p) => (
+            <button key={p.perfil} type="button" aria-pressed={perfilElegido === p.perfil}
               onClick={() => setPerfilElegido(p.perfil)}
-              className={`clay-interactive flex min-h-[104px] w-full items-center gap-3.5 rounded-[23px] border p-3.5 text-left shadow-[7px_9px_18px_#0b5e9c1c,-5px_-5px_14px_#ffffff,inset_1px_1px_2px_#ffffff] ${activo ? "border-[#1e88c8] bg-gradient-to-br from-white to-[#e7f4fb] ring-1 ring-[#1e88c8]/30" : "border-[#d6e6ef] bg-gradient-to-br from-white to-[#f5f9fc]"}`}
-            >
-              <span className={`flex size-[58px] shrink-0 items-center justify-center rounded-[19px] shadow-[inset_1px_1px_2px_#ffffff,4px_5px_10px_#0b5e9c16] ${index === 0 ? "bg-[#e0f0fb] text-[#0b5e9c]" : index === 1 ? "bg-[#e8f4dc] text-[#629a2e]" : "bg-[#dfeef6] text-[#005b8f]"}`}>
-                {index === 0 ? (
-                  <svg viewBox="0 0 24 24" className="size-7" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><circle cx="12" cy="7" r="3"/><path d="M5 20v-2a7 7 0 0 1 14 0v2M19 5v4m-2-2h4"/></svg>
-                ) : index === 1 ? (
-                  <svg viewBox="0 0 24 24" className="size-7" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M6 4v6a4 4 0 0 0 8 0V4M6 4H4m10 0h2M10 14v2a4 4 0 0 0 8 0v-3"/><circle cx="18" cy="11" r="2"/></svg>
-                ) : (
-                  <svg viewBox="0 0 24 24" className="size-7" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="M8 10h8M8 14h5"/></svg>
-                )}
-              </span>
-              <span className="min-w-0 flex-1">
-                <span className="block font-display text-[14px] font-semibold leading-snug text-[#005b8f]">{p.titulo}</span>
-                <span className="mt-1 block text-[12px] leading-[1.45] text-[#6d6e71]">{p.descripcion}</span>
-              </span>
-              <span className={`flex size-6 shrink-0 items-center justify-center rounded-full border-2 ${activo ? "border-[#0b5e9c] bg-[#0b5e9c] text-white" : "border-[#b9cedd] bg-white"}`} aria-hidden="true">
-                {activo && <svg viewBox="0 0 20 20" className="size-4" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="m4 10 4 4 8-8"/></svg>}
-              </span>
+              className={`min-h-12 rounded-full px-2 font-display text-sm font-semibold transition-colors ${perfilElegido === p.perfil ? "bg-gradient-to-r from-[#1e88c8] to-[#0b5e9c] text-white shadow-[0_5px_12px_#0b5e9c30]" : "text-[#6d6e71]"}`}>
+              {p.perfil === "paciente" ? "Personas" : "Profesionales"}
             </button>
-          );
-        })}
-      </section>
+          ))}
+        </div>
 
-      <button
-        type="button"
-        onClick={() => {
-          const elegido = PERFILES.find((p) => p.perfil === perfilElegido);
-          if (!elegido) return;
-          despachar({ tipo: "cambiarPerfil", perfil: elegido.perfil });
-          router.push(elegido.ruta);
-        }}
-        className="clay-interactive mt-6 flex min-h-[54px] w-full items-center justify-center gap-3 rounded-[18px] bg-gradient-to-r from-[#0b5e9c] to-[#1e88c8] px-5 font-display text-sm font-semibold text-white shadow-[5px_8px_16px_#0b5e9c40,inset_1px_1px_2px_#ffffff50] focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-[#0b5e9c]"
-      >
-        Continuar
-        <svg viewBox="0 0 24 24" className="size-5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="m5 12 14 0m-6-6 6 6-6 6"/></svg>
-      </button>
-      <p className="mt-3 text-center text-xs leading-relaxed text-[#6d6e71]">Servicio de enfermería · Atención a domicilio</p>
+        <section className="mt-7" aria-labelledby="acceso-vitalis">
+          <h2 id="acceso-vitalis" className="text-center font-display text-lg font-semibold">Ingresá a tu cuenta</h2>
+          <p className="mt-1 text-center text-xs text-[#6d6e71]">{perfilElegido === "paciente" ? "Pacientes y familias" : "Personal de enfermería y profesionales"}</p>
+          <form className="mt-6 space-y-4" onSubmit={(e) => { e.preventDefault(); ingresar(); }}>
+            <label className="block">
+              <span className="sr-only">Cédula o correo electrónico</span>
+              <span className="flex min-h-14 items-center gap-3 rounded-[20px] border border-[#dbe7ef] bg-white px-4 shadow-[3px_5px_14px_#0b5e9c0b]">
+                <svg className="size-5 shrink-0 text-[#1e88c8]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21v-2a8 8 0 0 1 16 0v2"/></svg>
+                <input type="text" autoComplete="username" placeholder="Cédula o correo electrónico" className="min-w-0 w-full bg-transparent text-sm text-[#005b8f] outline-none placeholder:text-[#8d9ca8]" />
+              </span>
+            </label>
+            <label className="block">
+              <span className="sr-only">Contraseña</span>
+              <span className="flex min-h-14 items-center gap-3 rounded-[20px] border border-[#dbe7ef] bg-white px-4 shadow-[3px_5px_14px_#0b5e9c0b]">
+                <svg className="size-5 shrink-0 text-[#1e88c8]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true"><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+                <input type="password" autoComplete="current-password" placeholder="Contraseña" className="min-w-0 w-full bg-transparent text-sm text-[#005b8f] outline-none placeholder:text-[#8d9ca8]" />
+              </span>
+            </label>
+            <label className="flex items-center gap-2.5 text-xs text-[#6d6e71]">
+              <input type="checkbox" className="size-4 accent-[#0b5e9c]" /> Recordar mis datos
+            </label>
+            <button type="submit" className="clay-interactive flex min-h-14 w-full items-center justify-center gap-3 rounded-full bg-gradient-to-r from-[#1e88c8] to-[#0b5e9c] font-display text-base font-semibold text-white shadow-[4px_9px_20px_#0b5e9c35]">
+              Ingresar <span aria-hidden="true">→</span>
+            </button>
+          </form>
+          <p className="mt-3 text-center text-[11px] text-[#6d6e71]">Acceso de prueba: los campos todavía no autentican usuarios.</p>
+        </section>
+
+        <div className="mt-auto pt-7">
+          <div className="grid grid-cols-3 gap-2 border-t border-[#dbe7ef] pt-5 text-center text-[11px] text-[#6d6e71]">
+            <span className="flex flex-col items-center gap-2"><span className="text-xl text-[#0b5e9c]">▦</span>Agendá tu visita</span>
+            <span className="flex flex-col items-center gap-2"><span className="text-xl text-[#0b5e9c]">♡</span>Atención cercana</span>
+            <span className="flex flex-col items-center gap-2"><span className="text-xl text-[#0b5e9c]">✓</span>Todo en un lugar</span>
+          </div>
+          <button type="button" onClick={() => { despachar({ tipo: "cambiarPerfil", perfil: "administracion" }); router.push("/admin"); }} className="mt-5 w-full py-2 text-center text-xs font-medium text-[#005b8f] underline underline-offset-4">Acceso de administración</button>
+        </div>
+      </div>
+      <div className="h-3 bg-gradient-to-r from-[#43b9d7] via-[#1e88c8] to-[#005b8f]" aria-hidden="true" />
 
       {modoPruebas && (
       <Tarjeta className="flex flex-col gap-4 border-dashed">
