@@ -11,8 +11,8 @@ import { PACIENTE_DEMO } from "@/lib/fixtures";
 
 export default function LayoutPaciente({ children }: { children: React.ReactNode }) {
   return (
-    <div className="mx-auto flex min-h-dvh w-full max-w-md flex-col bg-white md:my-6 md:min-h-[calc(100dvh-3rem)] md:overflow-hidden md:rounded-3xl md:border md:border-line md:shadow-sm">
-      <header className="flex min-h-[60px] items-center justify-between gap-2 border-b border-[#eef1f6] bg-white px-4">
+    <div className="mx-auto flex min-h-dvh w-full max-w-md flex-col vitalis-shell md:my-6 md:min-h-[calc(100dvh-3rem)] md:overflow-hidden md:rounded-[34px] md:border md:border-line md:shadow-[12px_18px_45px_#005b8f20]">
+      <header className="flex min-h-[60px] items-center justify-between gap-2 vitalis-header px-4">
         <div className="flex min-w-0 items-center gap-2">
           <MarcaVitalis />
           <DemoBadge />
