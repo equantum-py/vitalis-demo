@@ -48,7 +48,7 @@ test("recorrido completo: paciente, administración, profesional y estado final 
   await page.getByRole("button", { name: "Iniciar visita" }).click();
 
   // 6. Registro simulado y finalización
-  await page.getByLabel("Observaciones (texto ficticio)").fill(OBS);
+  await page.getByLabel("Observaciones", { exact: true }).fill(OBS);
   await page.getByRole("button", { name: "Guardar registro" }).click();
   await page.getByRole("button", { name: "Finalizar visita" }).click();
   await expect(page.getByRole("status")).toContainText("Visita finalizada");
