@@ -30,7 +30,7 @@ export default function InicioPaciente() {
           <div className="min-w-0">
             <h1 className="truncate text-[17px] font-semibold leading-tight">Hola, {PACIENTE_DEMO.nombre.split(" ")[0]}</h1>
             <p className="mt-1 flex items-center gap-1 text-xs text-[#6d6e71]">
-              <Icono nombre="ubicacion" className="size-3 text-[#1e88c8]" />
+              <Icono nombre="ubicacion" className="size-3 text-[#005b8f]" />
               Atención a domicilio
             </p>
           </div>
@@ -43,10 +43,10 @@ export default function InicioPaciente() {
       <div className="flex gap-2.5">
         <label className="flex min-h-12 min-w-0 flex-1 items-center gap-2 rounded-xl border border-[#e3e8f0] bg-white px-4">
           <span className="sr-only">Buscar profesional</span>
-          <input value={busqueda} onChange={(e) => setBusqueda(e.target.value)} placeholder="Buscar profesional" className="w-full min-w-0 bg-transparent text-sm outline-none placeholder:text-[#a2acbc]" />
+          <input value={busqueda} onChange={(e) => setBusqueda(e.target.value)} placeholder="Buscar profesional" className="w-full min-w-0 bg-transparent text-sm outline-none placeholder:text-[#64758b]" />
           <svg viewBox="0 0 24 24" fill="none" stroke="#1e88c8" strokeWidth="1.8" className="size-5 shrink-0" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m16 16 5 5"/></svg>
         </label>
-        <button type="button" aria-label="Mostrar u ocultar filtros" aria-expanded={filtros} onClick={() => setFiltros(!filtros)} className="flex size-12 shrink-0 items-center justify-center rounded-xl border border-[#e3e8f0] bg-white text-[#1e88c8]">
+        <button type="button" aria-label="Mostrar u ocultar filtros" aria-expanded={filtros} onClick={() => setFiltros(!filtros)} className="flex size-12 shrink-0 items-center justify-center rounded-xl border border-[#e3e8f0] bg-white text-[#005b8f]">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="size-5" aria-hidden="true"><path d="M4 7h16M7 12h10M10 17h4"/></svg>
         </button>
       </div>
@@ -87,8 +87,8 @@ export default function InicioPaciente() {
         <div className="grid grid-cols-3 gap-2">
           {SERVICIOS.map((servicio, i) => (
             <Link key={servicio} href="/paciente/solicitar" className="flex min-h-12 min-w-0 items-center gap-1.5 rounded-xl bg-white px-2 shadow-[0_5px_18px_#1d386008]">
-              <span className={`flex size-7 shrink-0 items-center justify-center rounded-lg text-sm ${i === 0 ? "bg-[#fff0f1] text-[#f66]" : i === 1 ? "bg-[#edf2ff] text-[#0b5e9c]" : "bg-[#eff9fa] text-[#1e88c8]"}`} aria-hidden="true">{i === 0 ? "✚" : i === 1 ? "♡" : "+"}</span>
-              <span className="min-w-0 break-words text-[10px] font-medium leading-tight">{servicio}</span>
+              <span className={`flex size-7 shrink-0 items-center justify-center rounded-lg text-sm ${i === 0 ? "bg-[#fff0f1] text-[#f66]" : i === 1 ? "bg-[#edf2ff] text-[#0b5e9c]" : "bg-[#eff9fa] text-[#005b8f]"}`} aria-hidden="true">{i === 0 ? "✚" : i === 1 ? "♡" : "+"}</span>
+              <span className="min-w-0 break-words text-xs font-medium leading-tight">{servicio}</span>
             </Link>
           ))}
         </div>
@@ -106,7 +106,7 @@ export default function InicioPaciente() {
               <div className="min-w-0 flex-1">
                 <p className="truncate text-xs font-bold">{profesional.nombre}</p>
                 <p className="mt-1 text-[11px] text-[#6d6e71]">Profesional</p>
-                <p className="mt-1 text-[10px] text-[#1e88c8]">Información de atención</p>
+                <p className="mt-1 text-[10px] text-[#005b8f]">Información de atención</p>
               </div>
             </div>
           )) : <p className="rounded-xl bg-white p-4 text-sm text-[#64758b]">No se encontraron profesionales.</p>}
