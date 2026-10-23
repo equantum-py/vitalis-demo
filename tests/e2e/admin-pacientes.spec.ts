@@ -20,7 +20,6 @@ test("08-A: alta, edición, búsqueda y persistencia de paciente ficticio", asyn
   await expect(page.getByText("000 333 444")).toBeVisible();
 
   await page.reload();
-  await page.getByRole("button", { name: /Volver al listado/ }).click().catch(async () => {});
   await page.getByRole("searchbox").fill("QA-08A-001");
   await expect(page.getByText("Prueba Ficticia Editada")).toBeVisible();
   await expect(page.getByText("1 de 3 pacientes ficticios")).toBeVisible();
