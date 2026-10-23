@@ -52,12 +52,13 @@ export default function SelectorDemo() {
 function Selector() {
   // Herramienta de atajo: solo para desarrollo y pruebas automatizadas (?pruebas=1). No aparece en el recorrido comercial.
   const modoPruebas = useSearchParams().get("pruebas") === "1";
-  const { estado, despachar } = useDemo();
+  const { estado, despachar, restablecer } = useDemo();
   const router = useRouter();
   const [perfilElegido, setPerfilElegido] = useState<Perfil>("paciente");
   const [usuario, setUsuario] = useState("");
   const [clave, setClave] = useState("");
   const [errorAcceso, setErrorAcceso] = useState("");
+  const [confirmarRestablecimiento, setConfirmarRestablecimiento] = useState(false);
   const [asignacion, setAsignacion] = useState<Record<string, string>>({});
   const [franjaSeleccionada, setFranjaSeleccionada] = useState<Record<string, string>>({});
   const ultima = estado.solicitudes[0];
@@ -161,6 +162,17 @@ function Selector() {
             Temporal, para verificar que una solicitud creada en el módulo de pacientes llega al estado compartido. En
             E03-C, estas acciones pasan al panel de administración.
           </p>
+        </div>
+
+        <div className="flex flex-col gap-2">
+          <button type="button" className={CLASE_BOTON.secundario} onClick={() => setConfirmarRestablecimiento(true)}>Restablecer demo</button>
+          {confirmarRestablecimiento && (
+            <div className="flex flex-col gap-2">
+              <p className="text-sm text-ink">Se eliminarán los datos ficticios guardados en este navegador.</p>
+              <button type="button" className={CLASE_BOTON.secundario} onClick={() => { restablecer(); setConfirmarRestablecimiento(false); }}>Sí, borrar los datos de la demo</button>
+              <button type="button" className={CLASE_BOTON.secundario} onClick={() => setConfirmarRestablecimiento(false)}>Cancelar</button>
+            </div>
+          )}
         </div>
 
         {!ultima && <p className="text-ink-soft">Todavía no hay solicitudes. Cree una desde el perfil de pacientes.</p>}
