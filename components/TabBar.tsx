@@ -18,7 +18,7 @@ export function TabBar() {
       {items.map((item) => {
         const activa = item.href === "/paciente" ? ruta === item.href : ruta.startsWith(item.href);
         return (
-          <Link key={item.label} href={item.href} aria-current={activa ? "page" : undefined} className={`flex min-h-[68px] min-w-0 flex-col items-center justify-center gap-1 text-center text-[10px] font-medium focus-visible:outline-2 focus-visible:outline-[#0b5e9c] ${activa ? "text-[#0b5e9c]" : "text-[#94a1b3]"}`} aria-label={item.label}>
+          <Link key={item.label} href={item.href} aria-current={activa ? "page" : undefined} className={`flex min-h-[68px] min-w-0 flex-col items-center justify-center gap-1 text-center text-[10px] font-medium focus-visible:outline-2 focus-visible:outline-[#0b5e9c] ${activa ? "text-[#0b5e9c]" : "text-[#586b82]"}`} aria-label={item.label}>
             <span className={`flex items-center justify-center ${item.primary ? "size-12 -translate-y-2 rounded-2xl bg-[#0b5e9c] text-white shadow-[0_6px_18px_#0b5e9c4d]" : "size-6"}`}>
               <Icono nombre={item.icon} className={item.primary ? "size-7" : "size-5"} />
             </span>
