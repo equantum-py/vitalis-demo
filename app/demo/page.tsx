@@ -36,8 +36,8 @@ const PERFILES: { perfil: Perfil; titulo: string; descripcion: string; ruta: str
 
 // Cuentas ficticias exclusivamente para recorrer la interfaz. No constituyen autenticación real.
 const CUENTAS_PRUEBA = [
-  { perfil: "paciente" as Perfil, usuario: "persona@vitalis.test", clave: "Vitalis2026!" },
-  { perfil: "profesional" as Perfil, usuario: "profesional@vitalis.test", clave: "Vitalis2026!" },
+  { perfil: "paciente" as Perfil, usuario: "1234567", clave: "123456" },
+  { perfil: "profesional" as Perfil, usuario: "7654321", clave: "654321" },
 ];
 
 export default function SelectorDemo() {
@@ -62,13 +62,21 @@ function Selector() {
   const ultima = estado.solicitudes[0];
 
   const ingresar = () => {
+    if (!/^\\d{6}$/.test(clave)) {
+      setErrorAcceso("La contraseña debe tener exactamente 6 dígitos.");
+      return;
+    }
+    if (!/^\\d+$/.test(usuario.trim())) {
+      setErrorAcceso("Ingresá tu número de cédula, solo números.");
+      return;
+    }
     const valido = CUENTAS_PRUEBA.some((cuenta) =>
       cuenta.perfil === perfilElegido &&
-      cuenta.usuario === usuario.trim().toLowerCase() &&
+      cuenta.usuario === usuario.trim() &&
       cuenta.clave === clave
     );
     if (!valido) {
-      setErrorAcceso("Usuario o contraseña incorrectos para el perfil seleccionado.");
+      setErrorAcceso("Cédula o contraseña incorrecta para el perfil seleccionado.");
       return;
     }
     setErrorAcceso("");
@@ -108,17 +116,17 @@ function Selector() {
           <p className="mt-1 text-center text-xs text-[#6d6e71]">{perfilElegido === "paciente" ? "Pacientes y familias" : "Personal de enfermería y profesionales"}</p>
           <form className="mt-6 space-y-4" onSubmit={(e) => { e.preventDefault(); ingresar(); }}>
             <label className="block">
-              <span className="sr-only">Cédula o correo electrónico</span>
+              <span className="sr-only">Número de cédula</span>
               <span className="flex min-h-14 items-center gap-3 rounded-[20px] border border-[#dbe7ef] bg-white px-4 shadow-[3px_5px_14px_#0b5e9c0b]">
                 <svg className="size-5 shrink-0 text-[#1e88c8]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21v-2a8 8 0 0 1 16 0v2"/></svg>
-                <input type="text" value={usuario} onChange={(e) => { setUsuario(e.target.value); setErrorAcceso(""); }} autoComplete="username" placeholder="Cédula o correo electrónico" className="min-w-0 w-full bg-transparent text-sm text-[#005b8f] outline-none placeholder:text-[#8d9ca8]" />
+                <input type="text" inputMode="numeric" pattern="[0-9]*" value={usuario} onChange={(e) => { setUsuario(e.target.value); setErrorAcceso(""); }} autoComplete="username" placeholder="Número de cédula" className="min-w-0 w-full bg-transparent text-sm text-[#005b8f] outline-none placeholder:text-[#8d9ca8]" />
               </span>
             </label>
             <label className="block">
               <span className="sr-only">Contraseña</span>
               <span className="flex min-h-14 items-center gap-3 rounded-[20px] border border-[#dbe7ef] bg-white px-4 shadow-[3px_5px_14px_#0b5e9c0b]">
                 <svg className="size-5 shrink-0 text-[#1e88c8]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true"><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
-                <input type="password" value={clave} onChange={(e) => { setClave(e.target.value); setErrorAcceso(""); }} autoComplete="current-password" placeholder="Contraseña" className="min-w-0 w-full bg-transparent text-sm text-[#005b8f] outline-none placeholder:text-[#8d9ca8]" />
+                <input type="password" inputMode="numeric" maxLength={6} pattern="[0-9]{6}" value={clave} onChange={(e) => { setClave(e.target.value); setErrorAcceso(""); }} autoComplete="current-password" placeholder="Contraseña" className="min-w-0 w-full bg-transparent text-sm text-[#005b8f] outline-none placeholder:text-[#8d9ca8]" />
               </span>
             </label>
             <label className="flex items-center gap-2.5 text-xs text-[#6d6e71]">
@@ -129,7 +137,7 @@ function Selector() {
               Ingresar <span aria-hidden="true">→</span>
             </button>
           </form>
-          <p className="mt-3 text-center text-[11px] text-[#6d6e71]">Cuenta de prueba: {perfilElegido === "paciente" ? "persona@vitalis.test" : "profesional@vitalis.test"} · Clave: Vitalis2026!</p>
+          <p className="mt-3 text-center text-[11px] text-[#6d6e71]">Acceso de prueba: CI {perfilElegido === "paciente" ? "1234567" : "7654321"} · PIN {perfilElegido === "paciente" ? "123456" : "654321"}</p>
         </section>
 
         <div className="mt-auto pt-7">
