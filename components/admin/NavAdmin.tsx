@@ -8,6 +8,7 @@ import { useDemo } from "@/lib/store";
 
 const ITEMS: { href: string; etiqueta: string; icono: NombreIcono }[] = [
   { href: "/admin", etiqueta: "Dashboard", icono: "inicio" },
+  { href: "/admin/pacientes", etiqueta: "Pacientes", icono: "usuarios" },
   { href: "/admin/solicitudes", etiqueta: "Solicitudes", icono: "solicitudes" },
   { href: "/admin/agenda", etiqueta: "Agenda", icono: "agenda" },
   { href: "/admin/profesionales", etiqueta: "Profesionales", icono: "usuarios" },
