@@ -34,6 +34,12 @@ const PERFILES: { perfil: Perfil; titulo: string; descripcion: string; ruta: str
   },
 ];
 
+// Cuentas ficticias exclusivamente para recorrer la interfaz. No constituyen autenticación real.
+const CUENTAS_PRUEBA = [
+  { perfil: "paciente" as Perfil, usuario: "persona@vitalis.test", clave: "Vitalis2026!" },
+  { perfil: "profesional" as Perfil, usuario: "profesional@vitalis.test", clave: "Vitalis2026!" },
+];
+
 export default function SelectorDemo() {
   return (
     <Suspense fallback={null}>
@@ -48,11 +54,24 @@ function Selector() {
   const { estado, despachar } = useDemo();
   const router = useRouter();
   const [perfilElegido, setPerfilElegido] = useState<Perfil>("paciente");
+  const [usuario, setUsuario] = useState("");
+  const [clave, setClave] = useState("");
+  const [errorAcceso, setErrorAcceso] = useState("");
   const [asignacion, setAsignacion] = useState<Record<string, string>>({});
   const [franjaSeleccionada, setFranjaSeleccionada] = useState<Record<string, string>>({});
   const ultima = estado.solicitudes[0];
 
   const ingresar = () => {
+    const valido = CUENTAS_PRUEBA.some((cuenta) =>
+      cuenta.perfil === perfilElegido &&
+      cuenta.usuario === usuario.trim().toLowerCase() &&
+      cuenta.clave === clave
+    );
+    if (!valido) {
+      setErrorAcceso("Usuario o contraseña incorrectos para el perfil seleccionado.");
+      return;
+    }
+    setErrorAcceso("");
     const elegido = PERFILES.find((p) => p.perfil === perfilElegido);
     if (!elegido) return;
     despachar({ tipo: "cambiarPerfil", perfil: elegido.perfil });
@@ -77,7 +96,7 @@ function Selector() {
         <div className="mt-7 grid grid-cols-2 rounded-full border border-[#dce8f0] bg-[#edf3f8] p-1 shadow-inner" role="group" aria-label="Tipo de acceso">
           {PERFILES.slice(0, 2).map((p) => (
             <button key={p.perfil} type="button" aria-pressed={perfilElegido === p.perfil}
-              onClick={() => setPerfilElegido(p.perfil)}
+              onClick={() => { setPerfilElegido(p.perfil); setErrorAcceso(""); setUsuario(""); setClave(""); }}
               className={`min-h-12 rounded-full px-2 font-display text-sm font-semibold transition-colors ${perfilElegido === p.perfil ? "bg-gradient-to-r from-[#1e88c8] to-[#0b5e9c] text-white shadow-[0_5px_12px_#0b5e9c30]" : "text-[#6d6e71]"}`}>
               {p.perfil === "paciente" ? "Personas" : "Profesionales"}
             </button>
@@ -92,24 +111,25 @@ function Selector() {
               <span className="sr-only">Cédula o correo electrónico</span>
               <span className="flex min-h-14 items-center gap-3 rounded-[20px] border border-[#dbe7ef] bg-white px-4 shadow-[3px_5px_14px_#0b5e9c0b]">
                 <svg className="size-5 shrink-0 text-[#1e88c8]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21v-2a8 8 0 0 1 16 0v2"/></svg>
-                <input type="text" autoComplete="username" placeholder="Cédula o correo electrónico" className="min-w-0 w-full bg-transparent text-sm text-[#005b8f] outline-none placeholder:text-[#8d9ca8]" />
+                <input type="text" value={usuario} onChange={(e) => { setUsuario(e.target.value); setErrorAcceso(""); }} autoComplete="username" placeholder="Cédula o correo electrónico" className="min-w-0 w-full bg-transparent text-sm text-[#005b8f] outline-none placeholder:text-[#8d9ca8]" />
               </span>
             </label>
             <label className="block">
               <span className="sr-only">Contraseña</span>
               <span className="flex min-h-14 items-center gap-3 rounded-[20px] border border-[#dbe7ef] bg-white px-4 shadow-[3px_5px_14px_#0b5e9c0b]">
                 <svg className="size-5 shrink-0 text-[#1e88c8]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true"><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
-                <input type="password" autoComplete="current-password" placeholder="Contraseña" className="min-w-0 w-full bg-transparent text-sm text-[#005b8f] outline-none placeholder:text-[#8d9ca8]" />
+                <input type="password" value={clave} onChange={(e) => { setClave(e.target.value); setErrorAcceso(""); }} autoComplete="current-password" placeholder="Contraseña" className="min-w-0 w-full bg-transparent text-sm text-[#005b8f] outline-none placeholder:text-[#8d9ca8]" />
               </span>
             </label>
             <label className="flex items-center gap-2.5 text-xs text-[#6d6e71]">
               <input type="checkbox" className="size-4 accent-[#0b5e9c]" /> Recordar mis datos
             </label>
+            {errorAcceso && <p role="alert" className="text-center text-xs font-medium text-[#a43c32]">{errorAcceso}</p>}
             <button type="submit" className="clay-interactive flex min-h-14 w-full items-center justify-center gap-3 rounded-full bg-gradient-to-r from-[#1e88c8] to-[#0b5e9c] font-display text-base font-semibold text-white shadow-[4px_9px_20px_#0b5e9c35]">
               Ingresar <span aria-hidden="true">→</span>
             </button>
           </form>
-          <p className="mt-3 text-center text-[11px] text-[#6d6e71]">Acceso de prueba: los campos todavía no autentican usuarios.</p>
+          <p className="mt-3 text-center text-[11px] text-[#6d6e71]">Cuenta de prueba: {perfilElegido === "paciente" ? "persona@vitalis.test" : "profesional@vitalis.test"} · Clave: Vitalis2026!</p>
         </section>
 
         <div className="mt-auto pt-7">
