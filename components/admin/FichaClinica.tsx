@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { datosClinicosIniciales } from "@/lib/vitalis/pacientes-iniciales";
 import HistoriaClinica from "@/components/admin/HistoriaClinica";
+import MedicacionPaciente from "@/components/admin/MedicacionPaciente";
 
 type PacienteInfo={id:string;nombre:string;apellido:string;documento:string;nacimiento:string;telefono:string;direccion:string;emergencia:string;afiliado:boolean;motivo:string;estado:string};
 type Vital={fecha:string;ta:string;fc:string;fr:string;sat:string;glucemia:string;temp:string;peso:string;talla:string};
@@ -9,8 +10,8 @@ type Asiento={id:string;fecha:string;titulo:string;detalle:string};
 type Indicacion={id:string;farmaco:string;dosis:string;via:string;frecuencia:string;prescriptor:string;desde:string;hasta:string};
 type Archivo={id:string;nombre:string;tipo:"Foto"|"Documento";fecha:string};
 type Datos={vitales:Vital[];enfermeria:Asiento[];indicaciones:Indicacion[];archivos:Archivo[]};
-type Tab="Historia clínica"|"Enfermería"|"Indicaciones"|"Fotografías"|"Documentos"|"Ubicación";
-const tabs:Tab[]=["Historia clínica","Enfermería","Indicaciones","Fotografías","Documentos","Ubicación"];
+type Tab="Historia clínica"|"Enfermería"|"Indicaciones"|"Medicación"|"Fotografías"|"Documentos"|"Ubicación";
+const tabs:Tab[]=["Historia clínica","Enfermería","Indicaciones","Medicación","Fotografías","Documentos","Ubicación"];
 const inicial:Datos={vitales:[],enfermeria:[],indicaciones:[],archivos:[]};
 const input="w-full rounded-xl border border-line bg-white px-3 py-2.5 text-ink";
 const boton="min-h-11 rounded-xl bg-navy px-4 py-2 font-semibold text-white";
@@ -46,13 +47,14 @@ export default function FichaClinica({paciente:p}:{paciente:PacienteInfo}){
  </div>
  <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
   <button className={boton} onClick={()=>iniciar("vitales","Enfermería")}>❤️ Signos vitales</button>
-  <button className={boton} onClick={()=>iniciar("indicacion","Indicaciones")}>💉 Medicación</button>
+  <button className={boton} onClick={()=>{setTab("Medicación");setAccion(null);}}>💉 Medicación</button>
   <button className={boton} onClick={()=>iniciar("registro","Enfermería")}>📝 Nuevo registro</button>
   <button className={boton} onClick={()=>iniciar("foto","Fotografías")}>📷 Adjuntar foto</button>
  </div>
  <section className="min-w-0 rounded-2xl border border-line bg-white p-4 md:p-5">
   <div className="mb-4 flex flex-wrap gap-2" role="group" aria-label="Secciones de ficha clínica">{tabs.map(t=><button key={t} type="button" aria-pressed={tab===t} className={tab===t?boton:"min-h-11 rounded-xl border border-line px-3 py-2 text-sm text-navy"} onClick={()=>{setTab(t);setAccion(null);}}>{t}</button>)}</div>
   {tab==="Historia clínica"&&<HistoriaClinica pacienteId={p.id}/>}
+  {tab==="Medicación"&&<MedicacionPaciente pacienteId={p.id}/>}
   {tab==="Enfermería"&&<div className="space-y-3"><div className="flex flex-wrap justify-between gap-2"><h3 className="font-semibold text-navy">Registros de enfermería</h3><div className="flex gap-2"><button className={boton} onClick={()=>iniciar("registro","Enfermería")}>Nuevo registro</button><button className={boton} onClick={()=>iniciar("vitales","Enfermería")}>Signos vitales</button></div></div>{datos.enfermeria.map(x=><article key={x.id} className="rounded-xl border border-line p-3"><p className="text-xs text-ink-soft">{x.fecha.replace("T"," ")}</p><h4 className="font-semibold">{x.titulo}</h4><p className="whitespace-pre-wrap text-sm">{x.detalle}</p></article>)}{datos.vitales.map((x,i)=><article key={x.fecha+i} className="rounded-xl border border-line p-3"><p className="text-xs text-ink-soft">{x.fecha.replace("T"," ")}</p><h4 className="font-semibold">Control de signos vitales</h4><p className="text-sm">{camposVital.filter(([k])=>x[k]).map(([k,n])=>n+": "+x[k]).join(" · ")}</p></article>)}{datos.enfermeria.length+datos.vitales.length===0&&<p className="text-sm text-ink-soft">Todavía no hay registros.</p>}</div>}
   {tab==="Indicaciones"&&<div className="space-y-3"><div className="flex flex-wrap justify-between gap-2"><h3 className="font-semibold text-navy">Indicaciones médicas</h3><button className={boton} onClick={()=>iniciar("indicacion","Indicaciones")}>Nueva indicación</button></div>{datos.indicaciones.map(x=><article key={x.id} className="rounded-xl border border-line p-3"><h4 className="font-semibold">{x.farmaco} · {x.dosis}</h4><p className="text-sm">{x.via} · {x.frecuencia}</p><p className="text-xs text-ink-soft">Prescriptor: {x.prescriptor} · {x.desde||"Sin inicio"} — {x.hasta||"Sin fin"}</p></article>)}{!datos.indicaciones.length&&<p className="text-sm text-ink-soft">Todavía no hay indicaciones.</p>}</div>}
   {(tab==="Fotografías"||tab==="Documentos")&&<div className="space-y-3"><div className="flex flex-wrap justify-between gap-2"><h3 className="font-semibold text-navy">{tab}</h3><button className={boton} onClick={()=>iniciar(tab==="Fotografías"?"foto":"documento",tab)}>Agregar {tab==="Fotografías"?"fotografía":"documento"}</button></div><p className="text-xs text-ink-soft">Se registran referencias de archivos; la carga multimedia estará disponible en otra etapa.</p>{datos.archivos.filter(a=>a.tipo===(tab==="Fotografías"?"Foto":"Documento")).map(a=><article key={a.id} className="rounded-xl border border-line p-3"><p className="font-medium">{a.nombre}</p><p className="text-xs text-ink-soft">{a.fecha.replace("T"," ")}</p></article>)}</div>}
