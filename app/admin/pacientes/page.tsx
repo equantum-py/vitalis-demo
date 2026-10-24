@@ -4,6 +4,8 @@ import { useEffect, useMemo, useState } from "react";
 import { EncabezadoPagina, Panel } from "@/components/admin/Encabezado";
 import FichaClinica from "@/components/admin/FichaClinica";
 import { PACIENTES_INICIALES_50 } from "@/lib/vitalis/pacientes-iniciales";
+import { pacientesDeEventos, type PacienteEvento } from "@/lib/vitalis/atenciones-pacientes";
+import Link from "next/link";
 
 type Paciente = {
   id: string; nombre: string; apellido: string; documento: string; nacimiento: string;
@@ -23,6 +25,7 @@ const boton = "inline-flex min-h-11 items-center justify-center rounded-xl bg-na
 function edad(fecha:string) { if(!fecha) return "Sin dato"; const n=new Date(fecha+"T12:00:00"); if(Number.isNaN(n.getTime())) return "Sin dato"; const hoy=new Date(); let e=hoy.getFullYear()-n.getFullYear(); if(hoy.getMonth()<n.getMonth() || (hoy.getMonth()===n.getMonth() && hoy.getDate()<n.getDate())) e--; return e>=0?e+" años":"Sin dato"; }
 export default function PacientesAdmin() {
  const [pacientes,setPacientes]=useState<Paciente[]>([]);
+ const [pacientesEvento,setPacientesEvento]=useState<PacienteEvento[]>([]);
  const [listo,setListo]=useState(false);
  const [buscar,setBuscar]=useState("");
  const [estadoFiltro,setEstadoFiltro]=useState("Todos");
@@ -44,8 +47,11 @@ export default function PacientesAdmin() {
   setListo(true);
  },[]);
  useEffect(()=>{if(listo) localStorage.setItem(CLAVE,JSON.stringify(pacientes));},[pacientes,listo]);
- const filtrados=useMemo(()=>pacientes.filter(p=> (estadoFiltro==="Todos"||p.estado===estadoFiltro) && [p.nombre,p.apellido,p.documento,p.telefono].join(" ").toLowerCase().includes(buscar.trim().toLowerCase())),[pacientes,buscar,estadoFiltro]);
- const actual=pacientes.find(p=>p.id===seleccion);
+ useEffect(()=>{const actualizar=()=>setPacientesEvento(pacientesDeEventos());actualizar();window.addEventListener("storage",actualizar);window.addEventListener("vitalis-eventos-cambio",actualizar);return()=>{window.removeEventListener("storage",actualizar);window.removeEventListener("vitalis-eventos-cambio",actualizar);};},[]);
+ const todos=useMemo(()=>([...pacientesEvento,...pacientes] as (Paciente|PacienteEvento)[]),[pacientesEvento,pacientes]);
+ const filtrados=useMemo(()=>todos.filter(p=> (estadoFiltro==="Todos"||p.estado===estadoFiltro) && [p.nombre,p.apellido,p.documento,p.telefono].join(" ").toLowerCase().includes(buscar.trim().toLowerCase())),[todos,buscar,estadoFiltro]);
+ const actual=todos.find(p=>p.id===seleccion);
+ const desdeEvento=actual&&"atencion" in actual?actual as PacienteEvento:null;
  function guardar(e:React.FormEvent<HTMLFormElement>){e.preventDefault();const d=form.documento.trim(); if(!form.nombre.trim()||!form.apellido.trim()||!d){setError("Nombre, apellido y documento son obligatorios.");return;}if(pacientes.some(p=>p.documento.trim().toLowerCase()===d.toLowerCase()&&p.id!==form.id)){setError("Ya existe un paciente con ese documento.");return;}const nuevo={...form,id:form.id||"demo-"+Date.now().toString(36),nombre:form.nombre.trim(),apellido:form.apellido.trim(),documento:d};setPacientes(prev=>form.id?prev.map(p=>p.id===form.id?nuevo:p):[nuevo,...prev]);setSeleccion(nuevo.id);setEditando(false);setError("");}
  function campo(etiqueta:string,llave:keyof Paciente,tipo="text"){return <label className="flex flex-col gap-1 text-sm font-medium text-ink">{etiqueta}<input className={input} type={tipo} value={String(form[llave]??"")} onChange={e=>setForm(v=>({...v,[llave]:e.target.value}))}/></label>;}
  return <div className="space-y-5">
@@ -60,12 +66,12 @@ export default function PacientesAdmin() {
     <div className="flex flex-wrap gap-3"><button className={boton} type="submit">Guardar paciente</button><button type="button" className="rounded-xl border border-line px-4 py-2" onClick={()=>{setEditando(false);setError("");}}>Cancelar</button></div>
    </form>
   </Panel> : actual ? <Panel titulo="Ficha del paciente">
-    <div className="mb-4 flex flex-wrap gap-3"><button type="button" className="rounded-xl border border-line px-4 py-2" onClick={()=>setSeleccion(null)}>← Volver al listado</button><button type="button" className={boton} onClick={()=>{setForm({...actual});setEditando(true);}}>Editar ficha</button></div>
-    <FichaClinica paciente={actual} />
+    <div className="mb-4 flex flex-wrap gap-3"><button type="button" className="rounded-xl border border-line px-4 py-2" onClick={()=>setSeleccion(null)}>← Volver al listado</button>{!desdeEvento&&<button type="button" className={boton} onClick={()=>{setForm({...actual});setEditando(true);}}>Editar ficha</button>}</div>
+    {desdeEvento ? <div className="space-y-4"><div className="rounded-xl bg-paper p-4"><h2 className="text-xl font-semibold text-navy">{desdeEvento.atencion.paciente}</h2><p className="text-sm">Documento: {desdeEvento.atencion.documento||"No informado"}</p><p className="text-sm">Evento: {desdeEvento.eventoNombre} · {desdeEvento.eventoLugar}</p><p className="text-sm">Fecha: {desdeEvento.atencion.fecha.replace("T"," ")}</p><p className="text-sm">Enfermero: {desdeEvento.atencion.enfermero}</p><p className="text-sm">Resultado: {desdeEvento.atencion.resultado}</p></div><section className="rounded-xl border border-line p-4"><h3 className="font-semibold text-navy">Registro de atención</h3><p>Motivo: {desdeEvento.atencion.motivo}</p><p>Prestación: {desdeEvento.atencion.prestacion}</p></section><section className="rounded-xl border border-line p-4"><h3 className="font-semibold text-navy">Signos vitales registrados</h3><div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">{([["Presión arterial",desdeEvento.atencion.ta],["Frecuencia cardíaca",desdeEvento.atencion.fc],["Frecuencia respiratoria",desdeEvento.atencion.fr],["Saturación O₂",desdeEvento.atencion.sat],["Glucemia",desdeEvento.atencion.glucemia],["Temperatura",desdeEvento.atencion.temp],["Peso",desdeEvento.atencion.peso],["Talla",desdeEvento.atencion.talla]] as const).map(([nombre,valor])=><div key={nombre} className="rounded-xl bg-paper p-3"><p className="text-xs text-ink-soft">{nombre}</p><p className="font-semibold text-navy">{valor||"No registrado"}</p></div>)}</div></section><Link className="font-semibold text-navy underline" href="/admin/eventos">Consultar evento →</Link></div> : <FichaClinica paciente={actual} />}
    </Panel> : <>
    <div className="flex flex-wrap items-end justify-between gap-3"><div className="flex flex-wrap gap-3"><label className="flex flex-col gap-1 text-sm">Buscar<input className={input} type="search" value={buscar} onChange={e=>setBuscar(e.target.value)} placeholder="Nombre, documento o teléfono"/></label><label className="flex flex-col gap-1 text-sm">Estado<select className={input} value={estadoFiltro} onChange={e=>setEstadoFiltro(e.target.value)}><option>Todos</option>{ESTADOS.map(s=><option key={s}>{s}</option>)}</select></label></div><button type="button" className={boton} onClick={()=>{setForm({...VACIO});setError("");setEditando(true);}}>+ Nuevo paciente</button></div>
-   <p role="status" className="text-sm text-ink-soft">{filtrados.length} de {pacientes.length} pacientes</p>
-   <ul className="grid gap-3">{filtrados.map(p=><li key={p.id} className="rounded-2xl border border-line bg-white p-4"><div className="flex flex-wrap items-center justify-between gap-3"><div><p className="font-semibold text-ink">{p.nombre} {p.apellido}</p><p className="text-sm text-ink-soft">{p.documento} · {p.estado}</p></div><button type="button" className="min-h-11 rounded-xl border border-line px-4 font-semibold text-navy" onClick={()=>setSeleccion(p.id)}>Ver ficha</button></div></li>)}</ul>
+   <p role="status" className="text-sm text-ink-soft">{filtrados.length} de {todos.length} pacientes y atenciones</p>
+   <ul className="grid gap-3">{filtrados.map(p=><li key={p.id} className="rounded-2xl border border-line bg-white p-4"><div className="flex flex-wrap items-center justify-between gap-3"><div><p className="font-semibold text-ink">{p.nombre} {p.apellido}</p><p className="text-sm text-ink-soft">{p.documento} · {p.estado} {"atencion" in p?"· Atención en evento":""}</p></div><button type="button" className="min-h-11 rounded-xl border border-line px-4 font-semibold text-navy" onClick={()=>setSeleccion(p.id)}>Ver ficha</button></div></li>)}</ul>
    {listo&&filtrados.length===0&&<p className="rounded-xl bg-paper p-5 text-ink-soft">No se encontraron pacientes.</p>}
   </>}
  </div>;
