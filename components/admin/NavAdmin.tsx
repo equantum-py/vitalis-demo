@@ -12,6 +12,7 @@ const ITEMS: { href: string; etiqueta: string; icono: NombreIcono }[] = [
   { href: "/admin/funcionarios", etiqueta: "Funcionarios", icono: "usuarios" },
   { href: "/admin/solicitudes", etiqueta: "Solicitudes", icono: "solicitudes" },
   { href: "/admin/agenda", etiqueta: "Agenda", icono: "agenda" },
+  { href: "/admin/eventos", etiqueta: "Eventos", icono: "agenda" },
   { href: "/admin/profesionales", etiqueta: "Profesionales", icono: "usuarios" },
   { href: "/admin/urgencias", etiqueta: "Urgencias", icono: "triangulo" },
 ];
