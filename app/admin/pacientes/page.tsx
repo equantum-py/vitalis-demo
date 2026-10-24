@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { EncabezadoPagina, Panel } from "@/components/admin/Encabezado";
 import FichaClinica from "@/components/admin/FichaClinica";
+import { PACIENTES_INICIALES_50 } from "@/lib/vitalis/pacientes-iniciales";
 
 type Paciente = {
   id: string; nombre: string; apellido: string; documento: string; nacimiento: string;
@@ -29,7 +30,19 @@ export default function PacientesAdmin() {
  const [editando,setEditando]=useState(false);
  const [form,setForm]=useState<Paciente>(VACIO);
  const [error,setError]=useState("");
- useEffect(()=>{try {const raw=localStorage.getItem(CLAVE); const data=raw?JSON.parse(raw):EJEMPLOS; setPacientes(Array.isArray(data)?data.map((p:Paciente)=>p.id==="demo-001"&&p.nombre==="Paciente"&&p.apellido==="Demostración A"?{...p,nombre:"Lucía",apellido:"Benítez",documento:"PAC-001",direccion:"Barrio San Pablo, Asunción",emergencia:"Familiar responsable",motivo:"Seguimiento domiciliario"}:p.id==="demo-002"&&p.nombre==="Paciente"&&p.apellido==="Demostración B"?{...p,nombre:"Roberto",apellido:"Giménez",documento:"PAC-002",direccion:"Barrio Centro, Luque",emergencia:"Familiar responsable",motivo:"Atención domiciliaria"}:p):EJEMPLOS);} catch {setPacientes(EJEMPLOS);} setListo(true);},[]);
+ useEffect(()=>{
+  try {
+   const raw=localStorage.getItem(CLAVE);
+   const data=raw?JSON.parse(raw):EJEMPLOS;
+   const existentes:Paciente[]=Array.isArray(data)?data:EJEMPLOS;
+   const migrados=existentes.map(p=>p.id==="demo-001"&&p.nombre==="Paciente"&&p.apellido==="Demostración A"?{...p,nombre:"Lucía",apellido:"Benítez",documento:"PAC-001",direccion:"Barrio San Pablo, Asunción",emergencia:"Familiar responsable",motivo:"Seguimiento domiciliario"}:p.id==="demo-002"&&p.nombre==="Paciente"&&p.apellido==="Demostración B"?{...p,nombre:"Roberto",apellido:"Giménez",documento:"PAC-002",direccion:"Barrio Centro, Luque",emergencia:"Familiar responsable",motivo:"Atención domiciliaria"}:p);
+   const ids=new Set(migrados.map(p=>p.id));
+   const docs=new Set(migrados.map(p=>p.documento.trim().toLowerCase()));
+   const adicionales=PACIENTES_INICIALES_50.filter(p=>!ids.has(p.id)&&!docs.has(p.documento.toLowerCase())) as Paciente[];
+   setPacientes([...migrados,...adicionales]);
+  } catch {setPacientes([...EJEMPLOS,...PACIENTES_INICIALES_50] as Paciente[]);}
+  setListo(true);
+ },[]);
  useEffect(()=>{if(listo) localStorage.setItem(CLAVE,JSON.stringify(pacientes));},[pacientes,listo]);
  const filtrados=useMemo(()=>pacientes.filter(p=> (estadoFiltro==="Todos"||p.estado===estadoFiltro) && [p.nombre,p.apellido,p.documento,p.telefono].join(" ").toLowerCase().includes(buscar.trim().toLowerCase())),[pacientes,buscar,estadoFiltro]);
  const actual=pacientes.find(p=>p.id===seleccion);
