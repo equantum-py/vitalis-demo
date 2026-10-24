@@ -39,7 +39,9 @@ export default function InicioProfesional() {
               <li key={s.id} className="flex flex-wrap items-center justify-between gap-3 py-4">
                 <div>
                   <p className="font-semibold text-ink">{s.id}</p>
-                  <p className="text-sm text-ink-soft">{s.franja}</p>
+                  <Link href="/profesional/eventos" className="inline-flex min-h-11 items-center justify-center rounded-xl bg-navy px-4 font-semibold text-white">Mis eventos y coberturas →</Link>
+
+      <p className="text-sm text-ink-soft">{s.franja}</p>
                 </div>
                 <div className="flex items-center gap-3">
                   <StatusPill estado={s.estado} />
