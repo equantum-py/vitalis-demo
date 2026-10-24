@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { EncabezadoPagina, Panel } from "@/components/admin/Encabezado";
-import HistoriaClinica from "@/components/admin/HistoriaClinica";
+import FichaClinica from "@/components/admin/FichaClinica";
 
 type Paciente = {
   id: string; nombre: string; apellido: string; documento: string; nacimiento: string;
@@ -48,9 +48,7 @@ export default function PacientesAdmin() {
    </form>
   </Panel> : actual ? <Panel titulo="Ficha del paciente">
     <div className="mb-4 flex flex-wrap gap-3"><button type="button" className="rounded-xl border border-line px-4 py-2" onClick={()=>setSeleccion(null)}>← Volver al listado</button><button type="button" className={boton} onClick={()=>{setForm({...actual});setEditando(true);}}>Editar ficha</button></div>
-    <h2 className="font-display text-2xl text-navy">{actual.nombre} {actual.apellido}</h2><p className="mb-5 text-sm text-ink-soft">{actual.estado} · {edad(actual.nacimiento)}</p>
-    <dl className="grid gap-4 md:grid-cols-2">{([["Documento",actual.documento],["Nacimiento",actual.nacimiento||"Sin dato"],["Teléfono",actual.telefono||"Sin dato"],["Dirección",actual.direccion||"Sin dato"],["Contacto de emergencia",actual.emergencia||"Sin dato"],["Afiliación Vitalis",actual.afiliado?"Sí":"No"],["Motivo de atención",actual.motivo||"Sin dato"]] as const).map(([k,v])=><div key={k} className="rounded-xl bg-paper p-3"><dt className="text-xs text-ink-soft">{k}</dt><dd className="mt-1 font-medium text-ink">{v}</dd></div>)}</dl>
-    <HistoriaClinica pacienteId={actual.id} />
+    <FichaClinica paciente={actual} />
    </Panel> : <>
    <div className="flex flex-wrap items-end justify-between gap-3"><div className="flex flex-wrap gap-3"><label className="flex flex-col gap-1 text-sm">Buscar<input className={input} type="search" value={buscar} onChange={e=>setBuscar(e.target.value)} placeholder="Nombre, documento o teléfono"/></label><label className="flex flex-col gap-1 text-sm">Estado<select className={input} value={estadoFiltro} onChange={e=>setEstadoFiltro(e.target.value)}><option>Todos</option>{ESTADOS.map(s=><option key={s}>{s}</option>)}</select></label></div><button type="button" className={boton} onClick={()=>{setForm({...VACIO});setError("");setEditando(true);}}>+ Nuevo paciente</button></div>
    <p role="status" className="text-sm text-ink-soft">{filtrados.length} de {pacientes.length} pacientes</p>
