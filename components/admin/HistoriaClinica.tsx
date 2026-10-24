@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { historiaInicial50 } from "@/lib/vitalis/pacientes-iniciales";
 
 type Seccion = "Resumen" | "Antecedentes" | "Alergias" | "Diagnósticos" | "Tratamientos" | "Evolución";
 type Registro = { id: string; seccion: Exclude<Seccion,"Resumen">; fecha: string; titulo: string; detalle: string };
@@ -32,8 +33,8 @@ export default function HistoriaClinica({pacienteId}:{pacienteId:string}) {
   try {
    const guardado=localStorage.getItem(CLAVE);
    const mapa:Record<string,Registro[]>=guardado?JSON.parse(guardado):{};
-   setRegistros(Array.isArray(mapa[pacienteId])?mapa[pacienteId]:INICIALES[pacienteId]||[]);
-  } catch {setRegistros(INICIALES[pacienteId]||[]);}
+   setRegistros(Array.isArray(mapa[pacienteId])?mapa[pacienteId]:historiaInicial50(pacienteId)||INICIALES[pacienteId]||[]);
+  } catch {setRegistros(historiaInicial50(pacienteId)||INICIALES[pacienteId]||[]);}
   setSeccion("Resumen");setAbierto(false);setCargado(true);
  },[pacienteId]);
  useEffect(()=>{
