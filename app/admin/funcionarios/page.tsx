@@ -6,9 +6,9 @@ type Rol = "Administrador" | "Supervisor" | "Enfermero";
 type Funcionario = { id: string; nombre: string; apellido: string; documento: string; telefono: string; correo: string; matricula: string; rol: Rol; activo: boolean };
 const CLAVE = "vitalis-demo-funcionarios-08b";
 const INICIALES: Funcionario[] = [
- { id:"func-demo-1", nombre:"Funcionario", apellido:"Demostración A", documento:"FUNC-DEMO-001", telefono:"000 000 001", correo:"", matricula:"", rol:"Administrador", activo:true },
- { id:"func-demo-2", nombre:"Funcionario", apellido:"Demostración B", documento:"FUNC-DEMO-002", telefono:"000 000 002", correo:"", matricula:"", rol:"Supervisor", activo:true },
- { id:"func-demo-3", nombre:"Funcionario", apellido:"Demostración C", documento:"FUNC-DEMO-003", telefono:"000 000 003", correo:"", matricula:"MAT-DEMO-003", rol:"Enfermero", activo:false }
+ { id:"func-demo-1", nombre:"Carlos", apellido:"Benítez", documento:"FUN-001", telefono:"000 000 001", correo:"", matricula:"", rol:"Administrador", activo:true },
+ { id:"func-demo-2", nombre:"Laura", apellido:"Martínez", documento:"FUN-002", telefono:"000 000 002", correo:"", matricula:"", rol:"Supervisor", activo:true },
+ { id:"func-demo-3", nombre:"Andrea", apellido:"Villalba", documento:"FUN-003", telefono:"000 000 003", correo:"", matricula:"MAT-003", rol:"Enfermero", activo:false }
 ];
 const VACIO: Funcionario = { id:"",nombre:"",apellido:"",documento:"",telefono:"",correo:"",matricula:"",rol:"Enfermero",activo:true };
 const CAMPO="w-full rounded-xl border border-line bg-white px-3 py-2.5 text-ink";
@@ -20,7 +20,7 @@ export default function FuncionariosPage() {
  const [filtro,setFiltro]=useState("Todos");
  const [form,setForm]=useState<Funcionario|null>(null);
  const [error,setError]=useState("");
- useEffect(()=>{try{const raw=localStorage.getItem(CLAVE);const lista=raw?JSON.parse(raw):INICIALES;setDatos(Array.isArray(lista)?lista:INICIALES);}catch{setDatos(INICIALES);}setCargado(true);},[]);
+ useEffect(()=>{try{const raw=localStorage.getItem(CLAVE);const lista=raw?JSON.parse(raw):INICIALES;setDatos(Array.isArray(lista)?lista.map((f:Funcionario)=>f.id==="func-demo-1"&&f.nombre==="Funcionario"&&f.apellido==="Demostración A"?{...f,nombre:"Carlos",apellido:"Benítez",documento:"FUN-001"}:f.id==="func-demo-2"&&f.nombre==="Funcionario"&&f.apellido==="Demostración B"?{...f,nombre:"Laura",apellido:"Martínez",documento:"FUN-002"}:f.id==="func-demo-3"&&f.nombre==="Funcionario"&&f.apellido==="Demostración C"?{...f,nombre:"Andrea",apellido:"Villalba",documento:"FUN-003",matricula:"MAT-003"}:f):INICIALES);}catch{setDatos(INICIALES);}setCargado(true);},[]);
  useEffect(()=>{if(cargado)localStorage.setItem(CLAVE,JSON.stringify(datos));},[datos,cargado]);
  const filtrados=useMemo(()=>datos.filter(f=>(filtro==="Todos"||f.rol===filtro||filtro==="Activos"&&f.activo||filtro==="Inactivos"&&!f.activo)&&[f.nombre,f.apellido,f.documento,f.matricula].join(" ").toLowerCase().includes(busqueda.toLowerCase().trim())),[datos,busqueda,filtro]);
  function guardar(e:React.FormEvent<HTMLFormElement>){e.preventDefault();if(!form)return;const d=form.documento.trim();if(!form.nombre.trim()||!form.apellido.trim()||!d){setError("Nombre, apellido y documento son obligatorios.");return;}if(datos.some(f=>f.id!==form.id&&f.documento.toLowerCase()===d.toLowerCase())){setError("El documento ya está registrado.");return;}const f={...form,nombre:form.nombre.trim(),apellido:form.apellido.trim(),documento:d,id:form.id||"func-"+Date.now().toString(36)};setDatos(v=>form.id?v.map(x=>x.id===f.id?f:x):[f,...v]);setForm(null);setError("");}
