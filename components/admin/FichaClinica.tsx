@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
+import { datosClinicosIniciales } from "@/lib/vitalis/pacientes-iniciales";
 import HistoriaClinica from "@/components/admin/HistoriaClinica";
 
 type PacienteInfo={id:string;nombre:string;apellido:string;documento:string;nacimiento:string;telefono:string;direccion:string;emergencia:string;afiliado:boolean;motivo:string;estado:string};
@@ -25,7 +26,7 @@ export default function FichaClinica({paciente:p}:{paciente:PacienteInfo}){
  const [archivo,setArchivo]=useState("");
  const [error,setError]=useState("");
  const clave="vitalis-ficha-clinica-08c-v2-"+p.id;
- useEffect(()=>{setCargado(false);try{const v=localStorage.getItem(clave);const x=v?JSON.parse(v):{};setDatos({vitales:Array.isArray(x.vitales)?x.vitales:[],enfermeria:Array.isArray(x.enfermeria)?x.enfermeria:[],indicaciones:Array.isArray(x.indicaciones)?x.indicaciones:[],archivos:Array.isArray(x.archivos)?x.archivos:[]});}catch{setDatos(inicial);}setTab("Historia clínica");setAccion(null);setCargado(true);},[clave]);
+ useEffect(()=>{setCargado(false);try{const v=localStorage.getItem(clave);const x=v?JSON.parse(v):(datosClinicosIniciales(p.id)||{});setDatos({vitales:Array.isArray(x.vitales)?x.vitales:[],enfermeria:Array.isArray(x.enfermeria)?x.enfermeria:[],indicaciones:Array.isArray(x.indicaciones)?x.indicaciones:[],archivos:Array.isArray(x.archivos)?x.archivos:[]});}catch{setDatos(inicial);}setTab("Historia clínica");setAccion(null);setCargado(true);},[clave]);
  useEffect(()=>{if(cargado)try{localStorage.setItem(clave,JSON.stringify(datos));}catch{}},[datos,cargado,clave]);
  function iniciar(a:typeof accion,t:Tab){setAccion(a);setTab(t);setError("");}
  function guardar(e:React.FormEvent){e.preventDefault();if(accion==="vitales"){if(!Object.entries(vital).some(([k,v])=>k!=="fecha"&&v.trim())){setError("Ingresá al menos una medición.");return;}setDatos(d=>({...d,vitales:[{...vital},...d.vitales]}));setVital({fecha:hoy(),ta:"",fc:"",fr:"",sat:"",glucemia:"",temp:"",peso:"",talla:""});}
