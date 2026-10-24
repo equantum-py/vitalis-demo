@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { EncabezadoPagina, Panel } from "@/components/admin/Encabezado";
+import HistoriaClinica from "@/components/admin/HistoriaClinica";
 
 type Paciente = {
   id: string; nombre: string; apellido: string; documento: string; nacimiento: string;
@@ -39,9 +40,9 @@ export default function PacientesAdmin() {
   
   {editando ? <Panel titulo={form.id?"Editar paciente":"Nuevo paciente"}>
    <form onSubmit={guardar} className="space-y-4">
-    <div className="grid gap-4 md:grid-cols-2">{campo("Nombre *","nombre")}{campo("Apellido *","apellido")}{campo("Número de cédula **","documento")}{campo("Fecha de nacimiento","nacimiento","date")}{campo("Teléfono","telefono")}{campo("Dirección","direccion")}{campo("Contacto de emergencia","emergencia")}{campo("Motivo de atención","motivo")}
+    <div className="grid gap-4 md:grid-cols-2">{campo("Nombre *","nombre")}{campo("Apellido *","apellido")}{campo("Número de cédula *","documento")}{campo("Fecha de nacimiento","nacimiento","date")}{campo("Teléfono","telefono")}{campo("Dirección","direccion")}{campo("Contacto de emergencia","emergencia")}{campo("Motivo de atención","motivo")}
     <label className="flex flex-col gap-1 text-sm font-medium">Estado<select className={input} value={form.estado} onChange={e=>setForm(v=>({...v,estado:e.target.value as Paciente["estado"]}))}>{ESTADOS.map(s=><option key={s}>{s}</option>)}</select></label>
-    <label className="flex items-center gap-2 text-sm font-medium"><input type="checkbox" checked={form.afiliado} onChange={e=>setForm(v=>({...v,afiliado:e.target.checked}))}/> Afiliado a Vitalis (demo)</label></div>
+    <label className="flex items-center gap-2 text-sm font-medium"><input type="checkbox" checked={form.afiliado} onChange={e=>setForm(v=>({...v,afiliado:e.target.checked}))}/> Afiliado a Vitalis</label></div>
     {error&&<p role="alert" className="text-red-700">{error}</p>}
     <div className="flex flex-wrap gap-3"><button className={boton} type="submit">Guardar paciente</button><button type="button" className="rounded-xl border border-line px-4 py-2" onClick={()=>{setEditando(false);setError("");}}>Cancelar</button></div>
    </form>
@@ -49,7 +50,7 @@ export default function PacientesAdmin() {
     <div className="mb-4 flex flex-wrap gap-3"><button type="button" className="rounded-xl border border-line px-4 py-2" onClick={()=>setSeleccion(null)}>← Volver al listado</button><button type="button" className={boton} onClick={()=>{setForm({...actual});setEditando(true);}}>Editar ficha</button></div>
     <h2 className="font-display text-2xl text-navy">{actual.nombre} {actual.apellido}</h2><p className="mb-5 text-sm text-ink-soft">{actual.estado} · {edad(actual.nacimiento)}</p>
     <dl className="grid gap-4 md:grid-cols-2">{([["Documento",actual.documento],["Nacimiento",actual.nacimiento||"Sin dato"],["Teléfono",actual.telefono||"Sin dato"],["Dirección",actual.direccion||"Sin dato"],["Contacto de emergencia",actual.emergencia||"Sin dato"],["Afiliación Vitalis",actual.afiliado?"Sí":"No"],["Motivo de atención",actual.motivo||"Sin dato"]] as const).map(([k,v])=><div key={k} className="rounded-xl bg-paper p-3"><dt className="text-xs text-ink-soft">{k}</dt><dd className="mt-1 font-medium text-ink">{v}</dd></div>)}</dl>
-    <div className="mt-5 rounded-xl border border-line p-4"><h3 className="font-semibold">Historia clínica</h3><p className="text-sm text-ink-soft">Los registros clínicos estarán disponibles próximamente.</p></div>
+    <HistoriaClinica pacienteId={actual.id} />
    </Panel> : <>
    <div className="flex flex-wrap items-end justify-between gap-3"><div className="flex flex-wrap gap-3"><label className="flex flex-col gap-1 text-sm">Buscar<input className={input} type="search" value={buscar} onChange={e=>setBuscar(e.target.value)} placeholder="Nombre, documento o teléfono"/></label><label className="flex flex-col gap-1 text-sm">Estado<select className={input} value={estadoFiltro} onChange={e=>setEstadoFiltro(e.target.value)}><option>Todos</option>{ESTADOS.map(s=><option key={s}>{s}</option>)}</select></label></div><button type="button" className={boton} onClick={()=>{setForm({...VACIO});setError("");setEditando(true);}}>+ Nuevo paciente</button></div>
    <p role="status" className="text-sm text-ink-soft">{filtrados.length} de {pacientes.length} pacientes</p>
