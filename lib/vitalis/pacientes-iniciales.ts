@@ -25,8 +25,8 @@ export const PACIENTES_INICIALES_50 = NOMBRES.map(([nombre,apellido],i)=>({
 }));
 export const esPacienteInicial50 = (id:string)=>id.startsWith("vitalis-pac-")&&/^vitalis-pac-\\d{3}$/.test(id);
 export function datosClinicosIniciales(id:string){
- const indice=Number(id.slice(-3))-1;
- if(!esPacienteInicial50(id)||indice<0||indice>=50)return null;
+ const indice=id==="demo-001"?4:id==="demo-002"?12:Number(id.slice(-3))-1;
+ if((!esPacienteInicial50(id)||indice<0||indice>=50)&&id!=="demo-001"&&id!=="demo-002")return null;
  const fecha="2026-10-"+String(10+indice%14).padStart(2,"0")+"T09:30";
  return {
   vitales:[{fecha,ta:`${112+indice%15}/${72+indice%10}`,fc:String(68+indice%22),fr:String(14+indice%7),sat:String(96+indice%4),glucemia:String(85+indice%30),temp:(36.1+(indice%9)/10).toFixed(1),peso:String(58+indice%34),talla:String(150+indice%35)}],
