@@ -1,10 +1,11 @@
 "use client";
 
-import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useState } from "react";
 import { DemoBadge } from "@/components/DemoBadge";
-import { AvisoDemo, CLASE_BOTON, CLASE_INPUT, PageTitle, Tarjeta } from "@/components/ui";
+import { MarcaVitalis } from "@/components/MarcaVitalis";
+import { InstalarVitalis } from "@/components/InstalarVitalis";
+import { CLASE_BOTON, CLASE_INPUT, Tarjeta } from "@/components/ui";
 import { FRANJAS_DEMO, PACIENTE_DEMO, PROFESIONALES_DEMO } from "@/lib/fixtures";
 import { ETIQUETA_ESTADO } from "@/lib/estado-ui";
 import { useDemo } from "@/lib/store";
@@ -14,14 +15,14 @@ const PERFILES: { perfil: Perfil; titulo: string; descripcion: string; ruta: str
   {
     perfil: "paciente",
     titulo: "Pacientes y familias",
-    descripcion: `${PACIENTE_DEMO.nombre} (ficticia). Solicitar atención y seguir su estado.`,
+    descripcion: `${PACIENTE_DEMO.nombre}. Solicitar atención y seguir su estado.`,
     ruta: "/paciente",
     disponible: true,
   },
   {
     perfil: "profesional",
     titulo: "Profesionales",
-    descripcion: "Agenda, inicio de visita, registro simulado y finalización.",
+    descripcion: "Agenda, inicio de visita, registro y finalización.",
     ruta: "/profesional",
     disponible: true,
   },
@@ -32,6 +33,12 @@ const PERFILES: { perfil: Perfil; titulo: string; descripcion: string; ruta: str
     ruta: "/admin",
     disponible: true,
   },
+];
+
+// Cuentas ficticias exclusivamente para recorrer la interfaz. No constituyen autenticación real.
+const CUENTAS_PRUEBA = [
+  { perfil: "paciente" as Perfil, usuario: "1234567", clave: "123456" },
+  { perfil: "profesional" as Perfil, usuario: "7654321", clave: "654321" },
 ];
 
 export default function SelectorDemo() {
@@ -47,49 +54,105 @@ function Selector() {
   const modoPruebas = useSearchParams().get("pruebas") === "1";
   const { estado, despachar, restablecer } = useDemo();
   const router = useRouter();
-  const [confirmarReinicio, setConfirmarReinicio] = useState(false);
+  const [perfilElegido, setPerfilElegido] = useState<Perfil>("paciente");
+  const [usuario, setUsuario] = useState("");
+  const [clave, setClave] = useState("");
+  const [errorAcceso, setErrorAcceso] = useState("");
+  const [confirmarRestablecimiento, setConfirmarRestablecimiento] = useState(false);
   const [asignacion, setAsignacion] = useState<Record<string, string>>({});
   const [franjaSeleccionada, setFranjaSeleccionada] = useState<Record<string, string>>({});
   const ultima = estado.solicitudes[0];
 
+  const ingresar = () => {
+    if (!/^[0-9]{6}$/.test(clave)) {
+      setErrorAcceso("La contraseña debe tener exactamente 6 dígitos.");
+      return;
+    }
+    if (!/^[0-9]+$/.test(usuario.trim())) {
+      setErrorAcceso("Ingresá tu número de cédula, solo números.");
+      return;
+    }
+    const valido = CUENTAS_PRUEBA.some((cuenta) =>
+      cuenta.perfil === perfilElegido &&
+      cuenta.usuario === usuario.trim() &&
+      cuenta.clave === clave
+    );
+    if (!valido) {
+      setErrorAcceso("Cédula o contraseña incorrecta para el perfil seleccionado.");
+      return;
+    }
+    setErrorAcceso("");
+    const elegido = PERFILES.find((p) => p.perfil === perfilElegido);
+    if (!elegido) return;
+    despachar({ tipo: "cambiarPerfil", perfil: elegido.perfil });
+    router.push(elegido.ruta);
+  };
+
   return (
-    <main className="mx-auto flex min-h-dvh w-full max-w-2xl flex-col gap-6 p-5 md:my-8 md:rounded-3xl md:bg-paper md:p-8 md:shadow-sm">
-      <div className="flex items-center justify-between">
-        <p className="font-display text-lg font-semibold text-azul-600">VITALIS</p>
-        <DemoBadge />
+    <main className="relative mx-auto flex min-h-dvh w-full max-w-md flex-col overflow-hidden bg-[#f8fcff] text-[#005b8f] sm:my-6 sm:min-h-[calc(100dvh-3rem)] sm:rounded-[34px] sm:shadow-[12px_18px_45px_#005b8f20]">
+      <div className="pointer-events-none absolute -right-24 -top-28 size-80 rounded-full bg-[#dff3fc]/70 blur-3xl" aria-hidden="true" />
+      <div className="pointer-events-none absolute -left-32 top-72 size-72 rounded-full bg-[#e7f5ed]/70 blur-3xl" aria-hidden="true" />
+      <div className="relative flex flex-1 flex-col px-7 pb-7 pt-8">
+        <header className="flex items-center justify-center">
+          <div className="scale-125 origin-center"><MarcaVitalis /></div>
+          <DemoBadge />
+        </header>
+        <div className="mt-8 text-center">
+          <p className="text-[11px] font-semibold uppercase tracking-[.2em] text-[#7cb342]">Servicio de enfermería</p>
+          <h1 className="mt-2 font-display text-[27px] font-semibold leading-tight text-[#005b8f]">Tu salud en buenas manos</h1>
+          <p className="mx-auto mt-2 max-w-[270px] text-sm leading-relaxed text-[#6d6e71]">Accedé a una atención más simple, cercana y segura.</p>
+        </div>
+
+        <div className="mt-7 grid grid-cols-2 rounded-full border border-[#dce8f0] bg-[#edf3f8] p-1 shadow-inner" role="group" aria-label="Tipo de acceso">
+          {PERFILES.slice(0, 2).map((p) => (
+            <button key={p.perfil} type="button" aria-pressed={perfilElegido === p.perfil}
+              onClick={() => { setPerfilElegido(p.perfil); setErrorAcceso(""); setUsuario(""); setClave(""); }}
+              className={`min-h-12 rounded-full px-2 font-display text-sm font-semibold transition-colors ${perfilElegido === p.perfil ? "bg-gradient-to-r from-[#1e88c8] to-[#0b5e9c] text-white shadow-[0_5px_12px_#0b5e9c30]" : "text-[#6d6e71]"}`}>
+              {p.perfil === "paciente" ? "Personas" : "Profesionales"}
+            </button>
+          ))}
+        </div>
+
+        <section className="mt-7" aria-labelledby="acceso-vitalis">
+          <h2 id="acceso-vitalis" className="text-center font-display text-lg font-semibold">Ingresá a tu cuenta</h2>
+          <p className="mt-1 text-center text-xs text-[#6d6e71]">{perfilElegido === "paciente" ? "Pacientes y familias" : "Personal de enfermería y profesionales"}</p>
+          <form className="mt-6 space-y-4" onSubmit={(e) => { e.preventDefault(); ingresar(); }}>
+            <label className="block">
+              <span className="sr-only">Número de cédula</span>
+              <span className="flex min-h-14 items-center gap-3 rounded-[20px] border border-[#dbe7ef] bg-white px-4 shadow-[3px_5px_14px_#0b5e9c0b]">
+                <svg className="size-5 shrink-0 text-[#1e88c8]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21v-2a8 8 0 0 1 16 0v2"/></svg>
+                <input type="text" inputMode="numeric" pattern="[0-9]*" value={usuario} onChange={(e) => { setUsuario(e.target.value); setErrorAcceso(""); }} autoComplete="username" placeholder="Número de cédula" className="min-w-0 w-full bg-transparent text-sm text-[#005b8f] outline-none placeholder:text-[#8d9ca8]" />
+              </span>
+            </label>
+            <label className="block">
+              <span className="sr-only">Contraseña</span>
+              <span className="flex min-h-14 items-center gap-3 rounded-[20px] border border-[#dbe7ef] bg-white px-4 shadow-[3px_5px_14px_#0b5e9c0b]">
+                <svg className="size-5 shrink-0 text-[#1e88c8]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true"><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+                <input type="password" inputMode="numeric" maxLength={6} pattern="[0-9]{6}" value={clave} onChange={(e) => { setClave(e.target.value); setErrorAcceso(""); }} autoComplete="current-password" placeholder="Contraseña" className="min-w-0 w-full bg-transparent text-sm text-[#005b8f] outline-none placeholder:text-[#8d9ca8]" />
+              </span>
+            </label>
+            <label className="flex items-center gap-2.5 text-xs text-[#6d6e71]">
+              <input type="checkbox" className="size-4 accent-[#0b5e9c]" /> Recordar mis datos
+            </label>
+            {errorAcceso && <p role="alert" className="text-center text-xs font-medium text-[#a43c32]">{errorAcceso}</p>}
+            <button type="submit" className="clay-interactive flex min-h-14 w-full items-center justify-center gap-3 rounded-full bg-gradient-to-r from-[#1e88c8] to-[#0b5e9c] font-display text-base font-semibold text-white shadow-[4px_9px_20px_#0b5e9c35]">
+              Ingresar <span aria-hidden="true">→</span>
+            </button>
+          </form>
+          <p className="mt-3 text-center text-[11px] text-[#6d6e71]">Acceso de prueba: CI {perfilElegido === "paciente" ? "1234567" : "7654321"} · PIN {perfilElegido === "paciente" ? "123456" : "654321"}</p>
+        </section>
+
+        <InstalarVitalis />
+        <div className="mt-auto pt-7">
+          <div className="grid grid-cols-3 gap-2 border-t border-[#dbe7ef] pt-5 text-center text-[11px] text-[#6d6e71]">
+            <span className="flex flex-col items-center gap-2"><span className="text-xl text-[#0b5e9c]">▦</span>Agendá tu visita</span>
+            <span className="flex flex-col items-center gap-2"><span className="text-xl text-[#0b5e9c]">♡</span>Atención cercana</span>
+            <span className="flex flex-col items-center gap-2"><span className="text-xl text-[#0b5e9c]">✓</span>Todo en un lugar</span>
+          </div>
+          <button type="button" onClick={() => { despachar({ tipo: "cambiarPerfil", perfil: "administracion" }); router.push("/admin"); }} className="mt-5 w-full py-2 text-center text-xs font-medium text-[#005b8f] underline underline-offset-4">Acceso de administración</button>
+        </div>
       </div>
-
-      <PageTitle eyebrow="Demostración" title="Elija un perfil para recorrer la demo">
-        <span>
-          Todos los datos son ficticios. No hay inicio de sesión real: el perfil solo define por dónde empieza el
-          recorrido.
-        </span>
-      </PageTitle>
-
-      <section aria-labelledby="perfiles" className="flex flex-col gap-3">
-        <h2 id="perfiles" className="sr-only">
-          Perfiles de demostración
-        </h2>
-        {PERFILES.map((p) => (
-          <button
-            key={p.perfil}
-            type="button"
-            onClick={() => {
-              despachar({ tipo: "cambiarPerfil", perfil: p.perfil });
-              router.push(p.ruta);
-            }}
-            className="flex min-h-16 flex-col items-start gap-1 rounded-2xl border border-line bg-white p-4 text-left transition-colors hover:border-azul-600 focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-azul-600"
-          >
-            <span className="flex w-full items-center justify-between">
-              <span className="font-semibold text-ink">{p.titulo}</span>
-              {!p.disponible && (
-                <span className="shrink-0 whitespace-nowrap rounded-full bg-paper px-2 py-0.5 text-xs font-semibold text-ink-soft">En construcción</span>
-              )}
-            </span>
-            <span className="text-sm text-ink-soft">{p.descripcion}</span>
-          </button>
-        ))}
-      </section>
+      <div className="h-3 bg-gradient-to-r from-[#43b9d7] via-[#1e88c8] to-[#005b8f]" aria-hidden="true" />
 
       {modoPruebas && (
       <Tarjeta className="flex flex-col gap-4 border-dashed">
@@ -99,6 +162,17 @@ function Selector() {
             Temporal, para verificar que una solicitud creada en el módulo de pacientes llega al estado compartido. En
             E03-C, estas acciones pasan al panel de administración.
           </p>
+        </div>
+
+        <div className="flex flex-col gap-2">
+          <button type="button" className={CLASE_BOTON.secundario} onClick={() => setConfirmarRestablecimiento(true)}>Restablecer demo</button>
+          {confirmarRestablecimiento && (
+            <div className="flex flex-col gap-2">
+              <p className="text-sm text-ink">Se eliminarán los datos ficticios guardados en este navegador.</p>
+              <button type="button" className={CLASE_BOTON.secundario} onClick={() => { restablecer(); setConfirmarRestablecimiento(false); }}>Sí, borrar los datos de la demo</button>
+              <button type="button" className={CLASE_BOTON.secundario} onClick={() => setConfirmarRestablecimiento(false)}>Cancelar</button>
+            </div>
+          )}
         </div>
 
         {!ultima && <p className="text-ink-soft">Todavía no hay solicitudes. Cree una desde el perfil de pacientes.</p>}
@@ -186,42 +260,6 @@ function Selector() {
       </Tarjeta>
       )}
 
-      <Tarjeta className="flex flex-col gap-3">
-        <h2 className="font-semibold text-ink">Datos de la demo</h2>
-        <p className="text-sm text-ink-soft">
-          Los cambios se guardan solo en este navegador. No se envían a Vitalis ni a ningún sistema externo.
-        </p>
-        {!confirmarReinicio ? (
-          <button type="button" onClick={() => setConfirmarReinicio(true)} className={CLASE_BOTON.peligro}>
-            Restablecer demo
-          </button>
-        ) : (
-          <div className="flex flex-col gap-2 sm:flex-row">
-            <button
-              type="button"
-              onClick={() => {
-                restablecer();
-                setConfirmarReinicio(false);
-                setAsignacion({});
-                setFranjaSeleccionada({});
-              }}
-              className={CLASE_BOTON.peligro}
-            >
-              Sí, borrar los datos de la demo
-            </button>
-            <button type="button" onClick={() => setConfirmarReinicio(false)} className={CLASE_BOTON.secundario}>
-              Cancelar
-            </button>
-          </div>
-        )}
-      </Tarjeta>
-
-      <AvisoDemo>
-        Vitalis todavía no aprobó las funcionalidades que se muestran. Son propuestas para validar en conjunto.{" "}
-        <Link href="/paciente" className="font-semibold text-azul-600 underline underline-offset-4">
-          Ir a pacientes
-        </Link>
-      </AvisoDemo>
     </main>
   );
 }

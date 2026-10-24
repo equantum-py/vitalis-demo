@@ -27,7 +27,7 @@ function ListaSolicitudes() {
     <div>
       <EncabezadoPagina
         titulo="Solicitudes"
-        descripcion="Solicitudes creadas por pacientes en la demostración. Seleccione una para asignar profesional o confirmar la franja."
+        descripcion="Seleccione una solicitud para asignar profesional o confirmar la franja."
       />
 
       <div className="mb-4 flex flex-col gap-3 lg:flex-row lg:items-end">
@@ -82,7 +82,7 @@ function ListaSolicitudes() {
               <thead className="bg-paper text-xs uppercase tracking-wider text-ink-soft">
                 <tr>
                   <th className="px-4 py-3 font-semibold">Código</th>
-                  <th className="px-4 py-3 font-semibold">Paciente (ficticio)</th>
+                  <th className="px-4 py-3 font-semibold">Paciente</th>
                   <th className="px-4 py-3 font-semibold">Motivo</th>
                   <th className="hidden px-4 py-3 font-semibold xl:table-cell">Preferencia</th>
                   <th className="px-4 py-3 font-semibold">Profesional</th>

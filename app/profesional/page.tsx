@@ -17,20 +17,20 @@ export default function InicioProfesional() {
   );
 
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-6 text-[#005b8f]">
       <EncabezadoPagina
         titulo={`Hola, ${activo?.nombre ?? "profesional"}`}
         descripcion="Resumen de visitas asignadas. Solo se muestran visitas de este profesional."
       />
 
-      <div className="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-4">
+      <div className="grid grid-cols-2 gap-3">
         <Kpi etiqueta="Por iniciar" valor={resumen.confirmadas} nota="Franja confirmada" />
         <Kpi etiqueta="En curso" valor={resumen.enCurso} nota="Visita iniciada" />
         <Kpi etiqueta="Finalizadas" valor={resumen.finalizadas} nota="Registro cerrado" />
         <Kpi etiqueta="Pendientes de franja" valor={resumen.pendientesFranja} nota="Sin confirmar por coordinación" />
       </div>
 
-      <Panel titulo="Próximas visitas">
+      <div className="vitalis-card p-4"><Panel titulo="Próximas visitas">
         {proximas.length === 0 ? (
           <Vacio>No hay visitas confirmadas para este profesional. Las visitas aparecen cuando coordinación confirma la franja.</Vacio>
         ) : (
@@ -39,7 +39,9 @@ export default function InicioProfesional() {
               <li key={s.id} className="flex flex-wrap items-center justify-between gap-3 py-4">
                 <div>
                   <p className="font-semibold text-ink">{s.id}</p>
-                  <p className="text-sm text-ink-soft">{s.franja}</p>
+                  <Link href="/profesional/eventos" className="inline-flex min-h-11 items-center justify-center rounded-xl bg-navy px-4 font-semibold text-white">Mis eventos y coberturas →</Link>
+
+      <p className="text-sm text-ink-soft">{s.franja}</p>
                 </div>
                 <div className="flex items-center gap-3">
                   <StatusPill estado={s.estado} />
@@ -51,10 +53,10 @@ export default function InicioProfesional() {
             ))}
           </ul>
         )}
-      </Panel>
+      </Panel></div>
 
       <p className="text-sm text-ink-soft">
-        Franjas de demostración: {FRANJAS_DEMO.join(" · ")}. Datos ficticios; no representan agenda real.
+        Franjas disponibles: {FRANJAS_DEMO.join(" · ")}.
       </p>
     </div>
   );

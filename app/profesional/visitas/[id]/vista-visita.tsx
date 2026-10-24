@@ -85,7 +85,7 @@ function DetalleVisita({ solicitud, onIniciar, onGuardar, onFinalizar }: PropsDe
     setErrores(nuevos);
     if (Object.keys(nuevos).length > 0) return;
     onGuardar(observaciones, indicaciones);
-    setAviso("Registro guardado (simulado). Puede seguir editándolo hasta finalizar la visita.");
+    setAviso("Registro guardado en este navegador. Puede seguir editándolo hasta finalizar la visita.");
     setErrorFinal(null);
   }
 
@@ -119,7 +119,7 @@ function DetalleVisita({ solicitud, onIniciar, onGuardar, onFinalizar }: PropsDe
 
       <div className="grid gap-6 lg:grid-cols-[1fr_380px]">
         <div className="flex flex-col gap-6">
-          <Panel titulo="Datos de la visita (ficticios)">
+          <Panel titulo="Datos de la visita">
             <dl className="grid gap-4 sm:grid-cols-2">
               <div>
                 <dt className="text-sm font-semibold text-ink-soft">Paciente</dt>
@@ -149,7 +149,7 @@ function DetalleVisita({ solicitud, onIniciar, onGuardar, onFinalizar }: PropsDe
             <p className="mt-4 rounded-xl bg-paper p-3 text-sm text-ink-soft">{PROXIMO_PASO[solicitud.estado]}</p>
           </Panel>
 
-          <Panel titulo="Registro de la visita (simulado)">
+          <Panel titulo="Registro de la visita">
             {cerrada && registro ? (
               <div className="flex flex-col gap-4">
                 <p className="rounded-xl bg-paper p-3 text-sm text-ink-soft">
@@ -172,7 +172,7 @@ function DetalleVisita({ solicitud, onIniciar, onGuardar, onFinalizar }: PropsDe
               <form onSubmit={guardar} noValidate className="flex flex-col gap-4" aria-label="Registro de la visita">
                 <div className="flex flex-col gap-1.5">
                   <label htmlFor="observaciones" className="text-sm font-semibold text-ink">
-                    Observaciones (texto ficticio)
+                    Observaciones
                   </label>
                   <textarea
                     id="observaciones"
@@ -191,7 +191,7 @@ function DetalleVisita({ solicitud, onIniciar, onGuardar, onFinalizar }: PropsDe
                 </div>
                 <div className="flex flex-col gap-1.5">
                   <label htmlFor="indicaciones" className="text-sm font-semibold text-ink">
-                    Indicaciones (texto ficticio, opcional)
+                    Indicaciones (opcional)
                   </label>
                   <textarea
                     id="indicaciones"
@@ -212,7 +212,7 @@ function DetalleVisita({ solicitud, onIniciar, onGuardar, onFinalizar }: PropsDe
           <Panel titulo="Firma del registro">
             <div className="flex flex-col gap-3">
               <p className="rounded-xl border border-dashed border-line p-4 text-sm text-ink-soft">
-                Firma digital: función futura. No está implementada en esta demostración y no tiene validez.
+                Firma digital no disponible. No se genera una firma con validez legal.
               </p>
               <button type="button" disabled className={CLASE_BOTON.secundario}>
                 Firmar registro (próximamente)

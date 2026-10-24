@@ -1,42 +1,75 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Roboto:wght@400;500;600;700&display=swap");
 @import "tailwindcss";
 
-/* Sistema visual aprobado (E04-E, dirección A "Clínica serena").
-   Colores observados en el logotipo e Instagram de Vitalis; los tonos de texto y fondo son propuestos.
-   Provisorio: no es todavía la identidad oficial aprobada por Vitalis. */
+/* Vitalis — etapa 01: identidad claymórfica suave.
+   Fuentes cargadas desde Google Fonts; requieren conexión en el navegador.
+   No se modifican estados, permisos ni reglas de negocio. */
 @theme inline {
-  --color-navy: #124266;
-  --color-azul: #0672ba;
-  --color-azul-600: #055e9e;
-  --color-azul-soft: #e3f0fa;
-  --color-azul-200: #bfdcf0;
-  --color-verde: #4b7a2f;
-  --color-verde-soft: #eaf3e4;
+  --color-navy: #005b8f;
+  --color-azul: #0b5e9c;
+  --color-azul-600: #005b8f;
+  --color-azul-soft: #e6f3fa;
+  --color-azul-200: #b9ddf0;
+  --color-verde: #7cb342;
+  --color-verde-soft: #f0f7e8;
   --color-paper: #f4f8fb;
   --color-surface: #ffffff;
-  --color-ink: #0e2f4a;
-  --color-ink-soft: #4e6478;
+  --color-ink: #005b8f;
+  --color-ink-soft: #6d6e71;
   --color-warm: #b5461c;
   --color-warm-soft: #fbede6;
   --color-warm-200: #eec3b1;
   --color-warm-ink: #8a3414;
   --color-line: #d6e2ec;
-  --font-sans: "Manrope", "Helvetica Neue", Arial, sans-serif;
-  --font-display: "Newsreader", Georgia, "Times New Roman", serif;
+  --font-sans: "Roboto", Arial, sans-serif;
+  --font-display: "Poppins", Arial, sans-serif;
 }
-
-html {
-  -webkit-text-size-adjust: 100%;
+:root {
+  --clay-shadow: 7px 9px 20px rgba(35, 82, 129, .09), -5px -5px 14px rgba(255, 255, 255, .9), inset 1px 1px 0 rgba(255,255,255,.85);
+  --clay-shadow-hover: 9px 12px 23px rgba(35, 82, 129, .13), -5px -5px 14px rgba(255,255,255,.95), inset 1px 1px 0 rgba(255,255,255,.9);
 }
-
+html { -webkit-text-size-adjust: 100%; }
 body {
   background: var(--color-paper);
   color: var(--color-ink);
   font-family: var(--font-sans);
   font-variant-numeric: tabular-nums;
 }
-
-@media (min-width: 768px) {
-  body {
-    background: #dce6ee;
-  }
+h1, h2, h3, h4, h5, h6, .font-display {
+  font-family: var(--font-display);
+  letter-spacing: -.025em;
 }
+.clay-card {
+  border: 1px solid rgba(206, 222, 238, .82);
+  border-radius: 22px;
+  background: linear-gradient(145deg, #ffffff 0%, #f8fbff 100%);
+  box-shadow: var(--clay-shadow);
+}
+.clay-interactive {
+  transition: box-shadow .18s ease, transform .18s ease, border-color .18s ease;
+}
+.clay-interactive:hover { box-shadow: var(--clay-shadow-hover); transform: translateY(-1px); }
+.clay-interactive:active { transform: translateY(0); }
+.clay-interactive:focus-visible { outline: 3px solid #0b5e9c; outline-offset: 3px; }
+@media (prefers-reduced-motion: reduce) {
+  .clay-interactive { transition: none; }
+  .clay-interactive:hover, .clay-interactive:active { transform: none; }
+}
+@media (min-width: 768px) { body { background: #e8f0f8; } }
+
+/* Colores oficiales Vitalis: referencia corporativa del 22/10/2026. */
+:root {
+  --vitalis-blue: #0b5e9c;
+  --vitalis-blue-light: #1e88c8;
+  --vitalis-green: #7cb342;
+  --vitalis-blue-dark: #005b8f;
+  --vitalis-gray: #6d6e71;
+}
+
+/* Identidad visual compartida por Personas y Profesionales. */
+.vitalis-shell { background: radial-gradient(circle at 90% 4%, #dff3fc 0, transparent 36%), radial-gradient(circle at 0% 55%, #e7f5ed 0, transparent 42%), #f8fcff; color: #005b8f; }
+.vitalis-header { background: rgba(255,255,255,.88); border-bottom: 1px solid #dbe7ef; }
+.vitalis-section-title { font-family: var(--font-display); font-size: 1rem; font-weight: 600; color: #005b8f; }
+.vitalis-card { border: 1px solid #dbe7ef; border-radius: 22px; background: linear-gradient(145deg,#fff,#f8fbff); box-shadow: var(--clay-shadow); }
+.vitalis-primary { border-radius: 9999px; background: linear-gradient(100deg,#1e88c8,#0b5e9c); color: white; font-family: var(--font-display); font-weight: 600; box-shadow: 4px 9px 20px #0b5e9c35; }
+.vitalis-field { border: 1px solid #dbe7ef; border-radius: 20px; background: white; color: #005b8f; box-shadow: 3px 5px 14px #0b5e9c0b; }

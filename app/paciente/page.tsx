@@ -1,104 +1,119 @@
 "use client";
 
 import Link from "next/link";
-import { EmergencyNotice } from "@/components/EmergencyNotice";
+import { useState } from "react";
 import { Icono } from "@/components/Icono";
-import { ProgresoSolicitud } from "@/components/ProgresoSolicitud";
-import { StatusPill } from "@/components/StatusPill";
-import { AvisoDemo } from "@/components/ui";
-import { PACIENTE_DEMO } from "@/lib/fixtures";
-import { formatearFecha } from "@/lib/formato";
-import { PROXIMO_PASO } from "@/lib/estado-ui";
+import { EmergencyNotice } from "@/components/EmergencyNotice";
+import { PACIENTE_DEMO, PROFESIONALES_DEMO } from "@/lib/fixtures";
 import { useDemo } from "@/lib/store";
+import { StatusPill } from "@/components/StatusPill";
+import { PROXIMO_PASO } from "@/lib/estado-ui";
+
+const SERVICIOS = ["Medicina general", "Enfermería", "Atención domiciliaria"];
 
 export default function InicioPaciente() {
   const { estado } = useDemo();
+  const [busqueda, setBusqueda] = useState("");
+  const [filtros, setFiltros] = useState(false);
   const reciente = estado.solicitudes[0];
+  const profesionales = PROFESIONALES_DEMO.filter((p) =>
+    p.nombre.toLowerCase().includes(busqueda.trim().toLowerCase()),
+  );
 
   return (
-    <div className="flex flex-col gap-6">
-      <header className="flex flex-col gap-1.5">
-        <h1 className="font-display text-[1.875rem] font-medium leading-tight text-navy">
-          Hola, {PACIENTE_DEMO.nombre.split(" ")[0]}
-        </h1>
-        <p className="text-[15px] text-ink-soft">¿En qué le podemos ayudar hoy?</p>
-      </header>
-
-      <section aria-labelledby="accion-principal" className="flex flex-col gap-4 rounded-3xl bg-azul p-5 text-white">
-        <div className="flex items-center gap-3.5">
-          <span className="flex size-11 shrink-0 items-center justify-center rounded-2xl bg-white/20">
-            <Icono nombre="solicitar" className="size-5.5" />
+    <div className="flex flex-col gap-7 pb-4 text-[#005b8f]">
+      <header className="flex items-center justify-between gap-3">
+        <div className="flex min-w-0 items-center gap-3">
+          <span aria-hidden="true" className="flex size-11 shrink-0 items-center justify-center rounded-full bg-[#e9f1fa] text-lg font-bold text-[#0b5e9c]">
+            {PACIENTE_DEMO.nombre.charAt(0)}
           </span>
           <div className="min-w-0">
-            <h2 id="accion-principal" className="text-[17px] font-semibold leading-snug">
-              Solicitar atención a domicilio
-            </h2>
-            <p className="mt-0.5 text-sm leading-snug text-white">
-              Coordinación confirma la franja y el profesional.
+            <h1 className="truncate text-[17px] font-semibold leading-tight">Hola, {PACIENTE_DEMO.nombre.split(" ")[0]}</h1>
+            <p className="mt-1 flex items-center gap-1 text-xs text-[#6d6e71]">
+              <Icono nombre="ubicacion" className="size-3 text-[#005b8f]" />
+              Atención a domicilio
             </p>
           </div>
         </div>
-        <Link
-          href="/paciente/solicitar"
-          className="flex min-h-13 items-center justify-center gap-1.5 rounded-2xl bg-white text-base font-semibold text-azul-600 focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-white"
-        >
-          Solicitar atención
-          <Icono nombre="flecha" className="size-4.5" />
+        <Link href="/paciente/solicitudes" aria-label="Ver solicitudes y avisos" className="flex size-11 shrink-0 items-center justify-center rounded-full bg-[#0b5e9c] text-white shadow-[0_8px_18px_#0b5e9c33]">
+          <Icono nombre="solicitudes" className="size-5" />
         </Link>
+      </header>
+
+      <div className="flex gap-2.5">
+        <label className="flex min-h-12 min-w-0 flex-1 items-center gap-2 rounded-xl border border-[#e3e8f0] bg-white px-4">
+          <span className="sr-only">Buscar profesional</span>
+          <input value={busqueda} onChange={(e) => setBusqueda(e.target.value)} placeholder="Buscar profesional" className="w-full min-w-0 bg-transparent text-sm outline-none placeholder:text-[#64758b]" />
+          <svg viewBox="0 0 24 24" fill="none" stroke="#1e88c8" strokeWidth="1.8" className="size-5 shrink-0" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m16 16 5 5"/></svg>
+        </label>
+        <button type="button" aria-label="Mostrar u ocultar filtros" aria-expanded={filtros} onClick={() => setFiltros(!filtros)} className="flex size-12 shrink-0 items-center justify-center rounded-xl border border-[#e3e8f0] bg-white text-[#005b8f]">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="size-5" aria-hidden="true"><path d="M4 7h16M7 12h10M10 17h4"/></svg>
+        </button>
+      </div>
+      {filtros && <div className="rounded-xl border border-[#e3e8f0] bg-white p-3 text-xs text-[#64758b]">Filtrar por nombre usando el buscador. No se muestra disponibilidad médica real.</div>}
+
+      <section aria-labelledby="proxima-atencion">
+        <div className="mb-3 flex items-center justify-between gap-2">
+          <h2 id="proxima-atencion" className="text-[15px] font-bold">Próxima atención</h2>
+          <Link href="/paciente/solicitudes" className="text-[10px] font-semibold uppercase text-[#0b5e9c]">Ver todas</Link>
+        </div>
+        <div className="rounded-[20px] bg-gradient-to-br from-[#1e88c8] to-[#0b5e9c] p-4 text-white shadow-[0_6px_0_#dbe6fb]">
+          {reciente ? (
+            <>
+              <div className="flex items-center justify-between gap-3">
+                <div className="min-w-0">
+                  <p className="text-sm font-semibold">Solicitud {reciente.id}</p>
+                  <p className="mt-1 text-xs text-white/85">{PROXIMO_PASO[reciente.estado]}</p>
+                </div>
+                <StatusPill estado={reciente.estado} />
+              </div>
+              <Link href={`/paciente/solicitudes/${reciente.id}`} className="mt-4 flex min-h-11 items-center justify-center rounded-xl bg-[#005b8f]/65 text-xs font-semibold text-white">Ver seguimiento <Icono nombre="flecha" className="ml-2 size-4" /></Link>
+            </>
+          ) : (
+            <>
+              <p className="text-sm font-semibold">Todavía no hay una atención programada</p>
+              <p className="mt-2 text-xs text-white/85">Solicitá atención a domicilio. Coordinación confirmará los detalles.</p>
+              <Link href="/paciente/solicitar" className="mt-4 flex min-h-11 items-center justify-center rounded-xl bg-[#005b8f]/65 text-xs font-semibold text-white">Solicitar atención <Icono nombre="flecha" className="ml-2 size-4" /></Link>
+            </>
+          )}
+        </div>
       </section>
 
-      {reciente ? (
-        <section aria-labelledby="ultima-solicitud" className="flex flex-col gap-3">
-          <div className="flex items-baseline justify-between gap-2">
-            <h2 id="ultima-solicitud" className="text-xs font-bold uppercase tracking-[0.08em] text-ink-soft">
-              Su última solicitud
-            </h2>
-            <span className="text-sm font-semibold text-ink">{reciente.id}</span>
-          </div>
-          <div className="flex flex-col gap-3.5 rounded-2xl border border-line bg-surface p-4">
-            <div className="flex items-center justify-between gap-2">
-              <StatusPill estado={reciente.estado} />
-              <span className="text-xs text-ink-soft">{formatearFecha(reciente.historial[0].fecha)}</span>
-            </div>
-            <p className="text-[15px] leading-relaxed text-ink">{PROXIMO_PASO[reciente.estado]}</p>
-            {reciente.estado !== "cancelada" && <ProgresoSolicitud estado={reciente.estado} />}
-            <Link
-              href={`/paciente/solicitudes/${reciente.id}`}
-              className="inline-flex min-h-11 items-center justify-between text-[15px] font-semibold text-azul-600 focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-azul-600"
-            >
-              Ver seguimiento
-              <Icono nombre="flecha" className="size-4.5" />
+      <section aria-labelledby="especialidades">
+        <div className="mb-3 flex items-center justify-between gap-2">
+          <h2 id="especialidades" className="text-[15px] font-bold">Especialidades</h2>
+          <Link href="/paciente/solicitar" className="text-[10px] font-semibold uppercase text-[#0b5e9c]">Ver todas</Link>
+        </div>
+        <div className="grid grid-cols-3 gap-2">
+          {SERVICIOS.map((servicio, i) => (
+            <Link key={servicio} href="/paciente/solicitar" className="flex min-h-12 min-w-0 items-center gap-1.5 rounded-xl bg-white px-2 shadow-[0_5px_18px_#1d386008]">
+              <span className={`flex size-7 shrink-0 items-center justify-center rounded-lg text-sm ${i === 0 ? "bg-[#fff0f1] text-[#f66]" : i === 1 ? "bg-[#edf2ff] text-[#0b5e9c]" : "bg-[#eff9fa] text-[#005b8f]"}`} aria-hidden="true">{i === 0 ? "✚" : i === 1 ? "♡" : "+"}</span>
+              <span className="min-w-0 break-words text-xs font-medium leading-tight">{servicio}</span>
             </Link>
-          </div>
-        </section>
-      ) : (
-        <section className="rounded-2xl border border-line bg-surface p-4">
-          <p className="text-ink-soft">Todavía no tiene solicitudes en esta demostración.</p>
-        </section>
-      )}
+          ))}
+        </div>
+      </section>
 
-      <Link
-        href="/paciente/solicitudes"
-        className="flex min-h-13 items-center justify-between border-y border-line text-[15px] font-semibold text-ink focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-azul-600"
-      >
-        <span className="flex items-center gap-3">
-          <Icono nombre="solicitudes" className="size-5 text-azul-600" />
-          Mis solicitudes
-        </span>
-        <span className="flex items-center gap-1.5 text-ink-soft">
-          {estado.solicitudes.length}
-          <Icono nombre="flecha" className="size-4.5" />
-        </span>
-      </Link>
+      <section aria-labelledby="profesionales">
+        <div className="mb-3 flex items-center justify-between gap-2">
+          <h2 id="profesionales" className="text-[15px] font-bold">Profesionales</h2>
+          <span className="text-[10px] font-semibold uppercase text-[#0b5e9c]">Profesionales</span>
+        </div>
+        <div className="flex flex-col gap-2.5">
+          {profesionales.length ? profesionales.map((profesional) => (
+            <div key={profesional.id} className="flex min-h-18 items-center gap-3 rounded-xl bg-white p-2 shadow-[0_5px_18px_#1d386008]">
+              <span aria-hidden="true" className="flex size-14 shrink-0 items-center justify-center rounded-lg bg-[#e9f1fa] text-xl font-semibold text-[#0b5e9c]">{profesional.nombre.slice(-1)}</span>
+              <div className="min-w-0 flex-1">
+                <p className="truncate text-xs font-bold">{profesional.nombre}</p>
+                <p className="mt-1 text-[11px] text-[#6d6e71]">Profesional</p>
+                <p className="mt-1 text-[10px] text-[#005b8f]">Información de atención</p>
+              </div>
+            </div>
+          )) : <p className="rounded-xl bg-white p-4 text-sm text-[#64758b]">No se encontraron profesionales.</p>}
+        </div>
+      </section>
 
       <EmergencyNotice />
-
-      <AvisoDemo>
-        Demostración con datos ficticios. Las funciones son propuestas sujetas a validación con Vitalis.{" "}
-        <Link href="/demo" className="font-semibold text-azul-600 underline underline-offset-4">
-          Cambiar de perfil
-        </Link>
-      </AvisoDemo>
 
     </div>
   );

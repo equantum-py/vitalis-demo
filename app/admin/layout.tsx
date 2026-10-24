@@ -13,15 +13,13 @@ export default function LayoutAdmin({ children }: { children: React.ReactNode })
       <aside className="hidden lg:sticky lg:top-0 lg:flex lg:h-dvh lg:w-60 lg:shrink-0 lg:flex-col lg:gap-8 lg:bg-navy lg:p-5 lg:text-white">
         <div className="flex items-center gap-2.5">
           <MarcaVitalis variante="clara" />
-          <Link href="/admin" className="font-display text-xl font-semibold text-white">
-            Vitalis
-          </Link>
+
         </div>
         <Suspense fallback={null}>
           <NavAdmin variante="lateral" />
         </Suspense>
         <p className="mt-auto text-xs leading-relaxed text-white/75">
-          Administración y coordinación. Demostración con datos ficticios.
+          Administración y coordinación.
         </p>
       </aside>
 
@@ -30,13 +28,12 @@ export default function LayoutAdmin({ children }: { children: React.ReactNode })
           <div className="flex items-center gap-3">
             <Link href="/admin" className="flex items-center gap-2.5 font-display text-xl font-semibold text-navy lg:hidden">
               <MarcaVitalis />
-              Vitalis
             </Link>
             <span className="hidden text-sm font-semibold text-ink-soft lg:inline">Panel de administración</span>
             <DemoBadge />
           </div>
           <div className="flex items-center gap-4 text-sm">
-            <span className="text-ink-soft">Perfil: Coordinación (demostración)</span>
+            <span className="text-ink-soft">Perfil: Coordinación</span>
             <Link href="/demo" className="font-semibold text-azul-600 underline underline-offset-4">
               Cambiar perfil
             </Link>

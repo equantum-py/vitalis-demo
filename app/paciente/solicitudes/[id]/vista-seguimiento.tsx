@@ -23,7 +23,7 @@ export function VistaSeguimiento({ id }: { id: string }) {
       <div className="flex flex-col gap-4">
         <PageTitle title="Solicitud no encontrada" />
         <p className="text-ink-soft">
-          No hay una solicitud con este código en la demostración. Puede haberse restablecido la demo.
+          No hay una solicitud con este código. Es posible que se hayan borrado los datos del navegador.
         </p>
         <Link href="/paciente/solicitudes" className="font-semibold text-azul-600 underline underline-offset-4">
           Volver a mis solicitudes

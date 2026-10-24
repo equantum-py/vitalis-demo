@@ -44,7 +44,7 @@ for (const ruta of RUTAS) {
     // Accesibilidad: WCAG 2.0/2.1 A y AA. Se falla por problemas serios y críticos.
     const resultado = await new AxeBuilder({ page }).withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"]).analyze();
     const graves = resultado.violations.filter((v) => v.impact === "serious" || v.impact === "critical");
-    const resumen = graves.map((v) => `${v.id} (${v.impact}): ${v.nodes.length} nodo(s)`).join("; ");
+    const resumen = graves.map((v) => `${v.id} (${v.impact}): ${v.nodes.length} nodo(s) — ${v.nodes.map((n) => `${n.target.join(", ")}: ${n.failureSummary ?? "sin detalle"}`).join(" | ")}`).join("; ");
     expect(graves.length, `accesibilidad en ${ruta}: ${resumen}`).toBe(0);
 
     const nombre = ruta.replace(/\//g, "_").replace(/^_/, "") || "inicio";

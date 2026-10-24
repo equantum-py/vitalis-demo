@@ -44,14 +44,14 @@ export default function OrientacionUrgencia() {
             Orientación registrada en el registro separado de urgencias. No se creó ninguna solicitud.
           </p>
         )}
-        <p className="text-sm text-ink-soft">Registros de urgencia en esta demostración: {estado.urgencias.length}</p>
+        <p className="text-sm text-ink-soft">Registros de urgencia: {estado.urgencias.length}</p>
       </Tarjeta>
 
       <Link href="/paciente/solicitudes" className="font-semibold text-azul-600 underline underline-offset-4">
         Ver solicitudes programadas
       </Link>
 
-      <AvisoDemo>Demostración con datos ficticios. El registro de urgencias no se envía a ningún servicio.</AvisoDemo>
+      <AvisoDemo>Este registro no contacta a servicios de emergencia. Ante una urgencia, llamá al servicio de emergencias.</AvisoDemo>
     </div>
   );
 }
